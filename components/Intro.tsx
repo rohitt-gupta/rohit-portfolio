@@ -38,7 +38,7 @@ function Intro() {
         </div>
       </div>
 
-      <motion.p
+      <motion.h1
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
 
@@ -48,7 +48,7 @@ function Intro() {
         <span className="font-bold">2 years</span> of experience. I enjoy
         building <span className="italic">sites & apps</span>. My focus is{" "}
         <span className="underline">React (Next.js)</span>.
-      </motion.p>
+      </motion.h1>
 
       <motion.div className='flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium'
         initial={{ opacity: 0, y: 100 }}
@@ -62,13 +62,13 @@ function Intro() {
           Contact Me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
         </Link>
 
-        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer'>
+        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10'>
           Download CV <HiDownload className='opacity-60 group-hover:translate-y-1 transition' />
         </a>
-        <a href="" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full'>
+        <a href="https://www.linkedin.com/in/rohit-gupta28/" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950  active:scale-105 transition cursor-pointer border border-black/10'>
           <BsLinkedin />
         </a>
-        <a href="" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full text-[1.35rem]'>
+        <a href="https://github.com/rohitt-gupta" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full text-[1.35rem] outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950 active:scale-105 transition cursor-pointer border border-black/10'>
           <FaGithubSquare />
         </a>
       </motion.div>
