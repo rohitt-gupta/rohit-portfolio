@@ -3,6 +3,10 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
+import { HiDownload } from 'react-icons/hi'
+import { FaGithubSquare } from 'react-icons/fa'
 
 function Intro() {
   return (
@@ -34,14 +38,41 @@ function Intro() {
         </div>
       </div>
 
-      <p className='mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4xl'>
-        <span className="font-bold">Hello, I'm Ricardo.</span> I'm a{" "}
+      <motion.p
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+
+        className='mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4xl'>
+        <span className="font-bold">Hello, I'm Rohit.</span> I'm a{" "}
         <span className="font-bold">full-stack developer</span> with{" "}
-        <span className="font-bold">8 years</span> of experience. I enjoy
+        <span className="font-bold">2 years</span> of experience. I enjoy
         building <span className="italic">sites & apps</span>. My focus is{" "}
         <span className="underline">React (Next.js)</span>.
-      </p>
-    </section>
+      </motion.p>
+
+      <motion.div className='flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium'
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.1,
+        }}
+      >
+        <Link href="#contact"
+          className='group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 outline-none rounded-full focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition'>
+          Contact Me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
+        </Link>
+
+        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer'>
+          Download CV <HiDownload className='opacity-60 group-hover:translate-y-1 transition' />
+        </a>
+        <a href="" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full'>
+          <BsLinkedin />
+        </a>
+        <a href="" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full text-[1.35rem]'>
+          <FaGithubSquare />
+        </a>
+      </motion.div>
+    </section >
   )
 }
 
