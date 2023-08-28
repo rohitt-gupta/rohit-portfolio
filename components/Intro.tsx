@@ -1,16 +1,21 @@
 'use client'
 
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
+import { useActiveSectionContext } from '@/context/active-section-context'
+
+import { useInView } from "react-intersection-observer";
+import { useSectionInView } from '@/lib/hooks'
 
 function Intro() {
+  const { ref } = useSectionInView("Home", 0.5)
   return (
-    <section id='home' className='mb-28 max-w-[50rem] text-center sm:mb-0 scroll-mt-[100rem]'>
+    <section ref={ref} id='home' className='mb-28 max-w-[50rem] text-center sm:mb-0 scroll-mt-[100rem]'>
       <div className='flex items-center justify-center'>
         <div className='relative'>
           <motion.div
@@ -50,7 +55,7 @@ function Intro() {
         <span className="underline">React (Next.js)</span>.
       </motion.h1>
 
-      <motion.div className='flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium'
+      <motion.div className='flex flex-col sm:flex-row items-center justify-center gap-4 px-4 text-lg font-medium'
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
