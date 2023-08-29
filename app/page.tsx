@@ -1,4 +1,5 @@
 import About from '@/components/About'
+import Contact from '@/components/Contact'
 import Experience from '@/components/Experience'
 import Intro from '@/components/Intro'
 import Projects from '@/components/Projects'
@@ -15,6 +16,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <Experience />
+      <Contact />
     </main>
   )
 }
