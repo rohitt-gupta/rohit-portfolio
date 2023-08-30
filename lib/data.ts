@@ -3,7 +3,7 @@ import { CgWorkAlt } from "react-icons/cg";
 import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
 import ecomImg from "@/public/ecom.png";
-import jamandplayImg from "@/public/JamAndPlay.png";
+import jamandplayImg from "@/public/jamandplay.png";
 import trelloImg from "@/public/trello.png";
 
 export const links = [
