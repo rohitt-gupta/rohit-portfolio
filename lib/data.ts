@@ -67,6 +67,8 @@ export const projectsData = [
       "Full stack ecommerce app with multiple stores functionality exposing public APIs for client app. ",
     tags: ["Next.js", "Tailwind", "shad-cn", "MySQL", "Prisma", "Typescript"],
     imageUrl: ecomImg,
+    projectLink: 'https://ecom-dashboard-five.vercel.app/',
+    githubLink: 'https://github.com/rohitt-gupta/ecommerce-store',
   },
   {
     title: "Jam and Play",
@@ -74,13 +76,17 @@ export const projectsData = [
       "Learn the art and science of creating music, with Jam and Play's comprehensive courses",
     tags: ["React", "TypeScript", "Headless UI", "Next.js", "Tailwind", "Framer-motion"],
     imageUrl: jamandplayImg,
+    projectLink: 'www.jamandplay.com',
+    githubLink: '',
   },
   {
-    title: "TaskFlow:The Trello clone",
+    title: "TaskFlow:The Trello Clone",
     description:
       "A simple yet beautiful todo app with drag ad drop functionality, backed by appwrite cloud for seamless data integration.  ",
     tags: ["React", "Next.js", "Appwrite", "Tailwind", "React-beautiful-dnd"],
     imageUrl: trelloImg,
+    projectLink: 'https://trello-clone-xjcj.vercel.app/',
+    githubLink: 'https://github.com/rohitt-gupta/trello-clone',
   },
 ] as const;
 
