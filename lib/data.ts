@@ -54,7 +54,7 @@ export const experiencesData = [
     title: "Electronics Engineering",
     location: "CTAE, Udaipur",
     description:
-      "I graduated after 4 years of studying. Secured multiple off-campus offers of job as a Software developer.",
+      "I did my engineering in electronics. Secured multiple off-campus offers of job as a Software developer.",
     icon: React.createElement(LuGraduationCap),
     date: "2018-2022",
   }
