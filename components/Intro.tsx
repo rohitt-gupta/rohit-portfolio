@@ -69,13 +69,13 @@ function Intro() {
           Contact Me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
         </Link>
 
-        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10'>
+        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10 dark:bg-white/10'>
           Download CV <HiDownload className='opacity-60 group-hover:translate-y-1 transition' />
         </a>
-        <a href="https://www.linkedin.com/in/rohit-gupta28/" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950  active:scale-105 transition cursor-pointer border border-black/10'>
+        <a href="https://www.linkedin.com/in/rohit-gupta28/" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950  active:scale-105 transition dark:bg-white/10 dark:text-white/60 cursor-pointer border border-black/10'>
           <BsLinkedin />
         </a>
-        <a href="https://github.com/rohitt-gupta" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full text-[1.35rem] outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950 active:scale-105 transition cursor-pointer border border-black/10'>
+        <a href="https://github.com/rohitt-gupta" target="_blank" className='bg-white text-gray-700 dark:bg-white/10 dark:text-white/60 p-4 flex items-center gap-2 rounded-full text-[1.35rem] outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950 active:scale-105 transition cursor-pointer border border-black/10'>
           <FaGithubSquare />
         </a>
       </motion.div>
