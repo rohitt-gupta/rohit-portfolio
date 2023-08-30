@@ -9,6 +9,7 @@ import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
 import { useActiveSectionContext } from '@/context/active-section-context'
 import { useSectionInView } from '@/lib/hooks'
+import profileImage from '@/public/pic4.jpg'
 
 function Intro() {
   const { ref } = useSectionInView("Home", 0.5)
@@ -25,7 +26,7 @@ function Intro() {
               duration: 0.2
             }}
           >
-            <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=368&h=368&q=100" alt='Rohit Gupta' width="192" height="192" quality="95" priority={true} className='h-24 w-24 rounded-full object-cover border-[0.35rem] border-white shadow-xl' />
+            <Image src={profileImage} alt='Rohit Gupta' width="192" height="192" quality="95" priority={true} className='h-24 w-24 rounded-full object-cover border-[0.35rem] border-white shadow-xl' />
           </motion.div>
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
