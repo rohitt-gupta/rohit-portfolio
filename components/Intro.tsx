@@ -46,7 +46,6 @@ function Intro() {
       <motion.h1
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
-
         className='mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4xl'>
         <span className="font-bold">Hello, I'm Rohit.</span> I'm a{" "}
         <span className="font-bold">full-stack developer</span> with{" "}
@@ -61,6 +60,7 @@ function Intro() {
         transition={{
           delay: 0.1,
         }}
+
       >
         <Link href="#contact"
           className='group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 outline-none rounded-full focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition' onClick={() => {

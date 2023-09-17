@@ -76,7 +76,7 @@ export const projectsData = [
       "Learn the art and science of creating music, with Jam and Play's comprehensive courses",
     tags: ["React", "TypeScript", "Headless UI", "Next.js", "Tailwind", "Framer-motion"],
     imageUrl: jamandplayImg,
-    projectLink: 'www.jamandplay.com',
+    projectLink: 'https://www.jamandplay.com/',
     githubLink: '',
   },
   {
