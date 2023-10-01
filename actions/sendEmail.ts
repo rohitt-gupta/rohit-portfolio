@@ -33,8 +33,6 @@ export const sendEmail = async (formData: FormData) => {
         message: message as string,
         senderEmail: senderEmail as string
       })
-      // text: message as string,
-
     })
   } catch (error: unknown) {
     return {
