@@ -27,7 +27,7 @@ function Projects() {
         />
       </SectionHeading>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="md:grid md:grid-cols-2 md:gap-8">
         {projectsData.map((project, index) => (
           <div key={index}>
             <Project {...project} />
