@@ -7,6 +7,9 @@ import { sendEmail } from "@/actions/sendEmail";
 import toast from "react-hot-toast";
 import SectionHeading from "./SectionHeading";
 import SubmitBtn from "./SubmitButton";
+import Image from "next/image";
+import indigoOpenBracket from '@/public/brackets/indigo-opening.svg'
+import indigoCloseBracket from '@/public/brackets/indigo-closing.svg'
 
 export default function Contact() {
   const { ref } = useSectionInView("Contact");
@@ -29,7 +32,21 @@ export default function Contact() {
         once: true,
       }}
     >
-      <SectionHeading>Contact me</SectionHeading>
+      <SectionHeading>
+        <Image
+          src={indigoOpenBracket}
+          alt="Project I worked on"
+          quality={95}
+          className='w-10 h-10'
+        />
+        <p className="title">Contact me</p>
+        <Image
+          className='w-10 h-10'
+          src={indigoCloseBracket}
+          alt="Project I worked on"
+          quality={95}
+        />
+      </SectionHeading>
 
       <p className="text-gray-700 -mt-6 dark:text-white/80">
         Please contact me directly at{" "}

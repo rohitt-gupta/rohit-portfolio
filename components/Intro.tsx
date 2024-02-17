@@ -9,7 +9,7 @@ import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
 import { useActiveSectionContext } from '@/context/active-section-context'
 import { useSectionInView } from '@/lib/hooks'
-import profileImage from '@/public/pic4.jpg'
+import profileImage from '@/public/pic1.jpeg'
 
 function Intro() {
   const { ref } = useSectionInView("Home", 0.5)
@@ -70,7 +70,7 @@ function Intro() {
           Contact Me <BsArrowRight className='opacity-70 group-hover:translate-x-1 transition' />
         </Link>
 
-        <a href="/Resume.pdf" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10 dark:bg-white/10'>
+        <a target='_blank' href="https://drive.google.com/file/d/13L2d9nD6PgL1GusHV6EV0OitwlAwT15R/view?usp=sharing" download={true} className='group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10 dark:bg-white/10'>
           Download CV <HiDownload className='opacity-60 group-hover:translate-y-1 transition' />
         </a>
         <a href="https://www.linkedin.com/in/rohit-gupta28/" target="_blank" className='bg-white text-gray-700 p-4 flex items-center gap-2 rounded-full outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950  active:scale-105 transition dark:bg-white/10 dark:text-white/60 cursor-pointer border border-black/10'>

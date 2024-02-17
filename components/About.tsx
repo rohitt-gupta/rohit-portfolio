@@ -4,6 +4,9 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { useSectionInView } from "@/lib/hooks";
+import indigoOpenBracket from '@/public/brackets/pink-opening.svg'
+import indigoCloseBracket from '@/public/brackets/pink-closing.svg'
+import Image from "next/image";
 
 export default function About() {
   const { ref } = useSectionInView("About", 0.75)
@@ -16,17 +19,36 @@ export default function About() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.175 }}
     >
-      <SectionHeading>About Me</SectionHeading>
+      <SectionHeading>
+        <Image
+          src={indigoOpenBracket}
+          alt="Project I worked on"
+          quality={95}
+          className='w-10 h-10'
+        />
+        <p className="title">About Me</p>
+        <Image
+          className='w-10 h-10'
+          src={indigoCloseBracket}
+          alt="Project I worked on"
+          quality={95}
+        />
+      </SectionHeading>
 
       <p className="mb-3">
-        Upon completing my <span className="font-medium">Electronics Engineering</span>, degree, I opted to follow my enthusiasm for programming. I embarked on a journey of acquiring knowledge in full-stack web development through YouTube tutorials and documentation. The facet of programming that resonates with me the most is the art of troubleshooting and finding resolutions. The gratification derived from unraveling complex problems is truly exhilarating. In my toolkit, I rely on {" "}        <span className="font-medium">
-          React, Next.js, Node.js, and MongoDB
-        </span> as the foundational technologies. Additionally, I possess familiarity with TypeScript and Prisma. I maintain a perpetual eagerness to explore novel technological advancements.
+        Everyone has their superpower,
+        For some, it's Music;
+        For others, it's Sports;
+        For me?
+        It has always been Computers.
+
+
+        I love building stuff, learning new things, meeting new people. I just love tech in general. So, if you have something cool to build feel free to reach out!!
       </p>
 
-      <p>
+      {/* <p>
         <span className="italic">When I'm not coding</span>, you'll find me immersed in anime, badminton matches, and PUBG conquests. <span className="font-medium">Learning is my ongoing pleasure</span>, currently focused on delving into the intricate world of backend architecture and the patterns that guide system design. And would you believe it, I'm even mastering the art of playing the guitar.
-      </p>
+      </p> */}
     </motion.section >
   );
 }

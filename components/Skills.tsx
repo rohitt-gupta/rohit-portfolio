@@ -6,6 +6,9 @@ import { skillsData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
+import Image from "next/image";
+import indigoOpenBracket from '@/public/brackets/green-opening.svg'
+import indigoCloseBracket from '@/public/brackets/green-closing.svg'
 
 const fadeInAnimationVariants = {
   initial: {
@@ -30,7 +33,21 @@ export default function Skills() {
       ref={ref}
       className="mb-28 max-w-[53rem] scroll-mt-28 text-center sm:mb-40"
     >
-      <SectionHeading>My skills</SectionHeading>
+      <SectionHeading>
+        <Image
+          src={indigoOpenBracket}
+          alt="Project I worked on"
+          quality={95}
+          className='w-10 h-10'
+        />
+        <p className="title">My Skills</p>
+        <Image
+          className='w-10 h-10'
+          src={indigoCloseBracket}
+          alt="Project I worked on"
+          quality={95}
+        />
+      </SectionHeading>
       <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
         {skillsData.map((skill, index) => (
           <motion.li
