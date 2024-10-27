@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
-import { FaGithubSquare } from 'react-icons/fa'
+import { FaGithubSquare, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
 import { useActiveSectionContext } from '@/context/active-section-context'
 import { useSectionInView } from '@/lib/hooks'
 import profileImage from '@/public/pic1.jpeg'
@@ -47,11 +47,9 @@ function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         className='mt-4 mb-10 px-4 font-medium text-2xl sm:text-4xl !leading-[1.5]'>
-        <span className="font-bold">Hello, I'm Rohit.</span> I'm a{" "}
-        <span className="font-bold">full-stack developer</span> with{" "}
-        <span className="font-bold">2 years</span> of experience. I enjoy
-        building <span className="italic">sites & apps</span>. My focus is{" "}
-        <span className="underline">React (Next.js)</span>.
+        <span className="font-bold">Hello, I'm Rohit.</span> I've been working in web development for 3 years, with{" "}
+        <span className="font-bold">React (Next.js), Nodejs and Typescript</span> as my focus. I enjoy
+        building stuff on<span className="italic"> WEB</span>.
       </motion.h1>
 
       <motion.div className='flex sm:flex-row flex-col justify-center items-center gap-4 px-4 font-medium text-lg'
@@ -70,7 +68,7 @@ function Intro() {
           Contact Me <BsArrowRight className='opacity-70 transition group-hover:translate-x-1' />
         </Link>
 
-        <Link target='_blank' href="https://drive.google.com/file/d/13L2d9nD6PgL1GusHV6EV0OitwlAwT15R/view?usp=sharing" download={true} className='flex items-center gap-2 bg-white dark:bg-white/10 px-7 py-3 border border-black/10 rounded-full group outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer'>
+        <Link target='_blank' href="https://drive.google.com/file/d/1-1LW0ArT3ujaIBx0Le7zKQ_IEimRCxuA/view?usp=sharing" download={true} className='flex items-center gap-2 bg-white dark:bg-white/10 px-7 py-3 border border-black/10 rounded-full group outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer'>
           Download CV <HiDownload className='opacity-60 transition group-hover:translate-y-1' />
         </Link>
         <Link href="https://www.linkedin.com/in/rohit-gupta28/" target="_blank" className='flex items-center gap-2 bg-white dark:bg-white/10 p-4 border border-black/10 rounded-full text-gray-700 outline-none focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950 active:scale-105 dark:text-white/60 transition cursor-pointer'>
@@ -78,6 +76,9 @@ function Intro() {
         </Link>
         <Link href="https://github.com/rohitt-gupta" target="_blank" className='flex items-center gap-2 bg-white dark:bg-white/10 p-4 border border-black/10 rounded-full text-[1.35rem] text-gray-700 hover:text-gray-950 dark:text-white/60 transition cursor-pointer outline-none focus:scale-[1.15] hover:scale-[1.15] active:scale-105'>
           <FaGithubSquare />
+        </Link>
+        <Link href="https://x.com/whyrohitwhy" target="_blank" className='flex items-center gap-2 bg-white dark:bg-white/10 p-4 border border-black/10 rounded-full text-[1.35rem] text-gray-700 hover:text-gray-950 dark:text-white/60 transition cursor-pointer outline-none focus:scale-[1.15] hover:scale-[1.15] active:scale-105'>
+          <FaTwitter />
         </Link>
       </motion.div>
     </section >
