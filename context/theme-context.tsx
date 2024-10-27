@@ -13,7 +13,7 @@ type ThemeContextProviderProps = {
 }
 function ThemeContextProvider({ children }: ThemeContextProviderProps) {
 
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
 
 
 
