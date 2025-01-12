@@ -1,13 +1,14 @@
 "use client";
 
 /**
- * This file is copied from https://github.com/manuarora700/manuarora.in/blob/5c008756d41284503e418f8afd9445e0bdb7ebc1/components/Header.js#L14
+ * This file is forked from https://github.com/manuarora700/manuarora.in/blob/5c008756d41284503e418f8afd9445e0bdb7ebc1/components/Header.js#L14
  */
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BlurImage } from "@/components/BlurImage";
 import Link from "next/link";
+import BlurFade from "./ui/blur-fade";
 
 const IntroHeader = () => {
 	const [open, setOpen] = useState(false);
@@ -37,42 +38,45 @@ const IntroHeader = () => {
 	return (
 		<div className='flex md:flex-row flex-col justify-between items-start md:space-x-14 mb-10 w-full'>
 			<div className='flex flex-col mt-6 md:w-3/4'>
-				<h1 className='mb-2 font-bold text-3xl text-black md:text-5xl dark:text-white tracking-tight'>
-					Rohit Gupta
-				</h1>
+				<BlurFade delay={0.1}>
+					<h1 className='mb-2 font-bold text-3xl text-black md:text-5xl dark:text-white tracking-tight'>
+						Rohit Gupta
+					</h1>
+				</BlurFade>
 
-				<div className='relative flex-wrap items-center mb-5 text-zinc-700 dark:text-zinc-400 leading-7'>
-					Building
-					<Link
-						className={
-							"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white  mx-1"
-						}
-						href='https://x.com/alpinedotinc'
-						target='__blank'
-					>
-						Alpine
-					</Link>
-					,
-					<Link
-						className={
-							"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1"
-						}
-						href='https://justcollab.io'
-						target='__blank'
-					>
-						Just Collab
-					</Link>
-					other
-					<Link
-						className={
-							"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1"
-						}
-						href='https://github.com/rohitt-gupta'
-						target='__blank'
-					>
-						Cool things
-					</Link>
-					{/* <span
+				<BlurFade delay={0.2}>
+					<div className='relative flex-wrap items-center mb-5 text-zinc-700 dark:text-zinc-400 leading-7'>
+						Building
+						<Link
+							className={
+								"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white  mx-1"
+							}
+							href='https://x.com/alpinedotinc'
+							target='__blank'
+						>
+							Alpine
+						</Link>
+						,
+						<Link
+							className={
+								"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1"
+							}
+							href='https://justcollab.io'
+							target='__blank'
+						>
+							Just Collab
+						</Link>
+						other
+						<Link
+							className={
+								"inline-block px-2 py-0 font-bold bg-gray-100 dark:bg-zinc-700 dark:text-white mx-1"
+							}
+							href='https://github.com/rohitt-gupta'
+							target='__blank'
+						>
+							Cool things
+						</Link>
+						{/* <span
 						className='font-bold text-zinc-800 dark:text-zinc-200 cursor-pointer'
 						style={{ cursor: "🤩" }}
 						onMouseEnter={() => setOpen(true)}
@@ -160,19 +164,22 @@ const IntroHeader = () => {
 							)}
 						</AnimatePresence> 
 					</span> */}
-				</div>
-				<p className='text-zinc-600 dark:text-zinc-500'>
-					Software Engineer passionate about building SaaS products and web
-					apps. Find me on{" "}
-					<Link
-						href='https://x.com/whyrohitwhy'
-						className='inline-flex relative font-bold font-inter dark:text-zinc-400 overflow-hidden group'
-						target='__blank'
-					>
-						<span className='relative'>twitter</span>
-					</Link>{" "}
-					for tech updates.
-				</p>
+					</div>
+				</BlurFade>
+				<BlurFade delay={0.3}>
+					<p className='text-zinc-600 dark:text-zinc-500'>
+						Software Engineer passionate about building SaaS products and web
+						apps. Find me on{" "}
+						<Link
+							href='https://x.com/whyrohitwhy'
+							className='inline-flex relative font-bold font-inter dark:text-zinc-400 overflow-hidden group'
+							target='__blank'
+						>
+							<span className='relative'>twitter</span>
+						</Link>{" "}
+						for tech updates.
+					</p>
+				</BlurFade>
 			</div>
 
 			<div className='relative flex-shrink-1 order-first md:order-last p-4 md:p-4'>

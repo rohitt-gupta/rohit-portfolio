@@ -1,11 +1,12 @@
-import Projects from "@/components/Projects";
-import SectionDivider from "@/components/SectionDivider";
+"use client";
+import ProjectsNew from "@/components/ProjectsNew";
+import { useSectionInView } from "@/lib/hooks";
 
 export default function ProjectsPage() {
+	const { ref } = useSectionInView("Work", 0.5);
 	return (
-		<main className='flex flex-col items-center px-4'>
-			<Projects />
-			<SectionDivider />
-		</main>
+		<section ref={ref} className='scroll-mt-28 mb-28'>
+			<ProjectsNew />
+		</section>
 	);
 }

@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import { Inter } from "next/font/google";
 import ActiveSectioContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
@@ -26,7 +25,7 @@ export default function RootLayout({
 	return (
 		<html lang='en' className='!scroll-smooth'>
 			<body
-				className={`${myFont.className} bg-[#EEEDEC] max-w-3xl mx-auto text-gray-950 relative pt-28 sm:pt-36 dark:bg-[#18181B] dark:text-gray-50 dark:text-opacity-90 min-h-screen flex flex-col`}
+				className={`${myFont.className} bg-background max-w-3xl mx-auto text-gray-950 relative pt-28 sm:pt-36 dark:text-gray-50 dark:text-opacity-90 min-h-screen flex flex-col`}
 			>
 				<ThemeContextProvider>
 					<ActiveSectioContextProvider>

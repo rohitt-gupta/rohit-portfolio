@@ -34,6 +34,16 @@ function ThemeContextProvider({ children }: ThemeContextProviderProps) {
 			if (localTheme === "dark") {
 				document.documentElement.classList.add("dark");
 			}
+		} else {
+			// Check system preference
+			const systemPrefersDark = window.matchMedia(
+				"(prefers-color-scheme: dark)"
+			).matches;
+			setTheme(systemPrefersDark ? "dark" : "light");
+			if (systemPrefersDark) {
+				document.documentElement.classList.add("dark");
+				window.localStorage.setItem("theme", "dark");
+			}
 		}
 	}, []);
 
