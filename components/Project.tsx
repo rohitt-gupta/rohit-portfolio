@@ -8,73 +8,79 @@ import { motion, useScroll, useTransform } from "framer-motion";
 type ProjectProps = (typeof projectsData)[number];
 
 export default function Project({
-  title,
-  description,
-  tags,
-  imageUrl,
-  projectLink,
-  githubLink
+	title,
+	description,
+	tags,
+	imageUrl,
+	projectLink,
+	githubLink,
 }: ProjectProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.33 1"],
-  });
-  const scaleProgess = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const opacityProgess = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+	const ref = useRef<HTMLDivElement>(null);
+	const { scrollYProgress } = useScroll({
+		target: ref,
+		offset: ["0 1", "1.33 1"],
+	});
 
-  return (
-    <motion.div
-      ref={ref}
-      style={{
-        scale: scaleProgess,
-        opacity: opacityProgess,
-      }}
-      className="group mb-3 sm:mb-8 sm:pb-3 last:mb-0"
-    >
-      <section className="bg-gray-100 max-w-[42rem] border border-black/5 rounded-lg overflow-hidden sm:pr-8 relative sm:h-[24rem] hover:bg-gray-200 transition sm:group-even:pl-8 dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
-        <div className="pt-4 pb-7 px-5 sm:pl-10 sm:pr-2 sm:pt-10 sm:max-w-[50%] flex flex-col h-full sm:group-even:ml-[18rem]">
-          <h3 className="text-2xl font-semibold">{title}</h3>
+	const scaleProgess = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+	const opacityProgess = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
-          <p className="mt-2 leading-relaxed text-gray-700 dark:text-white/70">
-            {description}
-          </p>
+	return (
+		<motion.div
+			ref={ref}
+			style={{
+				scale: scaleProgess,
+				opacity: opacityProgess,
+			}}
+			className='mb-3 sm:mb-8 last:mb-0 sm:pb-3 group'
+		>
+			<section className='sm:group-even:pl-8 relative bg-gray-100 hover:bg-gray-200 dark:hover:bg-white/20 dark:bg-white/10 sm:pr-8 border border-black/5 rounded-lg max-w-[42rem] sm:h-[24rem] dark:text-white transition overflow-hidden'>
+				<div className='sm:group-even:ml-[18rem] flex flex-col px-5 pt-4 sm:pt-10 sm:pr-2 pb-7 sm:pl-10 sm:max-w-[50%] h-full'>
+					<h3 className='font-semibold text-2xl'>{title}</h3>
 
-          <ul className="flex flex-wrap mt-4 sm:mt-6 gap-2 ">
-            {tags.map((tag, index) => (
-              <li
-                className="bg-black/[0.7] px-3 py-1 text-[0.7rem] uppercase tracking-wider text-white rounded-full dark:text-white/70"
-                key={index}
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
+					<p className='mt-2 text-gray-700 dark:text-white/70 leading-relaxed'>
+						{description}
+					</p>
 
-          <div className=" my-6 flex items-center justify-start gap-3">
-            <a target="_blank" href={githubLink === '' ? "https://github.com/rohitt-gupta" : githubLink} className="bg-gray-900 text-white px-7 py-3 flex items-center gap-2 outline-none rounded-lg focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition">Github</a>
-            <a target="_blank" href={projectLink} className="bg-gray-900 text-white px-7 py-3 flex items-center gap-2 outline-none rounded-lg focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition">Live</a>
-          </div>
-        </div>
+					<ul className='flex flex-wrap gap-2 mt-4 sm:mt-6'>
+						{tags.map((tag, index) => (
+							<li
+								className='bg-black/[0.7] px-3 py-1 rounded-full text-[0.7rem] text-white dark:text-white/70 uppercase tracking-wider'
+								key={index}
+							>
+								{tag}
+							</li>
+						))}
+					</ul>
 
-        <Image
-          src={imageUrl}
-          alt="Project I worked on"
-          quality={95}
-          className="absolute hidden sm:block top-[4rem] -right-40 w-[28.25rem] rounded-t-lg shadow-2xl
-        transition 
-        group-hover:scale-[1.04]
-        group-hover:-translate-x-3
-        group-hover:translate-y-3
-        group-hover:-rotate-2
+					<div className='flex justify-start items-center gap-3 my-6'>
+						<a
+							target='_blank'
+							href={
+								githubLink === ""
+									? "https://github.com/rohitt-gupta"
+									: githubLink
+							}
+							className='flex items-center gap-2 bg-gray-900 hover:bg-gray-950 px-7 py-3 rounded-lg text-white transition hover:scale-110 focus:scale-110 active:scale-105 outline-none'
+						>
+							Github
+						</a>
+						<a
+							target='_blank'
+							href={projectLink}
+							className='flex items-center gap-2 bg-gray-900 hover:bg-gray-950 px-7 py-3 rounded-lg text-white transition hover:scale-110 focus:scale-110 active:scale-105 outline-none'
+						>
+							Live
+						</a>
+					</div>
+				</div>
 
-        group-even:group-hover:translate-x-3
-        group-even:group-hover:translate-y-3
-        group-even:group-hover:rotate-2
-
-        group-even:right-[initial] group-even:-left-40"
-        />
-      </section>
-    </motion.div>
-  );
+				<Image
+					src={imageUrl}
+					alt='Project I worked on'
+					quality={95}
+					className='group-hover:scale-[1.04] group-hover:-rotate-2 group-even:group-hover:rotate-2 group-even:right-[initial] group-even:-left-40 sm:block top-[4rem] -right-40 absolute hidden shadow-2xl rounded-t-lg w-[28.25rem] transition group-hover:-translate-x-3 group-hover:translate-y-3 group-even:group-hover:translate-x-3 group-even:group-hover:translate-y-3'
+				/>
+			</section>
+		</motion.div>
+	);
 }
