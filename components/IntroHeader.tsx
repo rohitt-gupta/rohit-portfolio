@@ -31,6 +31,7 @@ const IntroHeader = () => {
 		hidden: { opacity: 0, scale: 0.5, y: "1vh" },
 		show: { opacity: 1, scale: 1, y: 0 },
 	};
+
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);

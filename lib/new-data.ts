@@ -180,3 +180,23 @@ export const DATA = {
 		},
 	],
 } as const;
+
+/**
+ * Jam and play
+ * Caption me
+ * Team chat application
+ * Ecommerce
+ * Travel App
+ * TaskFlow
+ *
+ * JRP: scranton ai, refclubo, ERA,
+ * GWP Platform
+ * Liftoff: Burn fm, Marketlens, Eduvixor,
+ * Justcollab
+ * betoxic
+ * web3ui
+ * nextbase
+ * jeweltrak
+ *
+ *
+ */
