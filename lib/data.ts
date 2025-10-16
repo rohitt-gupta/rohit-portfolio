@@ -2,12 +2,13 @@ import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
 import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
+
+import caption from "@/public/captionme.png";
+import discord from "@/public/discord.png";
 import ecomImg from "@/public/ecom.png";
 import jamandplayImg from "@/public/jamandplay.png";
-import trelloImg from "@/public/trello.png";
 import landingPage from "@/public/travel-agency.png";
-import caption from '@/public/captionme.png'
-import discord from '@/public/discord.png'
+import trelloImg from "@/public/trello.png";
 
 export const links = [
   {
@@ -60,19 +61,18 @@ export const experiencesData = [
       "I did my engineering in electronics. Secured multiple off-campus offers of job as a Software developer.",
     icon: React.createElement(LuGraduationCap),
     date: "2018-2022",
-  }
+  },
 ] as const;
 
 export const projectsData = [
-
   {
     title: "Caption-Me",
     description:
       "Caption Me is a tool that allows users to upload a video, transcribe it, edit the timeframe and words, and add captions with desired colors.",
     tags: ["Next.js", "AWS", "Ratelimiter", "Redis", "Upstash", "Typescript"],
     imageUrl: caption,
-    projectLink: 'https://caption-me.vercel.app/',
-    githubLink: 'https://github.com/rohitt-gupta/caption-me',
+    projectLink: "https://caption-me.vercel.app/",
+    githubLink: "https://github.com/rohitt-gupta/caption-me",
   },
   {
     title: "Team Chat application",
@@ -80,8 +80,8 @@ export const projectsData = [
       "Caption Me is a tool that allows users to upload a video, transcribe it, edit the timeframe and words, and add captions with desired colors.",
     tags: ["Next.js", "AWS", "Ratelimiter", "Redis", "Upstash", "Typescript"],
     imageUrl: discord,
-    projectLink: 'https://discord-clone-rho-dun.vercel.app/',
-    githubLink: 'https://github.com/rohitt-gupta/discord-clone',
+    projectLink: "https://discord-clone-rho-dun.vercel.app/",
+    githubLink: "https://github.com/rohitt-gupta/discord-clone",
   },
   {
     title: "Ecommerce: Admin and Client",
@@ -89,17 +89,16 @@ export const projectsData = [
       "Full stack ecommerce app with multiple stores functionality exposing public APIs for client app. ",
     tags: ["Next.js", "Tailwind", "shad-cn", "MySQL", "Prisma", "Typescript"],
     imageUrl: ecomImg,
-    projectLink: 'https://ecom-dashboard-five.vercel.app/',
-    githubLink: 'https://github.com/rohitt-gupta/ecommerce-store',
+    projectLink: "https://ecom-dashboard-five.vercel.app/",
+    githubLink: "https://github.com/rohitt-gupta/ecommerce-store",
   },
   {
     title: "Travel Agency UI/UX",
-    description:
-      "SImple landing page desgin using nextjs and tailwindcss. ",
+    description: "SImple landing page desgin using nextjs and tailwindcss. ",
     tags: ["Next.js", "Tailwind", "shad-cn", "MySQL", "Prisma", "Typescript"],
     imageUrl: landingPage,
-    projectLink: 'https://landing-page-tan-seven.vercel.app/',
-    githubLink: 'https://github.com/rohitt-gupta/landing-page',
+    projectLink: "https://landing-page-tan-seven.vercel.app/",
+    githubLink: "https://github.com/rohitt-gupta/landing-page",
   },
   {
     title: "Jam and Play",
@@ -107,8 +106,8 @@ export const projectsData = [
       "Learn the art and science of creating music, with Jam and Play's comprehensive courses",
     tags: ["React", "TypeScript", "Headless UI", "Next.js", "Tailwind", "Framer-motion"],
     imageUrl: jamandplayImg,
-    projectLink: 'https://www.jamandplay.com/',
-    githubLink: '',
+    projectLink: "https://www.jamandplay.com/",
+    githubLink: "",
   },
   {
     title: "TaskFlow:The Trello Clone",
@@ -116,8 +115,8 @@ export const projectsData = [
       "A simple yet beautiful todo app with drag ad drop functionality, backed by appwrite cloud for seamless data integration.  ",
     tags: ["React", "Next.js", "Appwrite", "Tailwind", "React-beautiful-dnd"],
     imageUrl: trelloImg,
-    projectLink: 'https://trello-clone-xjcj.vercel.app/',
-    githubLink: 'https://github.com/rohitt-gupta/trello-clone',
+    projectLink: "https://trello-clone-xjcj.vercel.app/",
+    githubLink: "https://github.com/rohitt-gupta/trello-clone",
   },
 ] as const;
 

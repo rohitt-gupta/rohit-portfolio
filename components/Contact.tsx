@@ -1,15 +1,17 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { useSectionInView } from "@/lib/hooks";
-import { sendEmail } from "@/actions/sendEmail";
+import Image from "next/image";
+import React from "react";
 import toast from "react-hot-toast";
+
+import { sendEmail } from "@/actions/sendEmail";
+import { useSectionInView } from "@/lib/hooks";
+import indigoCloseBracket from "@/public/brackets/indigo-closing.svg";
+import indigoOpenBracket from "@/public/brackets/indigo-opening.svg";
+
 import SectionHeading from "./SectionHeading";
 import SubmitBtn from "./SubmitButton";
-import Image from "next/image";
-import indigoOpenBracket from '@/public/brackets/indigo-opening.svg'
-import indigoCloseBracket from '@/public/brackets/indigo-closing.svg'
 
 export default function Contact() {
   const { ref } = useSectionInView("Contact");
@@ -37,11 +39,11 @@ export default function Contact() {
           src={indigoOpenBracket}
           alt="Project I worked on"
           quality={95}
-          className='w-10 h-10'
+          className="w-10 h-10"
         />
         <p className="title">Contact me</p>
         <Image
-          className='w-10 h-10'
+          className="w-10 h-10"
           src={indigoCloseBracket}
           alt="Project I worked on"
           quality={95}

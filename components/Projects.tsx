@@ -1,26 +1,28 @@
-'use client'
-import indigoOpenBracket from '@/public/brackets/blue-opening.svg'
-import indigoCloseBracket from '@/public/brackets/blue-closing.svg'
-import React, { useEffect } from 'react'
-import SectionHeading from './SectionHeading'
-import { projectsData } from '@/lib/data'
-import Project from './Project'
-import { useSectionInView } from '@/lib/hooks'
-import Image from 'next/image'
+"use client";
+import Image from "next/image";
+import React from "react";
+
+import { projectsData } from "@/lib/data";
+import { useSectionInView } from "@/lib/hooks";
+import indigoCloseBracket from "@/public/brackets/blue-closing.svg";
+import indigoOpenBracket from "@/public/brackets/blue-opening.svg";
+
+import Project from "./Project";
+import SectionHeading from "./SectionHeading";
 function Projects() {
-  const { ref } = useSectionInView("Projects", 0.5)
+  const { ref } = useSectionInView("Projects", 0.5);
   return (
-    <section id='projects' ref={ref} className='scroll-mt-28 mb-28'>
+    <section id="projects" ref={ref} className="scroll-mt-28 mb-28">
       <SectionHeading>
         <Image
           src={indigoOpenBracket}
           alt="Project I worked on"
           quality={95}
-          className='w-10 h-10'
+          className="w-10 h-10"
         />
         <p className="title">My projects</p>
         <Image
-          className='w-10 h-10'
+          className="w-10 h-10"
           src={indigoCloseBracket}
           alt="Project I worked on"
           quality={95}
@@ -35,8 +37,7 @@ function Projects() {
         ))}
       </div>
     </section>
-  )
+  );
 }
 
-export default Projects
-
+export default Projects;
