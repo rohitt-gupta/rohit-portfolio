@@ -1,21 +1,47 @@
-import About from "@/components/About";
-import Contact from "@/components/Contact";
-import Experience from "@/components/Experience";
-import Intro from "@/components/Intro";
-import Projects from "@/components/Projects";
-import SectionDivider from "@/components/SectionDivider";
-import Skills from "@/components/Skills";
+import type { Metadata } from "next";
 
-export default function Home() {
+import { BlogList } from "@/components/blog/blog-list";
+import Container from "@/components/container";
+import { Experience } from "@/components/experience";
+import { GetInTouch } from "@/components/get-in-touch";
+import { Header } from "@/components/header";
+import { DottedSeparator } from "@/components/separator";
+import { Stack } from "@/components/stack";
+import { Work } from "@/components/work";
+import { getAllFilesFrontMatter } from "@/lib/mdx";
+import { SITE } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: SITE.name,
+  description: SITE.description,
+  alternates: {
+    canonical: "/",
+  },
+};
+
+export default async function Home() {
+  const posts = (await getAllFilesFrontMatter("blog")).sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+  );
+
   return (
-    <main className="flex flex-col items-center px-4">
-      <Intro />
-      <SectionDivider />
-      <About />
-      <Projects />
-      <Skills />
+    <Container>
+      <Header />
+      <DottedSeparator className="my-10" />
+      <Work />
+      <DottedSeparator className="my-10" />
+      <Stack />
+      <DottedSeparator className="my-10" />
       <Experience />
-      <Contact />
-    </main>
+      <DottedSeparator className="my-10" />
+      <GetInTouch />
+      {posts.length > 0 ? (
+        <>
+          <DottedSeparator className="my-10" />
+          <BlogList posts={posts} />
+        </>
+      ) : null}
+      <DottedSeparator className="my-10" />
+    </Container>
   );
 }

@@ -1,73 +1,61 @@
-"use client";
-
-import "react-vertical-timeline-component/style.min.css";
-
-import Image from "next/image";
+import { IconBrandReact, IconCode, IconSchool } from "@tabler/icons-react";
 import React from "react";
-import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
-import { useTheme } from "@/context/theme-context";
-import { experiencesData } from "@/lib/data";
-import { useSectionInView } from "@/lib/hooks";
-import indigoCloseBracket from "@/public/brackets/indigo-closing.svg";
-import indigoOpenBracket from "@/public/brackets/indigo-opening.svg";
+import { Box } from "./box";
+import { Subheading } from "./subheading";
 
-import SectionHeading from "./SectionHeading";
+const iconClassName = "size-4 text-white drop-shadow-xl drop-shadow-black/40";
 
-export default function Experience() {
-  const { ref } = useSectionInView("Experience");
-  const { theme } = useTheme();
+const experience = [
+  {
+    title: "Full-Stack Developer",
+    company: "KrMroads, Hyderabad",
+    date: "2022 — present",
+    description:
+      "Building product end to end with React, Next.js, TypeScript, Tailwind and Framer Motion.",
+    icon: <IconBrandReact className={iconClassName} />,
+    boxClassName: "bg-linear-to-b from-cyan-400 to-cyan-600 ring-offset-cyan-500",
+  },
+  {
+    title: "Junior Software Developer",
+    company: "KrMroads, Hyderabad",
+    date: "Apr 2022 — Dec 2022",
+    description:
+      "Started on the front-end with React and Material UI. Mostly bug fixing, refactoring and untangling folder structure.",
+    icon: <IconCode className={iconClassName} />,
+    boxClassName: "bg-linear-to-b from-violet-400 to-violet-600 ring-offset-violet-500",
+  },
+  {
+    title: "Electronics Engineering",
+    company: "CTAE, Udaipur",
+    date: "2018 — 2022",
+    description:
+      "Studied electronics, wrote a lot of code on the side, and picked up multiple off-campus software offers.",
+    icon: <IconSchool className={iconClassName} />,
+    boxClassName: "bg-linear-to-b from-amber-400 to-amber-600 ring-offset-amber-500",
+  },
+];
 
+export const Experience = () => {
   return (
-    <section id="experience" ref={ref} className="scroll-mt-28 mb-28 sm:mb-40">
-      <SectionHeading>
-        <Image
-          src={indigoOpenBracket}
-          alt="Project I worked on"
-          quality={95}
-          className="w-10 h-10"
-        />
-        <p className="title">My experience</p>
-        <Image
-          className="w-10 h-10"
-          src={indigoCloseBracket}
-          alt="Project I worked on"
-          quality={95}
-        />
-      </SectionHeading>
-      <VerticalTimeline lineColor="">
-        {experiencesData.map((item, index) => (
-          <React.Fragment key={index}>
-            <VerticalTimelineElement
-              contentStyle={{
-                background: theme === "light" ? "#f3f4f6" : "rgba(255, 255, 255, 0.05)",
-                boxShadow: "none",
-                border: "1px solid rgba(0, 0, 0, 0.05)",
-                textAlign: "left",
-                padding: "1.3rem 2rem",
-              }}
-              contentArrowStyle={{
-                borderRight:
-                  theme === "light"
-                    ? "0.4rem solid #9ca3af"
-                    : "0.4rem solid rgba(255, 255, 255, 0.5)",
-              }}
-              date={item.date}
-              icon={item.icon}
-              iconStyle={{
-                background: theme === "light" ? "white" : "rgba(255, 255, 255, 0.15)",
-                fontSize: "1.5rem",
-              }}
-            >
-              <h3 className="font-semibold capitalize">{item.title}</h3>
-              <p className="font-normal !mt-0">{item.location}</p>
-              <p className="!mt-1 !font-normal text-gray-700 dark:text-white/75">
-                {item.description}
+    <section>
+      <Subheading>Where I&apos;ve been</Subheading>
+      <div className="mt-6 flex flex-col gap-6">
+        {experience.map((item) => (
+          <div key={item.title + item.date} className="flex flex-col">
+            <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-2">
+              <Box className={item.boxClassName}>{item.icon}</Box>
+              <p className="text-foreground shrink-0 font-medium">{item.title}</p>
+              <div className="hidden size-1 rounded-full bg-neutral-200 md:block"></div>
+              <p className="text-foreground/70 shrink-0">{item.company}</p>
+              <p className="text-foreground/50 font-mono text-xs font-light md:ml-auto">
+                {item.date}
               </p>
-            </VerticalTimelineElement>
-          </React.Fragment>
+            </div>
+            <p className="text-foreground/70 mt-2 text-sm">{item.description}</p>
+          </div>
         ))}
-      </VerticalTimeline>
+      </div>
     </section>
   );
-}
+};
