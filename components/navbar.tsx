@@ -10,6 +10,7 @@ import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import { DottedUnderline } from "./dotted-underline";
+import { Section } from "./section";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -26,52 +27,54 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="mx-auto flex max-w-2xl flex-col items-start gap-4 px-4 pt-4 md:pt-8">
-      <div className="flex items-center gap-2 perspective-distant">
-        <motion.div
-          variants={GENERAL_VARIANT}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={SPRING_CONFIG}
-          className="rounded-md bg-white shadow-md dark:bg-neutral-800"
-        >
-          <Image
-            src={SITE.avatar}
-            alt={SITE.name}
-            width={40}
-            height={40}
-            className="aspect-square size-6 rounded-md object-cover shadow-2xl"
-          />
-        </motion.div>
-        <h1 className="text-foreground text-xl font-medium tracking-tight md:text-2xl">
-          {SITE.name} <span className="text-foreground/50 font-normal">aka</span>{" "}
-          <span className="font-normal italic">{SITE.handle}</span>
-        </h1>
-      </div>
-      <div className="flex items-center gap-4">
-        {links.map((link) => {
-          const active = isActivePath(pathname, link.href);
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "group relative transition-colors",
-                active ? "text-primary" : "text-foreground/70 hover:text-primary",
-              )}
-            >
-              {link.title}
-              <DottedUnderline
+    <Section innerClassName="py-6 md:py-8">
+      <nav className="flex flex-col items-start gap-4">
+        <div className="flex items-center gap-2 perspective-distant">
+          <motion.div
+            variants={GENERAL_VARIANT}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={SPRING_CONFIG}
+            className="rounded-md bg-white shadow-md dark:bg-neutral-800"
+          >
+            <Image
+              src={SITE.avatar}
+              alt={SITE.name}
+              width={40}
+              height={40}
+              className="aspect-square size-6 rounded-md object-cover shadow-2xl"
+            />
+          </motion.div>
+          <h1 className="text-foreground text-xl font-medium tracking-tight md:text-2xl">
+            {SITE.name} <span className="text-foreground/50 font-normal">aka</span>{" "}
+            <span className="font-normal italic">{SITE.handle}</span>
+          </h1>
+        </div>
+        <div className="flex items-center gap-4">
+          {links.map((link) => {
+            const active = isActivePath(pathname, link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
                 className={cn(
-                  "mask-x-from-90% transition-opacity duration-300",
-                  active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                  "group relative transition-colors",
+                  active ? "text-primary" : "text-foreground/70 hover:text-primary",
                 )}
-              />
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
+              >
+                {link.title}
+                <DottedUnderline
+                  className={cn(
+                    "mask-x-from-90% transition-opacity duration-300",
+                    active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                  )}
+                />
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </Section>
   );
 };

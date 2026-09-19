@@ -9,8 +9,7 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import Container from "@/components/container";
-import { DottedSeparator } from "@/components/separator";
+import { Section } from "@/components/section";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -142,40 +141,35 @@ const items = [
 
 export default async function InspirationPage() {
   return (
-    <>
-      <Container className="min-h-screen">
-        <p className="text-foreground pt-4 text-base">
-          A list of the people I look up to, the websites I admire, the tools I use and everything
-          else that follows.
-        </p>
-        <p className="text-foreground pt-4 text-base">
-          I&apos;ll keep updating this list as I find more inspiration.
-        </p>
-        <div className="mt-8 flex flex-col gap-4">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              target="_blank"
-              className="group flex items-center gap-2"
-            >
-              <div className="mr-2 flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-linear-to-b from-neutral-50 to-neutral-100 shadow-sm ring-1 shadow-black/10 ring-black/10 md:size-8">
-                {item.src}
-              </div>
-              <div className="flex flex-col items-start gap-2 md:flex-row md:items-center">
-                <p className="text-foreground shrink-0 font-medium">{item.title}</p>
-                <div className="hidden size-1 rounded-full bg-neutral-200 md:block"></div>
-                <p className="text-foreground/70 group-hover:text-primary text-balance transition-transform duration-300 group-hover:translate-x-1">
-                  {item.description}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </Container>
-      <Container>
-        <DottedSeparator className="my-8" />
-      </Container>
-    </>
+    <Section innerClassName="min-h-screen">
+      <p className="text-foreground text-base">
+        A list of the people I look up to, the websites I admire, the tools I use and everything
+        else that follows.
+      </p>
+      <p className="text-foreground pt-4 text-base">
+        I&apos;ll keep updating this list as I find more inspiration.
+      </p>
+      <div className="mt-8 flex flex-col gap-4">
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            target="_blank"
+            className="group flex items-center gap-2"
+          >
+            <div className="mr-2 flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-linear-to-b from-neutral-50 to-neutral-100 shadow-sm ring-1 shadow-black/10 ring-black/10 md:size-8">
+              {item.src}
+            </div>
+            <div className="flex flex-col items-start gap-2 md:flex-row md:items-center">
+              <p className="text-foreground shrink-0 font-medium">{item.title}</p>
+              <div className="hidden size-1 rounded-full bg-neutral-200 md:block"></div>
+              <p className="text-foreground/70 group-hover:text-primary text-balance transition-transform duration-300 group-hover:translate-x-1">
+                {item.description}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </Section>
   );
 }

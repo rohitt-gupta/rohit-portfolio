@@ -2,8 +2,7 @@
 
 import { format, parseISO } from "date-fns";
 
-import Container from "@/components/container";
-import { DottedSeparator } from "@/components/separator";
+import { Section } from "@/components/section";
 
 export type BlogArticleFrontMatter = {
   title: string;
@@ -21,9 +20,9 @@ export function BlogArticleShell({ frontMatter, children }: BlogArticleShellProp
   const dateLabel = format(parseISO(frontMatter.publishedAt), "MMMM d, yyyy");
 
   return (
-    <Container>
-      <article className="pt-4">
-        <h2 className="text-primary pt-3 font-medium tracking-tight">{frontMatter.title}</h2>
+    <article>
+      <Section>
+        <h2 className="text-primary font-medium tracking-tight">{frontMatter.title}</h2>
         {frontMatter.summary ? (
           <p className="text-foreground/70 pt-3 text-sm leading-relaxed">{frontMatter.summary}</p>
         ) : null}
@@ -42,15 +41,13 @@ export function BlogArticleShell({ frontMatter, children }: BlogArticleShellProp
             </>
           ) : null}
         </div>
+      </Section>
 
-        <DottedSeparator className="my-8" />
-
+      <Section innerClassName="py-10 sm:py-12">
         <div className="prose prose-neutral prose-headings:scroll-mt-24 prose-a:text-primary prose-a:no-underline hover:prose-a:underline max-w-none">
           {children}
         </div>
-
-        <DottedSeparator className="mt-12 mb-4" />
-      </article>
-    </Container>
+      </Section>
+    </article>
   );
 }

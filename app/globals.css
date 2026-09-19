@@ -30,6 +30,11 @@ html {
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  /* Hairline grid: the rails down the column edges, the rules between sections and
+     the plus markers where the two cross. Mixed from --foreground rather than hard
+     coded so it re-tints with whatever palette Settings applies at runtime. */
+  --connection: color-mix(in oklab, var(--foreground) 22%, transparent);
+  --connection-strong: color-mix(in oklab, var(--foreground) 45%, transparent);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -67,6 +72,8 @@ html {
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
+  --color-connection: var(--connection);
+  --color-connection-strong: var(--connection-strong);
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);

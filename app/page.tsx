@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 
 import { BlogList } from "@/components/blog/blog-list";
-import Container from "@/components/container";
 import { Experience } from "@/components/experience";
 import { GetInTouch } from "@/components/get-in-touch";
 import { Header } from "@/components/header";
-import { DottedSeparator } from "@/components/separator";
+import { Section } from "@/components/section";
 import { Stack } from "@/components/stack";
 import { Work } from "@/components/work";
 import { getAllFilesFrontMatter } from "@/lib/mdx";
@@ -25,23 +24,27 @@ export default async function Home() {
   );
 
   return (
-    <Container>
-      <Header />
-      <DottedSeparator className="my-10" />
-      <Work />
-      <DottedSeparator className="my-10" />
-      <Stack />
-      <DottedSeparator className="my-10" />
-      <Experience />
-      <DottedSeparator className="my-10" />
-      <GetInTouch />
+    <>
+      <Section>
+        <Header />
+      </Section>
+      <Section>
+        <Work />
+      </Section>
+      <Section>
+        <Stack />
+      </Section>
+      <Section>
+        <Experience />
+      </Section>
+      <Section>
+        <GetInTouch />
+      </Section>
       {posts.length > 0 ? (
-        <>
-          <DottedSeparator className="my-10" />
+        <Section>
           <BlogList posts={posts} />
-        </>
+        </Section>
       ) : null}
-      <DottedSeparator className="my-10" />
-    </Container>
+    </>
   );
 }
