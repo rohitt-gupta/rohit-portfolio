@@ -4,6 +4,7 @@ import NextImage, { type ImageProps } from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { Highlight } from "@/components/highlight";
 import HighlightBox from "@/components/highlight-box";
 import StepCheck from "@/components/step-check";
 import StepLarge from "@/components/step-large";
@@ -53,6 +54,7 @@ const MDXComponents = {
   StepLarge,
   StepCheck,
   VideoDemo,
+  Highlight,
   HighlightBox,
   Divider,
   StepLargeCustom,

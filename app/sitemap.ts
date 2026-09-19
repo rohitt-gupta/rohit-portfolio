@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/about` },
     { url: `${SITE_URL}/blog` },
     { url: `${SITE_URL}/inspiration` },
+    { url: `${SITE_URL}/links` },
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Link from "next/link";
 import React from "react";
 
 import { Section } from "@/components/section";
@@ -51,7 +52,15 @@ export const Footer = () => {
       <footer className="flex flex-col gap-8">
         <div className="flex flex-wrap items-center justify-between gap-6">
           <Monogram />
-          <SocialLinks />
+          <div className="flex items-center gap-5">
+            <Link
+              href="/links"
+              className="text-muted-foreground hover:text-accent text-sm transition-colors"
+            >
+              Links
+            </Link>
+            <SocialLinks />
+          </div>
         </div>
 
         <div className="border-connection flex flex-wrap items-center justify-between gap-3 border-t pt-6">

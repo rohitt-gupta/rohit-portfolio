@@ -2,6 +2,15 @@
 
 ## What are all the things I need in my portfolio
 
+- I would want to add sounds jus liek some portfolios i saw...
+  - https://www.baothiento.com/
+  - https://dominikmart.in/
+
+[Fonts (confirmed from source):
+
+- gentlejoseph.com headings → Bricolage Grotesque (body is Calibre, licensed — I'll use Bricolage for headings only)
+- ozzyx.xyz headings → Space Grotesk (his body is Geist, hand-script accents are Gaegu)]
+
 - Heading font from: https://gentlejoseph.com/
 - 2nd Heading font from https://www.ozzyx.xyz/ , he's cool
 - I also like what Braydon(https://www.braydoncoyer.dev/) coyer has on the side lines, which is just liek Tailwind website....https://tailwindcss.com/
@@ -59,3 +68,23 @@
 - Signals: Blogs/ Videos which i am reading
 - Life
   - Where you were born, basically Chomu -> Jaipur -> Udaipur -> Jaipur -> Vienna(HUGEE!)
+
+---
+
+### References
+
+- https://www.manuarora.in/
+- https://www.itsbatu.com/#windmill
+- https://www.zagrodzki.me/
+- https://www.braydoncoyer.dev/
+- https://swamii.me/
+- https://gentlejoseph.com/
+- https://www.ozzyx.xyz/
+- https://maximeheckel.com/
+- https://dominikmart.in/ — Dominik Martin, product design + strategy + code
+- https://www.aidenybai.com/ — Aiden Bai
+- https://palakonweb.in/
+- https://stusmith.co/ — Stu Smith, designer (Austin, TX)
+- https://work.mariusz.cc/#about — Mariusz Cieśla, product/design engineer (Berlin)
+- https://sehajbindra.info/ — Sehaj Bindra
+- https://zilvestro.com/ — Silvestro, founder of Affonso

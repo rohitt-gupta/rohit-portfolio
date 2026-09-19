@@ -9,6 +9,7 @@ import { useMounted } from "@/lib/use-mounted";
 import { cn } from "@/lib/utils";
 
 import { DottedUnderline, type DottedUnderlineProps } from "./dotted-underline";
+import { highlightClass, type HighlightTone } from "./highlight";
 
 export type LinkPreviewDottedUnderline = DottedUnderlineProps & {
   /** Space below text for the strip (default 0.05rem). */
@@ -23,6 +24,12 @@ type LinkPreviewProps = {
   height?: number;
   /** Dotted SVG underline under the label (on by default). Pass `false` to disable. */
   dottedUnderline?: LinkPreviewDottedUnderline | false;
+  /**
+   * Paint a pastel highlight behind the label instead of underlining it. Takes
+   * over the label's colour and replaces the dotted rule — two emphasis marks on
+   * one word is one too many.
+   */
+  highlight?: HighlightTone;
 } & ({ isStatic: true; imageSrc: string } | { isStatic?: false; imageSrc?: never });
 
 export const LinkPreview = ({
@@ -34,6 +41,7 @@ export const LinkPreview = ({
   isStatic = false,
   imageSrc = "",
   dottedUnderline,
+  highlight,
 }: LinkPreviewProps) => {
   let src;
   if (!isStatic) {
@@ -71,7 +79,7 @@ export const LinkPreview = ({
 
   const underlineConfig =
     dottedUnderline && typeof dottedUnderline === "object" ? dottedUnderline : {};
-  const showDottedUnderline = dottedUnderline !== false;
+  const showDottedUnderline = dottedUnderline !== false && !highlight;
   const {
     dotRadius = 1,
     patternWidth = 6,
@@ -103,7 +111,11 @@ export const LinkPreview = ({
       >
         <HoverCardPrimitive.Trigger
           onMouseMove={handleMouseMove}
-          className={cn("group text-accent relative overflow-visible", className)}
+          className={cn(
+            "group relative overflow-visible",
+            highlight ? highlightClass(highlight, true) : "text-accent",
+            className,
+          )}
           href={url}
           target="_blank"
           rel="noopener noreferrer"

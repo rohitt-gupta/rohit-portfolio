@@ -1,13 +1,12 @@
 "use client";
 
-import { motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 import { DottedUnderline } from "@/components/dotted-underline";
 import { Section } from "@/components/section";
+import { Signature } from "@/components/signature";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -28,27 +27,20 @@ export const Navbar = () => {
 
   return (
     <Section innerClassName="py-6 sm:py-8">
-      <nav className="flex flex-col items-start gap-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <motion.span
-            initial={{ opacity: 0, scale: 0.6, rotate: -8 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="block"
+      <nav className="flex flex-col gap-4">
+        {/* Signature sits on the name's line, not beside the whole block — the nav
+            links are wide enough on a phone to leave it nowhere else to go. */}
+        <div className="flex items-center justify-between gap-4">
+          <Link
+            href="/"
+            className="font-display text-foreground text-xl font-semibold tracking-[-0.03em] sm:text-2xl"
           >
-            <Image
-              src={SITE.avatar}
-              alt=""
-              width={48}
-              height={48}
-              className="border-border aspect-square size-7 rounded-md border object-cover"
-            />
-          </motion.span>
-          <span className="font-display text-foreground text-xl font-semibold tracking-[-0.03em] sm:text-2xl">
-            {SITE.name} <span className="text-faint font-normal">aka</span>{" "}
-            <span className="font-normal italic">{SITE.handle}</span>
-          </span>
-        </Link>
+            {SITE.name}
+          </Link>
+
+          {/* 2.72:1 viewBox — these widths hold that ratio so nothing letterboxes. */}
+          <Signature className="text-muted-foreground h-10 w-27 shrink-0 sm:h-12 sm:w-33" />
+        </div>
 
         <div className="flex items-center gap-4">
           {LINKS.map((link) => {

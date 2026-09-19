@@ -18,6 +18,9 @@ html {
   --font-display: var(--font-bricolage);
   --font-secondary: var(--font-space-grotesk);
 
+  /* The overshoot-free ease every hover in the page shares. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+
   --background: oklch(0.985 0.004 85);
   --foreground: oklch(0.23 0.008 60);
   --muted: oklch(0.955 0.005 85);
@@ -40,6 +43,27 @@ html {
      stronger than --rule: the frame should recede, content structure shouldn't. */
   --connection: color-mix(in oklab, var(--foreground) 15%, transparent);
 
+  /* The avatar sits in a debossed dish, the way braydoncoyer.dev frames his.
+     A top-edge inset shadow is the whole illusion — light comes from above, so
+     a shadow under the top lip reads as "this surface is below the page". */
+  --well-shadow: color-mix(in oklab, var(--foreground) 11%, transparent);
+
+  /* ------------------------------------------------------------------
+   * Pastel highlighters. Paint behind a word instead of underlining it —
+   * the same trick a marker pen does on paper, which is why it reads as
+   * emphasis without shouting. Five tones so a page can colour-code what
+   * it points at (writing, code, socials) rather than tint at random.
+   *
+   * Lightness is held in a tight 0.93–0.945 band on purpose: hues this
+   * pale differ enough in perceived weight that letting yellow sit at its
+   * natural 0.95 makes the others look like a second, dirtier family.
+   * ------------------------------------------------------------------ */
+  --hl-butter: oklch(0.945 0.085 96);
+  --hl-sky: oklch(0.93 0.042 257);
+  --hl-mint: oklch(0.937 0.04 154);
+  --hl-lilac: oklch(0.93 0.045 302);
+  --hl-peach: oklch(0.935 0.042 45);
+
   /* Contribution graph, coolest to hottest. */
   --graph-0: oklch(0.93 0.004 85);
   --graph-1: oklch(0.87 0.05 70);
@@ -61,6 +85,19 @@ html {
   --ring: oklch(0.72 0.14 52);
   /* Lighter ink on a dark ground needs a touch more to stay visible. */
   --rule: color-mix(in oklab, var(--foreground) 9%, transparent);
+
+  /* Mixing in the (now light) foreground would glow instead of recess, so the
+     dark well is shadowed with plain black. */
+  --well-shadow: oklch(0 0 0 / 0.4);
+
+  /* Pastels can't survive inversion — a 0.93 chip on a 0.175 ground is a
+     flashbang. Same hues, dropped to a third of the lightness, so the chip
+     reads as a tinted well the light ink still sits comfortably on. */
+  --hl-butter: oklch(0.38 0.055 96);
+  --hl-sky: oklch(0.37 0.055 257);
+  --hl-mint: oklch(0.37 0.05 154);
+  --hl-lilac: oklch(0.375 0.055 302);
+  --hl-peach: oklch(0.375 0.055 45);
 
   --graph-0: oklch(0.24 0.006 70);
   --graph-1: oklch(0.34 0.05 55);
@@ -87,6 +124,12 @@ html {
   --color-ring: var(--ring);
   --color-rule: var(--rule);
   --color-connection: var(--connection);
+
+  --color-hl-butter: var(--hl-butter);
+  --color-hl-sky: var(--hl-sky);
+  --color-hl-mint: var(--hl-mint);
+  --color-hl-lilac: var(--hl-lilac);
+  --color-hl-peach: var(--hl-peach);
 
   --color-graph-0: var(--graph-0);
   --color-graph-1: var(--graph-1);
@@ -118,6 +161,71 @@ html {
   );
   background-size: 10px 10px;
   background-attachment: fixed;
+}
+
+/**
+ * Marker-pen highlights, the ozzyx.xyz way.
+ *
+ * `.highlight` is the paint and nothing else — inline, so a highlighted phrase
+ * still wraps mid-sentence, with `box-decoration-break: clone` re-drawing the
+ * radius and padding on every line fragment instead of leaving a torn box.
+ * The negative inline margin pays back the padding so highlighting a word
+ * doesn't nudge the words either side of it.
+ *
+ * `.highlight-link` adds the behaviour, and only links get it: static emphasis
+ * shouldn't twitch under the cursor. It has to switch to inline-block for the
+ * hover scale — transforms are ignored on non-replaced inline boxes — which
+ * costs mid-phrase wrapping, a fair trade for the short labels links carry.
+ */
+@layer components {
+  .highlight {
+    color: var(--foreground);
+    border-radius: 0.2em;
+    padding: 0.04em 0.16em;
+    margin-inline: -0.02em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-decoration: none;
+  }
+
+  .highlight-link {
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      filter 0.2s var(--ease-out-strong),
+      scale 0.2s var(--ease-out-strong);
+  }
+
+  .highlight-link:hover {
+    filter: saturate(1.6);
+    scale: 1.04;
+  }
+
+  /* Saturating a chip that is already dark barely registers, so dark mode
+     leans on lightness for the same "it lit up" read. */
+  .dark .highlight-link:hover {
+    filter: saturate(1.4) brightness(1.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .highlight-link:hover {
+      scale: 1;
+    }
+  }
+}
+
+/**
+ * The recessed dish the avatar sits in. Two insets doing separate jobs: a
+ * hairline ring that draws the lip, and an offset blur under the top edge that
+ * makes the floor read as sunk rather than painted on.
+ */
+@layer components {
+  .avatar-well {
+    background: var(--muted);
+    box-shadow:
+      inset 0 0 0 1px var(--rule),
+      inset 0 2px 3px var(--well-shadow);
+  }
 }
 
 @layer base {
