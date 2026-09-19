@@ -5,141 +5,150 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 html {
-  min-width: 360px;
+  min-width: 320px;
   scroll-behavior: smooth;
 }
 
+/**
+ * Paper, ink and one warm accent. Three faces, each with exactly one job:
+ * Bricolage for anything that shouts, Space Grotesk for the small labels that
+ * point at it, Geist for everything you actually read.
+ */
 :root {
-  --primary-font: var(--font-schibsted-grotesk);
-  --primary: oklch(0.205 0 0);
-  --theme-bg: var(--color-white);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  /* Hairline grid: the rails down the column edges, the rules between sections and
-     the plus markers where the two cross. Mixed from --foreground rather than hard
-     coded so it re-tints with whatever palette Settings applies at runtime. */
-  --connection: color-mix(in oklab, var(--foreground) 22%, transparent);
-  --connection-strong: color-mix(in oklab, var(--foreground) 45%, transparent);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  --font-display: var(--font-bricolage);
+  --font-secondary: var(--font-space-grotesk);
 
-@theme inline {
-  --font-display: var(--primary-font);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-theme-bg: var(--theme-bg);
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-connection: var(--connection);
-  --color-connection-strong: var(--connection-strong);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.23 0.008 60);
+  --muted: oklch(0.955 0.005 85);
+  --muted-foreground: oklch(0.53 0.008 60);
+  --faint: oklch(0.72 0.006 60);
+  --card: oklch(0.995 0.002 85);
+  --accent: oklch(0.58 0.15 42);
+  --accent-soft: oklch(0.93 0.04 70);
+  --border: oklch(0.9 0.005 75);
+  --ring: oklch(0.58 0.15 42);
+
+  /* Every hairline in the page FRAME is this one weight — the section rules, the
+     column rails and the outer edge of the hatch band. One token so they can't drift
+     apart into two visibly different greys. */
+  --rule: color-mix(in oklab, var(--foreground) 6%, transparent);
+  /* The hatch is drawn at the same weight, so band and frame read as one system. */
+  --pattern-fg: var(--rule);
+
+  /* Borders on things that sit ON the page — cards, chips, inputs. Deliberately
+     stronger than --rule: the frame should recede, content structure shouldn't. */
+  --connection: color-mix(in oklab, var(--foreground) 15%, transparent);
+
+  /* Contribution graph, coolest to hottest. */
+  --graph-0: oklch(0.93 0.004 85);
+  --graph-1: oklch(0.87 0.05 70);
+  --graph-2: oklch(0.78 0.1 58);
+  --graph-3: oklch(0.68 0.14 50);
+  --graph-4: oklch(0.58 0.16 42);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: oklch(0.175 0.006 70);
+  --foreground: oklch(0.93 0.004 85);
+  --muted: oklch(0.225 0.006 70);
+  --muted-foreground: oklch(0.68 0.006 80);
+  --faint: oklch(0.48 0.006 80);
+  --card: oklch(0.21 0.006 70);
+  --accent: oklch(0.72 0.14 52);
+  --accent-soft: oklch(0.32 0.06 50);
+  --border: oklch(0.3 0.006 70);
+  --ring: oklch(0.72 0.14 52);
+  /* Lighter ink on a dark ground needs a touch more to stay visible. */
+  --rule: color-mix(in oklab, var(--foreground) 9%, transparent);
+
+  --graph-0: oklch(0.24 0.006 70);
+  --graph-1: oklch(0.34 0.05 55);
+  --graph-2: oklch(0.46 0.09 50);
+  --graph-3: oklch(0.59 0.13 48);
+  --graph-4: oklch(0.72 0.15 46);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-secondary: var(--font-secondary);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint: var(--faint);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-rule: var(--rule);
+  --color-connection: var(--connection);
+
+  --color-graph-0: var(--graph-0);
+  --color-graph-1: var(--graph-1);
+  --color-graph-2: var(--graph-2);
+  --color-graph-3: var(--graph-3);
+  --color-graph-4: var(--graph-4);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/**
+ * The 45° hatch Tailwind and Braydon Coyer run down their page gutters. 1px rule every
+ * 10px along the diagonal, drawn from --pattern-fg so it re-tints with the theme.
+ *
+ * `fixed` anchors the pattern to the viewport rather than to each strip, so the
+ * diagonals stay in phase across every section boundary instead of restarting — the
+ * gutter reads as one continuous band. Tailwind's own site does the same.
+ */
+@utility bg-hatch {
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--pattern-fg) 0,
+    var(--pattern-fg) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+  background-attachment: fixed;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
   }
-  html {
-    @apply font-sans;
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    @apply outline-ring outline-2 outline-offset-2;
+  }
+}
+
+/* Anything that animates on entry should simply be there for people who asked
+   not to be moved. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

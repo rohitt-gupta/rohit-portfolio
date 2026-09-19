@@ -1,28 +1,30 @@
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
+import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { Inter, Schibsted_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
 
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { Settings } from "@/components/settings";
 import { SITE, SITE_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import Providers from "./providers";
 
-const inter = Inter({
+/** Headings — the face from gentlejoseph.com. */
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
+  display: "swap",
+  variable: "--font-bricolage",
 });
 
-const schibstedGrotesk = Schibsted_Grotesk({
+/** Eyebrows, labels and buttons — the face from ozzyx.xyz. */
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-schibsted-grotesk",
+  display: "swap",
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -52,22 +54,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={cn(
-        inter.variable,
-        schibstedGrotesk.variable,
+        bricolage.variable,
+        spaceGrotesk.variable,
         GeistSans.variable,
-        "font-sans antialiased",
+        GeistMono.variable,
       )}
       suppressHydrationWarning
     >
       {/* Extensions (password managers, colour pickers, …) inject attributes onto
           <body> before React hydrates — suppress the resulting mismatch warning. */}
-      <body className={cn("font-display bg-theme-bg")} suppressHydrationWarning>
-        <Settings />
-        <Navbar />
-        <main>
-          <Providers>{children}</Providers>
-        </main>
-        <Footer />
+      <body suppressHydrationWarning>
+        <Providers>
+          <a
+            href="#main"
+            className="bg-background focus:ring-ring sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2 focus:ring-2"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <main id="main">{children}</main>
+          <Footer />
+        </Providers>
         <Analytics />
       </body>
     </html>

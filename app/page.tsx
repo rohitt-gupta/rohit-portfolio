@@ -1,50 +1,52 @@
 import type { Metadata } from "next";
 
-import { BlogList } from "@/components/blog/blog-list";
-import { Experience } from "@/components/experience";
-import { GetInTouch } from "@/components/get-in-touch";
-import { Header } from "@/components/header";
+import { Cta } from "@/components/cta";
+import { CurrentProject } from "@/components/current-project";
+import { GitGraph } from "@/components/git-graph";
+import { Hero } from "@/components/hero";
 import { Section } from "@/components/section";
-import { Stack } from "@/components/stack";
-import { Work } from "@/components/work";
-import { getAllFilesFrontMatter } from "@/lib/mdx";
+import { SelectedWork } from "@/components/selected-work";
+import { StackSection } from "@/components/stack-section";
+import { getContributions } from "@/lib/github";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: SITE.name,
   description: SITE.description,
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
 };
 
 export default async function Home() {
-  const posts = (await getAllFilesFrontMatter("blog")).sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
+  // Null when GitHub's mirror is down or rate-limited — the band just doesn't render.
+  const contributions = await getContributions(SITE.github);
 
   return (
     <>
-      <Section>
-        <Header />
+      <Section innerClassName="py-12 sm:py-16">
+        <Hero />
       </Section>
+
       <Section>
-        <Work />
+        <CurrentProject />
       </Section>
+
       <Section>
-        <Stack />
+        <SelectedWork />
       </Section>
+
       <Section>
-        <Experience />
+        <StackSection />
       </Section>
-      <Section>
-        <GetInTouch />
-      </Section>
-      {posts.length > 0 ? (
+
+      {contributions ? (
         <Section>
-          <BlogList posts={posts} />
+          <GitGraph data={contributions} />
         </Section>
       ) : null}
+
+      <Section id="contact">
+        <Cta />
+      </Section>
     </>
   );
 }

@@ -3,8 +3,6 @@
 import { IconSearch } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 
-import { cn } from "@/lib/utils";
-
 import { BlogPostLink } from "./blog-post-link";
 
 export type BlogIndexPost = {
@@ -14,11 +12,7 @@ export type BlogIndexPost = {
   summary?: string;
 };
 
-type BlogIndexProps = {
-  posts: BlogIndexPost[];
-};
-
-export function BlogIndex({ posts }: BlogIndexProps) {
+export function BlogIndex({ posts }: { posts: BlogIndexPost[] }) {
   const [query, setQuery] = useState("");
 
   const sorted = useMemo(
@@ -32,17 +26,20 @@ export function BlogIndex({ posts }: BlogIndexProps) {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return sorted;
-    return sorted.filter((p) => p.title.toLowerCase().includes(q));
+    return sorted.filter(
+      (p) => p.title.toLowerCase().includes(q) || (p.summary ?? "").toLowerCase().includes(q),
+    );
   }, [sorted, query]);
 
   return (
-    <section className="mt-6 flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <div className="relative">
         <label htmlFor="blog-search" className="sr-only">
-          Search posts by title
+          Search posts
         </label>
         <IconSearch
-          className="text-foreground/40 pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
+          className="text-faint pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
+          stroke={1.6}
           aria-hidden
         />
         <input
@@ -50,29 +47,23 @@ export function BlogIndex({ posts }: BlogIndexProps) {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Filter by title…"
-          className={cn(
-            "w-full rounded-md border border-neutral-200 bg-white py-2.5 pr-3 pl-10 text-sm text-neutral-800",
-            "placeholder:text-foreground/40",
-            "focus:border-primary focus:ring-primary focus:ring-1 focus:outline-none",
-          )}
+          placeholder="Search posts…"
           autoComplete="off"
+          className="border-connection bg-card text-foreground placeholder:text-faint focus:border-accent w-full rounded-md border py-2.5 pr-3 pl-9 text-sm transition-colors focus:outline-none"
         />
       </div>
 
-      <div>
-        {!filtered.length ? (
-          <p className="text-foreground/70 text-sm">No posts match that filter.</p>
-        ) : (
-          <ul className="flex flex-col gap-4">
-            {filtered.map((post) => (
-              <li key={post.slug}>
-                <BlogPostLink title={post.title} slug={post.slug} publishedAt={post.publishedAt} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </section>
+      {!filtered.length ? (
+        <p className="text-muted-foreground text-sm">Nothing matches that. Try fewer words.</p>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {filtered.map((post) => (
+            <li key={post.slug}>
+              <BlogPostLink {...post} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
