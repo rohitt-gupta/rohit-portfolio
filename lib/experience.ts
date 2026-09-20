@@ -13,6 +13,8 @@ export type Company = {
   company: string;
   /** One line on what the company does. Worth setting for names a reader won't know. */
   blurb?: string;
+  /** What the work was built with. Company-level: it spans every position here. */
+  stack?: string[];
   /** Full-time, Self-employed, Contract… */
   employment?: string;
   location?: string;
@@ -37,13 +39,13 @@ export const EXPERIENCE: Company[] = [
     employment: "Full-time",
     location: "Vienna, Austria",
     mode: "Hybrid",
-    positions: [{ title: "Software Engineer (Editor)", period: "Jul 2026 — Present" }],
+    positions: [{ title: "Software Engineer (Editor)", period: "Jul 2026 → Present" }],
   },
   {
     company: "Launchbox Studio",
     employment: "Self-employed",
     mode: "Remote",
-    positions: [{ title: "Founder", period: "Apr 2024 — Present" }],
+    positions: [{ title: "Founder", period: "Apr 2024 → Present" }],
   },
   {
     company: "Steerlab",
@@ -51,13 +53,24 @@ export const EXPERIENCE: Company[] = [
     employment: "Part-time",
     location: "Paris, France",
     mode: "Remote",
-    positions: [{ title: "Product Engineer", period: "Jul 2025 — Jul 2026" }],
+    stack: ["TypeScript", "JavaScript", "ProseMirror", "React", "Gleam", "Redraw"],
+    positions: [
+      {
+        title: "Product Engineer",
+        period: "Jul 2025 → Jul 2026",
+        summary: "Brought in part-time to replace the core editor in an existing codebase.",
+        highlights: [
+          "Rebuilt the editor on ProseMirror in JavaScript and TypeScript. It had been running on Tiptap and the team had hit a ceiling on what they could get out of it, so the work was to drop the abstraction and build straight against the document model Tiptap itself wraps.",
+          "Learned Gleam, a statically typed language that was new to me, and worked in Redraw — its React bindings — where the Gleam side of the codebase meets React.",
+        ],
+      },
+    ],
   },
   {
     company: "Frontier AI Lab",
     employment: "Full-time",
     mode: "Remote",
-    positions: [{ title: "Senior Software Engineer", period: "Oct 2025 — Jun 2026" }],
+    positions: [{ title: "Senior Software Engineer", period: "Oct 2025 → Jun 2026" }],
   },
   {
     company: "AI Acquisition",
@@ -65,24 +78,97 @@ export const EXPERIENCE: Company[] = [
     employment: "Full-time",
     location: "Dubai, UAE",
     mode: "Remote",
-    positions: [{ title: "Product Engineer", period: "Aug 2025 — Dec 2025" }],
+    stack: [
+      "Next.js",
+      "React 19",
+      "TypeScript",
+      "tRPC",
+      "Vercel AI SDK",
+      "Mastra",
+      "Inngest",
+      "Drizzle ORM",
+      "Neon Postgres",
+      "TanStack Query",
+      "Tailwind CSS",
+      "Instantly API",
+      "Resend",
+      "Playwright",
+    ],
+    positions: [
+      {
+        title: "Product Engineer",
+        period: "Aug 2025 → Dec 2025",
+        summary:
+          "Worked across an outbound stack that runs itself: a campaign agent fires cold email through Instantly, the AI SDR picks up whoever replies and holds the conversation, and anything that turns out to be a real lead is written into the CRM as a new record.",
+        highlights: [
+          "Built the CRM end to end — the system of record every qualified lead lands in, and the last step of the automated flow.",
+          "Built the dashboard and analytics: every email sent and every reply collected in one place, tied back to the CRM records they belong to.",
+          "Contributed to the AI campaign manager, which sends the cold-email sequences out through the Instantly API.",
+          "Contributed to the AI SDR — it answers replies, qualifies the prospect in conversation, and opens the CRM entry once someone looks worth talking to.",
+        ],
+      },
+    ],
   },
   {
     company: "Alpine",
+    blurb:
+      "A productivity suite in one workspace — documents, slides, tasks, projects and messaging.",
     location: "New York, United States",
     mode: "Remote",
-    positions: [{ title: "Product Engineer", period: "Nov 2024 — Jul 2025" }],
+    stack: [
+      "Remix",
+      "React",
+      "TypeScript",
+      "ProseMirror",
+      "prosemirror-collab",
+      "Bazel",
+      "AWS CDK",
+      "Cloudflare Workers",
+      "DynamoDB",
+      "vanilla-extract",
+      "React Aria",
+      "CodeMirror",
+      "WebSockets",
+      "Playwright",
+    ],
+    positions: [
+      {
+        title: "Product Engineer",
+        period: "Nov 2024 → Jul 2025",
+        summary:
+          "Hired onto the editor and ended up working across the product. The editor is ProseMirror, collaborating in real time through prosemirror-collab, so most of the work sat in the document model and the operational-transform layer that keeps every client in agreement.",
+        highlights: [
+          "Rebuilt ProseMirror's table support from scratch. The community extension had been abandoned by its maintainer, so I worked from the existing forks, stripped out the broken behaviour and rebuilt it as a component we owned outright.",
+          "Worked in the real-time collaboration layer — ProseMirror documents reconciled across clients with prosemirror-collab and operational transform.",
+          "Built workspace settings end to end: the profile page, and the account and workspace switchers.",
+          "Came up to speed on Bazel to work in the monorepo. A build system and repo layout I had not touched before, and the steepest part of the ramp.",
+          "Shipped against infrastructure spread across AWS and Cloudflare Workers with Remix on the front — the first time I had worked on a system distributed that widely, and the thing I took most from the role.",
+        ],
+      },
+    ],
   },
   {
     company: "mroads",
     employment: "Full-time",
     location: "Hyderabad, India",
     mode: "Remote",
-    period: "Apr 2022 — Nov 2024",
+    period: "Apr 2022 → Nov 2024",
+    stack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Redux Toolkit",
+      "Java Spring Boot",
+      "Tailwind CSS",
+      "Material UI",
+      "Framer Motion",
+      "Jenkins",
+      "AWS",
+    ],
     positions: [
       {
         title: "Software Engineer",
-        period: "Apr 2023 — Nov 2024",
+        period: "Apr 2023 → Nov 2024",
         summary:
           "Worked with the Panna team on end-to-end candidate and employee management — React on the front, Java Spring Boot behind it.",
         highlights: [
@@ -97,7 +183,7 @@ export const EXPERIENCE: Company[] = [
       },
       {
         title: "Associate Software Engineer",
-        period: "Apr 2022 — Apr 2023",
+        period: "Apr 2022 → Apr 2023",
         summary:
           "Built and unit-tested product features across Next.js, TypeScript, redux-toolkit and AWS, with Framer Motion, Material UI and Tailwind CSS on the surface.",
         highlights: [
