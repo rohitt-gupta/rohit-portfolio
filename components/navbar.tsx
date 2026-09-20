@@ -27,22 +27,15 @@ export const Navbar = () => {
 
   return (
     <Section innerClassName="py-6 sm:py-8">
-      <nav className="flex flex-col gap-4">
-        {/* Signature sits on the name's line, not beside the whole block — the nav
-            links are wide enough on a phone to leave it nowhere else to go. */}
-        <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/"
-            className="font-display text-foreground text-xl font-semibold tracking-[-0.03em] sm:text-2xl"
-          >
-            {SITE.name}
-          </Link>
+      <nav className="grid grid-cols-[1fr_auto] items-center gap-4">
+        <Link
+          href="/"
+          className="font-display text-foreground col-start-1 row-start-1 text-xl font-semibold tracking-[-0.03em] sm:text-2xl"
+        >
+          {SITE.name}
+        </Link>
 
-          {/* 2.72:1 viewBox — these widths hold that ratio so nothing letterboxes. */}
-          <Signature className="text-muted-foreground h-10 w-27 shrink-0 sm:h-12 sm:w-33" />
-        </div>
-
-        <div className="flex items-center gap-4">
+        <div className="col-span-2 row-start-2 flex items-center gap-4 sm:col-span-1 sm:col-start-1">
           {LINKS.map((link) => {
             const active = isActivePath(pathname, link.href);
             return (
@@ -66,6 +59,12 @@ export const Navbar = () => {
             );
           })}
         </div>
+
+        {/* Beside the name on a phone, where the links row needs the full width;
+            spanning both rows once there is room, so it centres on the block.
+            row-end rather than row-span: row-span sets grid-row-start too, and
+            would fight row-start-1. 2.72:1 viewBox, so the widths hold that ratio. */}
+        <Signature className="text-muted-foreground col-start-2 row-start-1 h-10 w-27 shrink-0 sm:row-end-3 sm:h-12 sm:w-33" />
       </nav>
     </Section>
   );

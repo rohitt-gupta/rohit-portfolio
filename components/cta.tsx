@@ -2,7 +2,6 @@ import React from "react";
 
 import { ActionLink } from "@/components/action-link";
 import { CopyEmail } from "@/components/copy-email";
-import { SocialLinks } from "@/components/social-links";
 import { SectionHeader } from "@/components/typography";
 import { SITE } from "@/lib/site";
 
@@ -28,8 +27,6 @@ export const Cta = () => {
           Résumé
         </ActionLink>
       </div>
-
-      <SocialLinks showLabels className="pt-1" />
     </div>
   );
 };
