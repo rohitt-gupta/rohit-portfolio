@@ -36,10 +36,41 @@ export type Company = {
 export const EXPERIENCE: Company[] = [
   {
     company: "fynk",
+    blurb: "Contract lifecycle management — drafting, negotiation and signing in one place.",
     employment: "Full-time",
     location: "Vienna, Austria",
     mode: "Hybrid",
-    positions: [{ title: "Software Engineer (Editor)", period: "Jul 2026 → Present" }],
+    stack: [
+      "Vue 3",
+      "TypeScript",
+      "Tiptap",
+      "ProseMirror",
+      "Laravel",
+      "Inertia",
+      "Vite",
+      "Reka UI",
+      "Tailwind CSS",
+      "MySQL",
+      "Pusher",
+      "GitLab",
+      "Figma",
+      "Claude",
+    ],
+    positions: [
+      {
+        title: "Software Engineer (Editor)",
+        period: "Jul 2026 → Present",
+        summary:
+          "I own the document and template editor — the part of fynk where a contract is actually written. Everything that touches it is mine: the contract features, the AI built on top of them, the performance work, and the maintenance that keeps the rest possible. Tiptap and ProseMirror in Vue 3, on a Laravel backend.",
+        highlights: [
+          "A customer reported a thousand-cell template they could no longer type in. Profiling found eight independent full-document walks running on every keystroke, cursor move and scroll, so I replaced the DOM queries and node view re-renders on the typing path with derived state. A typed character went from 12 to 16 document.querySelector calls to none, and Cmd+A from 1,426 to none.",
+          "The same pass turned up work happening nowhere near the typing path: the minimap sweeping around 1,030 elements and forcing a reflow on every scroll event, still doing it after it had been closed, and Sentry tracing holding 86% of the main thread on load.",
+          "Reworked the layout, design and behaviour of the features that make a contract a contract rather than a text file — dynamic fields, conditional content, signature and approval blocks, dynamic tables, column layouts, headers and footers, section references, track changes. The pieces were already there; the work was making them read clearly on the page and behave the way someone drafting a contract expects.",
+          "Migrated Tiptap v2 to v3, put upstream extensions back in place of our forks, and cut 70-odd dead exports. Then reorganised the editor tree around what code does to the document rather than which library construct it happens to use, so that a new engineer — or a coding agent — can find the one place a change belongs without reading the whole editor first. The architecture doc that came out of it is what the team and its agents work from now.",
+          "Took a piece of the editor off a vendor's cloud and onto our own infrastructure. Contracts are the last documents a company wants leaving its own systems, so the tighter answer was to run it ourselves rather than pass customer text through someone else's service.",
+        ],
+      },
+    ],
   },
   {
     company: "Launchbox Studio",
