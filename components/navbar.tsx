@@ -7,6 +7,7 @@ import React from "react";
 import { DottedUnderline } from "@/components/dotted-underline";
 import { Section } from "@/components/section";
 import { Signature } from "@/components/signature";
+import { hoverSfx } from "@/lib/sfx";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +31,11 @@ export const Navbar = () => {
       <nav className="grid grid-cols-[1fr_auto] items-center gap-4">
         <Link
           href="/"
-          className="font-display text-foreground col-start-1 row-start-1 text-xl font-semibold tracking-[-0.03em] sm:text-2xl"
+          {...hoverSfx()}
+          // justify-self-start, or the grid stretches this across the whole 1fr
+          // column: 500-odd pixels of empty strip that still navigate home and
+          // still fire the hover tick.
+          className="font-display text-foreground col-start-1 row-start-1 justify-self-start text-xl font-semibold tracking-[-0.03em] sm:text-2xl"
         >
           {SITE.name}
         </Link>
@@ -43,6 +48,7 @@ export const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
+                {...hoverSfx()}
                 className={cn(
                   "font-secondary group relative text-[0.9375rem] transition-colors",
                   active ? "text-foreground" : "text-muted-foreground hover:text-foreground",

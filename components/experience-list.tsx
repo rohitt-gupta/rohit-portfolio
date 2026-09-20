@@ -5,7 +5,7 @@ import { type Company, EXPERIENCE } from "@/lib/experience";
 import { cn } from "@/lib/utils";
 
 /**
- * A tracked label with a hairline running out to the right edge — the device
+ * A tracked label with a hairline running out to the right edge. The device
  * gentlejoseph.com uses to open a sub-block. It separates without a heading
  * weight, which is what you want this far down a nested list.
  */
@@ -16,9 +16,27 @@ const RuledLabel = ({ children }: { children: React.ReactNode }) => (
   </p>
 );
 
+/**
+ * One measure, shared by every block of copy in an entry: the blurb, the summary
+ * and the highlights all break on the same right edge, a little inside the column
+ * the tech chips run to.
+ *
+ * A rem value rather than `max-w-prose`, which was here before and was wrong twice
+ * over. `prose` is 65ch, and ch is the width of a zero, far wider than an average
+ * character in this face: 65ch at 16px is 690px, which takes about 104 characters
+ * of 14px body text, not 65. And because ch scales with font-size, the same class
+ * on the 14px paragraph and the 16px highlights wrapper resolved 85px apart. A rem
+ * is the same number wherever it is written, so the two sides cannot drift.
+ */
+const MEASURE = "max-w-[44rem]";
+
+const Prose = ({ children }: { children: React.ReactNode }) => (
+  <p className={cn("text-muted-foreground text-sm leading-relaxed", MEASURE)}>{children}</p>
+);
+
 /** Dot-marked list. One marker style, since there's only one kind of list here. */
 const Bullets = ({ items }: { items: string[] }) => (
-  <ul className="flex max-w-prose flex-col gap-2">
+  <ul className="flex flex-col gap-2">
     {items.map((item) => (
       <li
         key={item}
@@ -49,7 +67,7 @@ function CompanyBlock({ company }: { company: Company }) {
 
   /**
    * With one position and nothing written about it, the whole list is empty
-   * markup — and an empty flex child still collects a gap. Skip it, or the four
+   * markup, and an empty flex child still collects a gap. Skip it, or the four
    * bare entries sit in noticeably more air than the ones carrying content.
    */
   const hasPositionDetail = company.positions.some((p) => p.summary || p.highlights?.length);
@@ -61,7 +79,7 @@ function CompanyBlock({ company }: { company: Company }) {
         <p className="text-faint font-mono text-[0.6875rem] tracking-[0.08em] uppercase">
           {meta.join("  ·  ")}
         </p>
-        {/* Brand casing kept as written — "fynk" and "mroads" are lowercase on
+        {/* Brand casing kept as written: "fynk" and "mroads" are lowercase on
             purpose, and the display face carries the hierarchy without shouting. */}
         <h3 className="font-display text-foreground text-xl font-semibold tracking-[-0.025em]">
           {company.company}
@@ -71,9 +89,7 @@ function CompanyBlock({ company }: { company: Company }) {
         ) : null}
       </div>
 
-      {company.blurb ? (
-        <p className="text-muted-foreground max-w-prose text-sm leading-relaxed">{company.blurb}</p>
-      ) : null}
+      {company.blurb ? <Prose>{company.blurb}</Prose> : null}
 
       {company.stack?.length ? (
         <ul className="flex flex-wrap gap-2 pt-0.5">
@@ -110,14 +126,10 @@ function CompanyBlock({ company }: { company: Company }) {
                 </>
               ) : null}
 
-              {position.summary ? (
-                <p className="text-muted-foreground max-w-prose text-sm leading-relaxed">
-                  {position.summary}
-                </p>
-              ) : null}
+              {position.summary ? <Prose>{position.summary}</Prose> : null}
 
               {position.highlights?.length ? (
-                <div className="mt-2 flex max-w-prose flex-col gap-3">
+                <div className={cn("mt-2 flex flex-col gap-3", MEASURE)}>
                   <RuledLabel>Highlights</RuledLabel>
                   <Bullets items={position.highlights} />
                 </div>
