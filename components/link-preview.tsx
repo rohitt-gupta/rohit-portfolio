@@ -5,6 +5,7 @@ import { encode } from "qss";
 import React from "react";
 
 import { POP_IN_VARIANT, SPRING_CONFIG } from "@/lib/motion-config";
+import { hoverSfx } from "@/lib/sfx";
 import { useMounted } from "@/lib/use-mounted";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,7 @@ type LinkPreviewProps = {
   dottedUnderline?: LinkPreviewDottedUnderline | false;
   /**
    * Paint a pastel highlight behind the label instead of underlining it. Takes
-   * over the label's colour and replaces the dotted rule — two emphasis marks on
+   * over the label's colour and replaces the dotted rule, because two emphasis marks on
    * one word is one too many.
    */
   highlight?: HighlightTone;
@@ -65,7 +66,10 @@ export const LinkPreview = ({
 
   const isMounted = useMounted();
 
-  const springConfig = { stiffness: 100, damping: 15 };
+  // Stiff enough to track the pointer rather than drift after it; the soft spring
+  // this replaced took about half a second to catch up with a hand that had
+  // already stopped moving.
+  const springConfig = { stiffness: 380, damping: 30 };
   const x = useMotionValue(0);
 
   const translateX = useSpring(x, springConfig);
@@ -111,6 +115,10 @@ export const LinkPreview = ({
       >
         <HoverCardPrimitive.Trigger
           onMouseMove={handleMouseMove}
+          // Fires on arrival rather than on the card opening: the 50ms open delay
+          // exists so a pointer passing through does not flash a card, but it has
+          // already passed over the words, and the tick belongs to that moment.
+          {...hoverSfx()}
           className={cn(
             "group relative overflow-visible",
             highlight ? highlightClass(highlight, true) : "text-accent",
@@ -166,7 +174,7 @@ export const LinkPreview = ({
                     className="block rounded-xl shadow"
                     style={{ fontSize: 0 }}
                   >
-                    {/* Microlink returns a redirect, not a stable asset — next/image can't optimise it. */}
+                    {/* Microlink returns a redirect, not a stable asset, so next/image can't optimise it. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={isStatic ? imageSrc : src}
