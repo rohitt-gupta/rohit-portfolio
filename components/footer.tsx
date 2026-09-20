@@ -7,6 +7,7 @@ import { Section } from "@/components/section";
 import { SocialLinks } from "@/components/social-links";
 import { SoundToggle } from "@/components/sound-toggle";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { hoverSfx } from "@/lib/sfx";
 import { SITE } from "@/lib/site";
 
 export const Footer = () => {
@@ -16,6 +17,7 @@ export const Footer = () => {
         <div className="flex flex-wrap items-center gap-5">
           <Link
             href="/links"
+            {...hoverSfx()}
             className="text-muted-foreground hover:text-accent text-sm transition-colors"
           >
             Links
@@ -25,11 +27,12 @@ export const Footer = () => {
 
         <div className="border-connection flex flex-wrap items-center justify-between gap-3 border-t pt-6">
           <p className="text-faint text-xs">
-            Built by yours truly —{" "}
+            Built by yours truly,{" "}
             <a
               href={SITE.repo}
               target="_blank"
               rel="noopener noreferrer"
+              {...hoverSfx()}
               className="hover:text-accent underline decoration-dotted underline-offset-4 transition-colors"
             >
               here&apos;s the code

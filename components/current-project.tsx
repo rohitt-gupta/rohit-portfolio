@@ -7,7 +7,7 @@ import { ActionLink } from "@/components/action-link";
 import { Highlight } from "@/components/highlight";
 import { Eyebrow } from "@/components/typography";
 import { CURRENT_PROJECT, type ProjectPreview } from "@/lib/projects";
-import { sfx } from "@/lib/sfx";
+import { hoverSfx, sfx } from "@/lib/sfx";
 import { TECH_LINKS } from "@/lib/tech-links";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,7 @@ const LiveDot = () => (
 
 /**
  * The screenshot half: hatch along the top and left, the shot itself running off the
- * right edge and the bottom. Cropping it is the point — a page that carries on past
+ * right edge and the bottom. Cropping it is the point: a page that carries on past
  * the frame reads as a real thing being used, where a whole screenshot floating with
  * margin all round reads as a thumbnail.
  *
@@ -30,7 +30,7 @@ const LiveDot = () => (
  * shot is cut wherever that lands. `object-cover` from the top-left then fills that
  * box whatever the source aspect is.
  *
- * The right inset is deliberately large. It isn't padding — it's how much of the shot
+ * The right inset is deliberately large. It isn't padding, it's how much of the shot
  * gets carried off the edge, and a timid 1rem reads as a misaligned image rather than
  * a deliberate crop.
  *
@@ -50,11 +50,9 @@ const Preview = ({
   return (
     <div
       className="bg-hatch border-rule group relative min-h-56 overflow-hidden border-t sm:min-h-72 lg:min-h-0 lg:border-t-0 lg:border-l"
-      onPointerEnter={(event) => {
-        // The whole half is the hover target, not just the screenshot, so the
-        // sound and the scene arrive together wherever the pointer crosses in.
-        if (event.pointerType !== "touch") sfx.hover();
-      }}
+      // The whole half is the hover target, not just the screenshot, so the
+      // sound and the scene arrive together wherever the pointer crosses in.
+      {...hoverSfx(sfx.hover)}
     >
       {/* The hatch is the resting state; hovering trades it for the photograph
           underneath the shot. Mounted at zero opacity rather than swapped in on
@@ -83,7 +81,7 @@ const Preview = ({
           {/* The shot leans in a little while the scene comes up behind it. From
               the top-left, matching object-left-top, so the zoom pushes further
               past the crop rather than drifting the whole page sideways. The
-              frame itself stays put — its geometry is what makes the bleed read
+              frame itself stays put; its geometry is what makes the bleed read
               as deliberate. */}
           <Image
             src={preview.src}
@@ -99,13 +97,13 @@ const Preview = ({
 };
 
 /**
- * The "what's he actually doing right now" band — the one project worth reading a
+ * The "what's he actually doing right now" band: the one project worth reading a
  * paragraph about, so it gets the whole width rather than a tile in the work grid.
  *
  * Split 40/60 at `lg`, the thing itself taking the larger half. That ratio is the
  * whole design: the screenshot carries the section and the copy is a caption hung
  * beside it, which is why the prose here sits at body scale rather than the hero's.
- * An even split with display-size type gave both halves too little — a cramped
+ * An even split with display-size type gave both halves too little: a cramped
  * 30-character measure next to a screenshot too small to read.
  *
  * The section hands its padding over (`innerClassName="p-0 sm:p-0"` on the Section) so
@@ -133,7 +131,7 @@ export const CurrentProject = () => {
 
         {/*
           Body scale, not hero scale. The claim stays in full ink and the elaboration
-          drops to muted behind it — the same two-tone the hero bio uses — but at 15/16px,
+          drops to muted behind it, the same two-tone the hero bio uses, but at 15/16px,
           because this column is 40% of an already-capped 54rem and anything larger sets
           five words to a line. The project name is a marker-pen highlight rather than a
           heading, so the whole thing stays one sentence you can read.
@@ -142,11 +140,11 @@ export const CurrentProject = () => {
           <Highlight tone="peach" href={href || undefined}>
             {title}
           </Highlight>{" "}
-          — {tagline} <span className="text-muted-foreground font-normal">{description}</span>
+          is {tagline} <span className="text-muted-foreground font-normal">{description}</span>
         </p>
 
         {/* `mt-auto` drops this to the floor of the column. The gap it opens up under
-            short copy is deliberate — the band is framed by its rules, and the button
+            short copy is deliberate: the band is framed by its rules, and the button
             wants to sit on the bottom one. */}
         <div className="mt-auto flex flex-col items-start gap-4 pt-6">
           <div className="text-faint font-secondary flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.6875rem] tracking-wide">

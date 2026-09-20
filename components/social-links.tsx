@@ -6,6 +6,7 @@ import {
 } from "@tabler/icons-react";
 import React from "react";
 
+import { hoverSfx } from "@/lib/sfx";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +45,7 @@ export function SocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
+            {...hoverSfx()}
             className="text-muted-foreground hover:text-accent inline-flex items-center gap-2 text-sm transition-colors"
           >
             <Icon className="size-4" stroke={1.6} aria-hidden />

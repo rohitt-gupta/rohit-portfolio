@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import React, { useState } from "react";
 
+import { sfx } from "@/lib/sfx";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -11,11 +12,11 @@ import { cn } from "@/lib/utils";
 const POP = { type: "spring" as const, stiffness: 300, damping: 18 };
 /** The frame breathes slower than the photo, so the two reads don't collide. */
 const BREATHE = { type: "spring" as const, stiffness: 200, damping: 20 };
-/** Leaving is quicker than arriving — a slow exit just looks like lag. */
+/** Leaving is quicker than arriving; a slow exit just looks like lag. */
 const DROP = { duration: 0.18, ease: [0.4, 0, 1, 1] as const };
 
 /**
- * The photo you can poke, framed the way braydoncoyer.dev frames his — but
+ * The photo you can poke, framed the way braydoncoyer.dev frames his, but
  * square. Three concentric layers: a hairline outer ring, a debossed well, and
  * the photo sitting in it.
  *
@@ -41,6 +42,9 @@ export function AvatarToy({ className }: { className?: string }) {
 
   const cycle = () => {
     if (!multiple) return;
+    // Two voices timed to the animation: a falling one for the drop into the
+    // well, a rising one for the next photo springing back out of it.
+    sfx.swap();
     setIndex((i) => (i + 1) % photos.length);
     setPoked(true);
     setSwapping(true);
@@ -61,7 +65,7 @@ export function AvatarToy({ className }: { className?: string }) {
           multiple && "cursor-pointer",
         )}
       >
-        {/* Outer lip. Purely a ring — the page shows through it. */}
+        {/* Outer lip. Purely a ring; the page shows through it. */}
         <span aria-hidden className="border-rule absolute inset-0 rounded-[22%] border" />
 
         {/* The dish the photo drops into, and what you see during the swap. */}

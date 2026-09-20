@@ -5,7 +5,7 @@ import React from "react";
 
 import { BrandIcon } from "@/components/brand-icon";
 import type { Project } from "@/lib/projects";
-import { sfx } from "@/lib/sfx";
+import { hoverSfx, sfx } from "@/lib/sfx";
 import { cn } from "@/lib/utils";
 
 /** The corner glints that make the tile read as glass rather than a flat panel. */
@@ -47,10 +47,7 @@ export function ProjectCard({ project, className }: { project: Project; classNam
       href={project.href}
       target="_blank"
       rel="noopener noreferrer"
-      onPointerEnter={(event) => {
-        // Touch fires pointerenter on tap, where a hover sound makes no sense.
-        if (event.pointerType !== "touch") sfx.hover();
-      }}
+      {...hoverSfx(sfx.hover)}
       className={cn(
         "group flex flex-col transition-transform duration-150 ease-out active:scale-[0.985]",
         className,

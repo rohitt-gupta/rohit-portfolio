@@ -1,7 +1,7 @@
 /**
  * A very small synthesiser for interface sounds.
  *
- * Nothing is downloaded — every sound is generated at the moment it plays, so
+ * Nothing is downloaded; every sound is generated at the moment it plays, so
  * there are no audio files to ship, cache or license. Two voices cover it: an
  * oscillator for anything pitched, and a one-second buffer of white noise, read
  * from a random offset, for anything percussive.
@@ -17,7 +17,7 @@ type Voice = {
   freq: number;
   /** Glide to this frequency across the sound's length. */
   to?: number;
-  /** Seconds. These are short — a UI tick is nearer 0.01 than 0.1. */
+  /** Seconds. These are short; a UI tick is nearer 0.01 than 0.1. */
   dur?: number;
   /** Seconds to reach full gain. Longer reads as a swell, shorter as a click. */
   attack?: number;
@@ -138,7 +138,7 @@ function takeVoice() {
   return true;
 }
 
-/** True when this key fired within `ms` — a pointer crossing a grid fires fast. */
+/** True when this key fired within `ms`. A pointer crossing a grid fires fast. */
 function throttled(key: string, ms: number) {
   const now = performance.now();
   const previous = lastPlayed.get(key);
@@ -252,7 +252,7 @@ function jitter(freq: number, spread: number) {
 
 export const sfx = {
   /**
-   * Twelve milliseconds of resonant noise around 2.6 kHz — a tick rather than a
+   * Twelve milliseconds of resonant noise around 2.6 kHz, a tick rather than a
    * tone. Throttled hard: a pointer crossing a grid of cards would otherwise fire
    * this a dozen times in a flick.
    */
@@ -260,4 +260,59 @@ export const sfx = {
     if (throttled("hover", 55)) return;
     noise({ freq: jitter(2600, 120), dur: 0.012, gain: 0.076, q: 2.2 });
   },
+
+  /**
+   * The same idea an octave up and half as loud, for small targets: nav items,
+   * inline links, the icons in the footer. A word in a sentence is a lighter
+   * thing to point at than a project tile, and it should sound like one.
+   *
+   * It carries its own throttle key so a card hover cannot swallow a nav hover,
+   * or the reverse: crossing from the page into the header is one gesture but
+   * two separate answers.
+   */
+  tick() {
+    if (throttled("tick", 60)) return;
+    noise({ freq: jitter(4300, 220), dur: 0.009, gain: 0.042, q: 3.2 });
+  },
+
+  /**
+   * The photo dropping into its well and the next one springing back out, as two
+   * voices rather than one: a falling sine for the drop, then a rising triangle
+   * a beat later for the return. The delay is tuned to the exit animation, so the
+   * second voice lands while the well is empty rather than on top of the first.
+   *
+   * Not throttled by a pointer crossing anything, only by how fast a finger can
+   * click, so the window is long enough to swallow a double-click's second half.
+   */
+  swap() {
+    if (throttled("swap", 120)) return;
+    tone({ type: "sine", freq: 520, to: 250, dur: 0.075, attack: 0.003, gain: 0.062 });
+    tone({
+      type: "triangle",
+      freq: 330,
+      to: 700,
+      dur: 0.13,
+      attack: 0.01,
+      gain: 0.05,
+      delay: 0.095,
+      cutoff: 2800,
+    });
+  },
 };
+
+/**
+ * Spread onto anything that should answer the pointer arriving: `{...hoverSfx()}`
+ * for a small target, `{...hoverSfx(sfx.hover)}` for a large one.
+ *
+ * Touch fires `pointerenter` on tap, where a hover sound is just a click sound
+ * arriving at the wrong moment, so those are skipped. The event is typed
+ * structurally to keep this file free of a React import — it stays a synthesiser
+ * that happens to be convenient in JSX, not a component module.
+ */
+export function hoverSfx(play: () => void = sfx.tick) {
+  return {
+    onPointerEnter: (event: { pointerType: string }) => {
+      if (event.pointerType !== "touch") play();
+    },
+  };
+}
