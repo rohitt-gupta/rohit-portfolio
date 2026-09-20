@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TechIcon } from "@/components/tech-icon";
+import { TechChip } from "@/components/tech-chip";
 import { type Company, EXPERIENCE } from "@/lib/experience";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +32,7 @@ const Bullets = ({ items }: { items: string[] }) => (
 
 function CompanyBlock({ company }: { company: Company }) {
   const multiple = company.positions.length > 1;
+  const uid = company.company.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   /**
    * The line above the name carries everything factual, so the name itself can
@@ -77,12 +78,12 @@ function CompanyBlock({ company }: { company: Company }) {
       {company.stack?.length ? (
         <ul className="flex flex-wrap gap-2 pt-0.5">
           {company.stack.map((tech) => (
-            <li
-              key={tech}
-              className="border-connection text-muted-foreground inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs"
-            >
-              <TechIcon name={tech} />
-              {tech}
+            <li key={tech}>
+              <TechChip
+                name={tech}
+                uid={`${uid}-${tech.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                className="text-muted-foreground text-xs"
+              />
             </li>
           ))}
         </ul>
