@@ -54,6 +54,7 @@ export const TECH_LINKS: Record<string, string> = {
   PostgreSQL: "https://www.postgresql.org",
   MySQL: "https://www.mysql.com",
   Prisma: "https://www.prisma.io",
+  SQLite: "https://sqlite.org",
   Drizzle: "https://orm.drizzle.team",
   "Drizzle ORM": "https://orm.drizzle.team",
   "Neon Postgres": "https://neon.com",
@@ -61,6 +62,7 @@ export const TECH_LINKS: Record<string, string> = {
   Appwrite: "https://appwrite.io",
   DynamoDB: "https://aws.amazon.com/dynamodb/",
   tRPC: "https://trpc.io",
+  Zod: "https://zod.dev",
   Resend: "https://resend.com",
   Stripe: "https://stripe.com",
   Pusher: "https://pusher.com",
@@ -70,6 +72,8 @@ export const TECH_LINKS: Record<string, string> = {
 
   // AI
   Claude: "https://claude.com",
+  // Left generic: the docs root redirects to a dated spec version.
+  MCP: "https://modelcontextprotocol.io",
   "Vercel AI SDK": "https://ai-sdk.dev",
   Mastra: "https://mastra.ai",
   Inngest: "https://www.inngest.com",
@@ -87,6 +91,9 @@ export const TECH_LINKS: Record<string, string> = {
   GitLab: "https://about.gitlab.com",
   "GitHub Actions": "https://github.com/features/actions",
   Playwright: "https://playwright.dev",
+  Vitest: "https://vitest.dev",
+  Storybook: "https://storybook.js.org",
+  OpenTelemetry: "https://opentelemetry.io",
   Figma: "https://www.figma.com",
   FFmpeg: "https://ffmpeg.org",
 };

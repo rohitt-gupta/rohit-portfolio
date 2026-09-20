@@ -7,15 +7,18 @@ import { cn } from "@/lib/utils";
  * `lib/experience.ts`.
  *
  * The paths are inlined rather than pulled from a package. No single library
- * covers this list — measured against all 51 labels, the best any one of them
- * managed was 38 — so each mark comes from whichever source draws it best:
+ * covers this list: measured against the 51 labels there were at the time, the
+ * best any one of them managed was 38, so each mark comes from whichever source
+ * draws it best:
  *
  *   - tech-stack-icons (MIT) for most of them. Depending on it is not an option:
  *     all 691 icons live in one object its component indexes into at runtime, so
  *     nothing can be tree-shaken and importing a single icon ships ~2.6 MB gzipped.
  *   - Iconify's SVG Logos set (CC0) where it has a symbol-only "-icon" variant or
- *     a mark the others lack — Resend as a glyph instead of a wordmark, DynamoDB,
+ *     a mark the others lack: Resend as a glyph instead of a wordmark, DynamoDB,
  *     the real Cloudflare Workers mark rather than the generic cloud.
+ *   - Iconify's devicon set (MIT) in the one case where the logos set only has the
+ *     full lockup and devicon has the signet on its own: SQLite.
  *   - Simple Icons (CC0) for the long tail it alone carries. Those are one-colour
  *     silhouettes, so they take the brand's own hex.
  *
@@ -28,9 +31,11 @@ import { cn } from "@/lib/utils";
  *     id is namespaced. SVG ids are document-global and the sources reuse "a"/"b"
  *     across icons, so a page of marks would otherwise cross-reference.
  *
- * Six labels have no mark anywhere — NativeWind, React Aria, Inngest, Instantly
- * API, Mastra and Redraw — and fall back to a dot. Better a dot than a lookalike:
- * Tailwind's logo standing in for NativeWind would just be wrong.
+ * Everything the vendor publishes but no library carries (NativeWind, React Aria,
+ * Inngest, Instantly API, Mastra, Tiptap, Yjs, Inertia, Reka UI) was taken off the
+ * vendor's own site; each of those is noted where it sits. Three labels have no
+ * mark anywhere (Redraw, Zustand and Expo) and fall back to a dot. Better a dot
+ * than a lookalike: Expo Router's logo standing in for Expo would just be wrong.
  */
 type Mark = {
   /** Sources draw on different grids, so each mark carries its own. */
@@ -464,6 +469,43 @@ const MARKS: Record<string, Mark> = {
       </>
     ),
   },
+  // devicon's sqlite, not Iconify's: logos:sqlite is the 512x228 lockup, and a
+  // wordmark that wide is a smudge at 14px. This one is the signet on its own.
+  SQLite: {
+    vb: "0 0 128 128",
+    el: (uid: string) => (
+      <>
+        <path
+          fill="#0b7fcc"
+          d="M69.5 99.176c-.059-.73-.094-1.2-.094-1.2S67.2 83.087 64.57 78.642c-.414-.707.043-3.594 1.207-7.88c.68 1.169 3.54 6.192 4.118 7.81c.648 1.824.78 2.347.78 2.347s-1.57-8.082-4.144-12.797a162 162 0 0 1 2.004-6.265c.973 1.71 3.313 5.859 3.828 7.3c.102.293.192.543.27.774l.074-.414c-.59-2.504-1.75-6.86-3.336-10.082c3.52-18.328 15.531-42.824 27.84-53.754H16.9c-5.387 0-9.789 4.406-9.789 9.789v88.57c0 5.383 4.406 9.789 9.79 9.789h52.897a119 119 0 0 1-.297-14.652"
+        />
+        <path
+          fill={`url(#sqlite-a${uid})`}
+          d="M65.777 70.762c.68 1.168 3.54 6.188 4.117 7.809c.649 1.824.781 2.347.781 2.347s-1.57-8.082-4.144-12.797a165 165 0 0 1 2.004-6.27c.887 1.567 2.922 5.169 3.652 6.872l.082-.961c-.648-2.496-1.633-5.766-2.898-8.328c3.242-16.871 13.68-38.97 24.926-50.898H16.899a6.94 6.94 0 0 0-6.934 6.933v82.11c17.527-6.731 38.664-12.88 56.855-12.614c-.672-2.605-1.441-4.96-2.25-6.324c-.414-.707.043-3.597 1.207-7.879"
+        />
+        <path
+          fill="#003956"
+          d="M115.95 2.781c-5.5-4.906-12.164-2.933-18.734 2.899a44 44 0 0 0-2.914 2.859c-11.25 11.926-21.684 34.023-24.926 50.895c1.262 2.563 2.25 5.832 2.894 8.328c.168.64.32 1.242.442 1.754c.285 1.207.437 1.996.437 1.996s-.101-.383-.515-1.582c-.078-.23-.168-.484-.27-.773a8 8 0 0 0-.172-.434c-.734-1.703-2.765-5.305-3.656-6.867c-.762 2.25-1.437 4.36-2.004 6.265c2.578 4.715 4.149 12.797 4.149 12.797s-.137-.523-.782-2.347c-.578-1.621-3.441-6.64-4.117-7.809c-1.164 4.281-1.625 7.172-1.207 7.88c.809 1.362 1.574 3.722 2.25 6.323c1.524 5.867 2.586 13.012 2.586 13.012s.031.469.094 1.2a119 119 0 0 0 .297 14.651c.504 6.11 1.453 11.363 2.664 14.172l.828-.449c-1.781-5.535-2.504-12.793-2.188-21.156c.48-12.793 3.422-28.215 8.856-44.289c9.191-24.27 21.938-43.738 33.602-53.035c-10.633 9.602-25.023 40.684-29.332 52.195c-4.82 12.891-8.238 24.984-10.301 36.574c3.55-10.863 15.047-15.53 15.047-15.53s5.637-6.958 12.227-16.888c-3.95.903-10.43 2.442-12.598 3.352c-3.2 1.344-4.067 1.8-4.067 1.8s10.371-6.312 19.27-9.171c12.234-19.27 25.562-46.648 12.141-58.621"
+        />
+        <defs>
+          <linearGradient
+            id={`sqlite-a${uid}`}
+            x1="-15.615"
+            x2="-6.741"
+            y1="-9.108"
+            y2="-9.108"
+            gradientTransform="rotate(90 -90.486 64.634)scale(9.2712)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stopColor="#95d7f4" />
+            <stop offset=".92" stopColor="#0f7fcc" />
+            <stop offset="1" stopColor="#0f7fcc" />
+          </linearGradient>
+        </defs>
+      </>
+    ),
+  },
+
   Prisma: {
     vb: "0 0 100 100",
     el: (
@@ -543,6 +585,45 @@ const MARKS: Record<string, Mark> = {
       </>
     ),
   },
+  Zod: {
+    vb: "0 0 256 212",
+    el: (uid: string) => (
+      <>
+        <path
+          fill={`url(#zod-a${uid})`}
+          d="M50.087 0a23.97 23.97 0 0 0-22.526 15.772L1.447 87.494a23.97 23.97 0 0 0 6.828 26.32l105.542 91.458c9.088 7.876 22.606 7.799 31.604-.18l102.51-90.89a23.97 23.97 0 0 0 6.652-26.055l-26.02-72.292A23.97 23.97 0 0 0 206.007 0z"
+        />
+        <path
+          fill={`url(#zod-b${uid})`}
+          d="M225.397 68.751a13.695 13.695 0 0 1-5.242 16.002L98.71 161.785L58.795 126.96l153.889-93.535z"
+        />
+        <path
+          fill="#fff"
+          d="m212.169 31.997l12.922 35.901H30.786l13.092-35.957A16.38 16.38 0 0 1 59.14 21.167h137.495a16.38 16.38 0 0 1 15.533 10.83"
+        />
+        <path
+          fill={`url(#zod-c${uid})`}
+          d="M137.011 180.305a12.87 12.87 0 0 1-17 .065l-61.216-53.41h138.408z"
+        />
+        <defs>
+          <linearGradient id={`zod-a${uid}`} x1="50%" x2="50%" y1="100.031%" y2="0%">
+            <stop offset="0%" stopColor="#4669f6" />
+            <stop offset="100%" stopColor="#45a9ff" />
+          </linearGradient>
+          <linearGradient id={`zod-b${uid}`} x1="95.049%" x2="10.721%" y1="28.918%" y2="71.593%">
+            <stop offset="0%" stopColor="#fff" stopOpacity=".6" />
+            <stop offset="30.534%" stopColor="#fff" stopOpacity=".595" />
+            <stop offset="100%" stopColor="#fff" stopOpacity=".4" />
+          </linearGradient>
+          <linearGradient id={`zod-c${uid}`} x1="78.289%" x2="50%" y1="50%" y2="50%">
+            <stop offset="0%" stopColor="#fff" stopOpacity=".6" />
+            <stop offset="100%" stopColor="#fff" />
+          </linearGradient>
+        </defs>
+      </>
+    ),
+  },
+
   Resend: {
     vb: "0 0 256 256",
     el: (
@@ -606,6 +687,22 @@ const MARKS: Record<string, Mark> = {
       </>
     ),
   },
+  OpenTelemetry: {
+    vb: "0 0 256 256",
+    el: (
+      <>
+        <path
+          fill="#f5a800"
+          d="M135.44 139.918c-10.906 10.905-10.906 28.587 0 39.492c10.907 10.906 28.59 10.906 39.497 0c10.906-10.905 10.906-28.587 0-39.492s-28.59-10.905-39.497 0m29.525 29.548c-5.4 5.4-14.152 5.4-19.553 0s-5.401-14.151 0-19.552s14.152-5.4 19.553 0c5.402 5.375 5.402 14.151 0 19.552M174.47 2.512l-17.112 17.11c-3.35 3.35-3.35 8.855 0 12.204l66.814 66.808c3.35 3.35 8.855 3.35 12.205 0l17.113-17.111c3.35-3.35 3.35-8.854 0-12.203L186.65 2.512c-3.35-3.35-8.83-3.35-12.18 0M54.577 221.162c3.038-3.038 3.038-7.997 0-11.035l-8.699-8.699c-3.038-3.037-7.998-3.037-11.036 0l-17.97 17.968l-.026.026l-4.933-4.933c-2.727-2.727-7.167-2.727-9.868 0c-2.727 2.726-2.727 7.166 0 9.866l29.603 29.6c2.727 2.727 7.167 2.727 9.868 0c2.7-2.726 2.726-7.166 0-9.866l-4.934-4.934l.026-.026z"
+        />
+        <path
+          fill="#425cc7"
+          d="M145.1 51.638L107.084 89.65c-3.376 3.375-3.376 8.932 0 12.307l23.474 23.472c16.594-11.943 39.86-10.463 54.792 4.466l19.008-19.006c3.376-3.375 3.376-8.932 0-12.307l-46.95-46.944c-3.375-3.402-8.932-3.402-12.308 0m-24.41 83.684l-13.866-13.865c-3.246-3.246-8.57-3.246-11.815 0l-48.897 48.918c-3.246 3.245-3.246 8.568 0 11.814l27.707 27.704c3.246 3.246 8.57 3.246 11.815 0l31.447-31.495c-6.648-13.736-5.453-30.327 3.61-43.076"
+        />
+      </>
+    ),
+  },
+
   Vercel: {
     vb: "0 0 100 100",
     el: (
@@ -865,6 +962,53 @@ const MARKS: Record<string, Mark> = {
       </>
     ),
   },
+  Vitest: {
+    vb: "0 0 256 234",
+    el: (
+      <>
+        <path
+          fill="#fcc72b"
+          d="m192.115 70.808l-61.2 88.488a5.27 5.27 0 0 1-2.673 2.002a5.3 5.3 0 0 1-3.343-.005a5.25 5.25 0 0 1-2.66-2.01a5.2 5.2 0 0 1-.903-3.203l2.45-48.854l-39.543-8.386a5.26 5.26 0 0 1-2.292-1.118a5.22 5.22 0 0 1-1.83-4.581a5.2 5.2 0 0 1 .895-2.383L142.218 2.27a5.28 5.28 0 0 1 6.016-1.996a5.24 5.24 0 0 1 2.66 2.01c.643.942.96 2.066.903 3.203l-2.45 48.855l39.542 8.386a5.26 5.26 0 0 1 2.293 1.117a5.21 5.21 0 0 1 1.829 4.582a5.2 5.2 0 0 1-.896 2.382"
+        />
+        <path
+          fill="#729b1b"
+          d="M128.025 233.537a12.36 12.36 0 0 1-8.763-3.63l-57.828-57.823a12.39 12.39 0 0 1 .023-17.5a12.394 12.394 0 0 1 17.5-.024l49.068 49.061L234.917 96.733a12.39 12.39 0 0 1 17.523 17.524l-115.655 115.65a12.34 12.34 0 0 1-8.76 3.63"
+        />
+        <path
+          fill="#729b1b"
+          fillOpacity=".5"
+          d="M127.975 233.537a12.36 12.36 0 0 0 8.763-3.63l57.828-57.823a12.4 12.4 0 0 0 3.605-8.754a12.395 12.395 0 0 0-12.375-12.376a12.4 12.4 0 0 0-8.755 3.606l-49.066 49.061L21.082 96.733a12.392 12.392 0 0 0-17.524 17.524l115.656 115.65a12.35 12.35 0 0 0 8.76 3.63"
+        />
+      </>
+    ),
+  },
+
+  // The upstream file masks the glyph to the book so the corner flag is cut at the
+  // top edge; the mask is the book's own outline, so it is repeated as a clip path
+  // rather than pulled in through a <use>.
+  Storybook: {
+    vb: "0 0 256 319",
+    el: (uid: string) => (
+      <>
+        <path
+          fill="#ff4785"
+          d="M9.872 293.324L.012 30.574C-.315 21.895 6.338 14.54 15.005 14L238.494.032c8.822-.552 16.42 6.153 16.972 14.975q.03.498.031.998v286.314c0 8.839-7.165 16.004-16.004 16.004q-.36 0-.718-.016l-213.627-9.595c-8.32-.373-14.963-7.065-15.276-15.388"
+        />
+        <g clipPath={`url(#storybook-a${uid})`}>
+          <path
+            fill="#fff"
+            d="m188.665 39.127l1.527-36.716L220.884 0l1.322 37.863a2.387 2.387 0 0 1-3.864 1.96l-11.835-9.325l-14.013 10.63a2.387 2.387 0 0 1-3.829-2.001m-39.251 80.853c0 6.227 41.942 3.243 47.572-1.131c0-42.402-22.752-64.684-64.415-64.684c-41.662 0-65.005 22.628-65.005 56.57c0 59.117 79.78 60.249 79.78 92.494c0 9.052-4.433 14.426-14.184 14.426c-12.705 0-17.729-6.49-17.138-28.552c0-4.786-48.458-6.278-49.936 0c-3.762 53.466 29.548 68.887 67.665 68.887c36.935 0 65.892-19.687 65.892-55.326c0-63.36-80.961-61.663-80.961-93.06c0-12.728 9.455-14.425 15.07-14.425c5.909 0 16.546 1.042 15.66 24.801"
+          />
+        </g>
+        <defs>
+          <clipPath id={`storybook-a${uid}`}>
+            <path d="M9.872 293.324L.012 30.574C-.315 21.895 6.338 14.54 15.005 14L238.494.032c8.822-.552 16.42 6.153 16.972 14.975q.03.498.031.998v286.314c0 8.839-7.165 16.004-16.004 16.004q-.36 0-.718-.016l-213.627-9.595c-8.32-.373-14.963-7.065-15.276-15.388" />
+          </clipPath>
+        </defs>
+      </>
+    ),
+  },
+
   Jenkins: {
     vb: "0 0 24 24",
     el: (
@@ -893,12 +1037,12 @@ const MARKS: Record<string, Mark> = {
    * them. Same rules as above: a mark that is flat black upstream is drawn
    * in currentColor and the surface showing through it in var(--background),
    * so one copy serves both themes. Any <style>, <script> or class hook the
-   * vendor file carried is stripped — a <style> inside an inlined SVG is not
+   * vendor file carried is stripped, because a <style> inside an inlined SVG is not
    * scoped to it, it styles the whole page.
    * ------------------------------------------------------------------ */
 
   // nativewind.dev/favicon.svg. Its <style> carried a global
-  // "@media (prefers-color-scheme: dark) { svg { filter: invert(1) } }" — dropped,
+  // "@media (prefers-color-scheme: dark) { svg { filter: invert(1) } }", dropped,
   // because that inverts every other mark on the page, not just this one. The
   // strokes are currentColor already, so the theme is covered without it.
   NativeWind: {
@@ -977,7 +1121,7 @@ const MARKS: Record<string, Mark> = {
     ),
   },
 
-  // instantly.ai, cropped out of its lockup — the file is symbol plus
+  // instantly.ai, cropped out of its lockup; the file is symbol plus
   // wordmark, and only the symbol survives a 14px chip.
   "Instantly API": {
     vb: "0 0 28 28",
@@ -1012,7 +1156,7 @@ const MARKS: Record<string, Mark> = {
 
   // react-spectrum.adobe.com, its own favicon. It ships a light-dark()
   // fill, which follows the OS rather than this site's own toggle, so it is pinned
-  // to the lighter purple — that one holds on both grounds.
+  // to the lighter purple, which holds on both grounds.
   "React Aria": {
     vb: "200 206 800 790",
     el: (
@@ -1042,7 +1186,7 @@ const MARKS: Record<string, Mark> = {
     ),
   },
 
-  // tiptap.dev, its editor signet — the only symbol it publishes. Everything
+  // tiptap.dev, its editor signet, the only symbol it publishes. Everything
   // else is the wordmark, which cannot survive 14px.
   Tiptap: {
     vb: "0 0 48 48",
@@ -1344,6 +1488,17 @@ const MARKS: Record<string, Mark> = {
           d="m50.228 170.321l50.357-28.257l.843-2.463l-.843-1.361h-2.462l-8.426-.518l-28.775-.778l-24.952-1.037l-24.175-1.296l-6.092-1.297L0 125.796l.583-3.759l5.12-3.434l7.324.648l16.202 1.101l24.304 1.685l17.629 1.037l26.118 2.722h4.148l.583-1.685l-1.426-1.037l-1.101-1.037l-25.147-17.045l-27.22-18.017l-14.258-10.37l-7.713-5.25l-3.888-4.925l-1.685-10.758l7-7.713l9.397.649l2.398.648l9.527 7.323l20.35 15.75L94.817 91.9l3.889 3.24l1.555-1.102l.195-.777l-1.75-2.917l-14.453-26.118l-15.425-26.572l-6.87-11.018l-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0l10.63 1.426l4.472 3.888l6.61 15.101l10.694 23.786l16.591 32.34l4.861 9.592l2.592 8.879l.973 2.722h1.685v-1.556l1.36-18.211l2.528-22.36l2.463-28.776l.843-8.1l4.018-9.722l7.971-5.25l6.222 2.981l5.12 7.324l-.713 4.73l-3.046 19.768l-5.962 30.98l-3.889 20.739h2.268l2.593-2.593l10.499-13.934l17.628-22.036l7.778-8.749l9.073-9.657l5.833-4.601h11.018l8.1 12.055l-3.628 12.443l-11.342 14.388l-9.398 12.184l-13.48 18.147l-8.426 14.518l.778 1.166l2.01-.194l30.46-6.481l16.462-2.982l19.637-3.37l8.88 4.148l.971 4.213l-3.5 8.62l-20.998 5.184l-24.628 4.926l-36.682 8.685l-.454.324l.519.648l16.526 1.555l7.065.389h17.304l32.21 2.398l8.426 5.574l5.055 6.805l-.843 5.184l-12.962 6.611l-17.498-4.148l-40.83-9.721l-14-3.5h-1.944v1.167l11.666 11.406l21.387 19.314l26.767 24.887l1.36 6.157l-3.434 4.86l-3.63-.518l-23.526-17.693l-9.073-7.972l-20.545-17.304h-1.36v1.814l4.73 6.935l25.017 37.59l1.296 11.536l-1.814 3.76l-6.481 2.268l-7.13-1.297l-14.647-20.544l-15.1-23.138l-12.185-20.739l-1.49.843l-7.194 77.448l-3.37 3.953l-7.778 2.981l-6.48-4.925l-3.436-7.972l3.435-15.749l4.148-20.544l3.37-16.333l3.046-20.285l1.815-6.74l-.13-.454l-1.49.194l-15.295 20.999l-23.267 31.433l-18.406 19.702l-4.407 1.75l-7.648-3.954l.713-7.064l4.277-6.286l25.47-32.405l15.36-20.092l9.917-11.6l-.065-1.686h-.583L44.07 198.125l-12.055 1.555l-5.185-4.86l.648-7.972l2.463-2.593l20.35-13.999z"
         />
       </>
+    ),
+  },
+
+  // Simple Icons. Flat black upstream, so it follows the theme like the others.
+  MCP: {
+    vb: "0 0 24 24",
+    el: (
+      <path
+        fill="currentColor"
+        d="M13.85 0a4.16 4.16 0 0 0-2.95 1.217L1.456 10.66a.835.835 0 0 0 0 1.18a.835.835 0 0 0 1.18 0l9.442-9.442a2.49 2.49 0 0 1 3.541 0a2.49 2.49 0 0 1 0 3.541L8.59 12.97l-.1.1a.835.835 0 0 0 0 1.18a.835.835 0 0 0 1.18 0l.1-.098l7.03-7.034a2.49 2.49 0 0 1 3.542 0l.049.05a2.49 2.49 0 0 1 0 3.54l-8.54 8.54a1.96 1.96 0 0 0 0 2.755l1.753 1.753a.835.835 0 0 0 1.18 0a.835.835 0 0 0 0-1.18l-1.753-1.753a.266.266 0 0 1 0-.394l8.54-8.54a4.185 4.185 0 0 0 0-5.9l-.05-.05a4.16 4.16 0 0 0-2.95-1.218c-.2 0-.401.02-.6.048a4.17 4.17 0 0 0-1.17-3.552A4.16 4.16 0 0 0 13.85 0m0 3.333a.84.84 0 0 0-.59.245L6.275 10.56a4.186 4.186 0 0 0 0 5.902a4.186 4.186 0 0 0 5.902 0L19.16 9.48a.835.835 0 0 0 0-1.18a.835.835 0 0 0-1.18 0l-6.985 6.984a2.49 2.49 0 0 1-3.54 0a2.49 2.49 0 0 1 0-3.54l6.983-6.985a.835.835 0 0 0 0-1.18a.84.84 0 0 0-.59-.245"
+      />
     ),
   },
 
