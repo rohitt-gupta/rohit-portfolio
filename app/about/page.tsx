@@ -10,11 +10,11 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Chomu to Jaipur to Udaipur to Vienna — how I got into building things for the web, and what I care about outside of it.",
+    "Chomu to Jaipur to Udaipur to Vienna: how I got into building things for the web, and what I care about outside of it.",
   alternates: { canonical: "/about" },
 };
 
-/** Things I like. Low stakes, high signal — the bit people actually remember. */
+/** Things I like. Low stakes, high signal. The bit people actually remember. */
 const LIKES = [
   { title: "Long walks with a podcast", note: "Best debugging tool I own." },
   { title: "Mechanical keyboards", note: "Tactile, not clicky. I have roommates." },
@@ -40,7 +40,7 @@ export default function AboutPage() {
           <div className="text-muted-foreground flex max-w-prose flex-col gap-4 text-[0.9375rem] leading-relaxed">
             <p>
               I grew up in Chomu, a small town outside Jaipur, and the route from there to here ran
-              through Jaipur, then Udaipur for engineering, then back to Jaipur — and now Vienna,
+              through Jaipur, then Udaipur for engineering, then back to Jaipur, and now Vienna,
               which is still the biggest jump of the lot.
             </p>
             <p>
@@ -50,10 +50,10 @@ export default function AboutPage() {
               offers and no real interest in circuits.
             </p>
             <p>
-              Three years in, I build product end to end — React and Next.js on the front,
-              TypeScript and Node behind it, React Native when it needs to be in someone&apos;s
-              pocket. I like the unglamorous parts: naming things properly, deleting code, making
-              the loading state feel like it was designed rather than remembered.
+              Three years in, I build product end to end: React and Next.js on the front, TypeScript
+              and Node behind it, React Native when it needs to be in someone&apos;s pocket. I like
+              the unglamorous parts: naming things properly, deleting code, making the loading state
+              feel like it was designed rather than remembered.
             </p>
             <p>
               Outside of work I&apos;m mostly reading, walking, or quietly rewriting this website

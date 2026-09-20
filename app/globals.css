@@ -32,24 +32,24 @@ html {
   --border: oklch(0.9 0.005 75);
   --ring: oklch(0.58 0.15 42);
 
-  /* Every hairline in the page FRAME is this one weight — the section rules, the
+  /* Every hairline in the page FRAME is this one weight: the section rules, the
      column rails and the outer edge of the hatch band. One token so they can't drift
      apart into two visibly different greys. */
   --rule: color-mix(in oklab, var(--foreground) 6%, transparent);
   /* The hatch is drawn at the same weight, so band and frame read as one system. */
   --pattern-fg: var(--rule);
 
-  /* Borders on things that sit ON the page — cards, chips, inputs. Deliberately
+  /* Borders on things that sit ON the page: cards, chips, inputs. Deliberately
      stronger than --rule: the frame should recede, content structure shouldn't. */
   --connection: color-mix(in oklab, var(--foreground) 15%, transparent);
 
   /* The avatar sits in a debossed dish, the way braydoncoyer.dev frames his.
-     A top-edge inset shadow is the whole illusion — light comes from above, so
+     A top-edge inset shadow is the whole illusion. Light comes from above, so
      a shadow under the top lip reads as "this surface is below the page". */
   --well-shadow: color-mix(in oklab, var(--foreground) 11%, transparent);
 
   /* ------------------------------------------------------------------
-   * Pastel highlighters. Paint behind a word instead of underlining it —
+   * Pastel highlighters. Paint behind a word instead of underlining it,
    * the same trick a marker pen does on paper, which is why it reads as
    * emphasis without shouting. Five tones so a page can colour-code what
    * it points at (writing, code, socials) rather than tint at random.
@@ -90,7 +90,7 @@ html {
      dark well is shadowed with plain black. */
   --well-shadow: oklch(0 0 0 / 0.4);
 
-  /* Pastels can't survive inversion — a 0.93 chip on a 0.175 ground is a
+  /* Pastels can't survive inversion: a 0.93 chip on a 0.175 ground is a
      flashbang. Same hues, dropped to a third of the lightness, so the chip
      reads as a tinted well the light ink still sits comfortably on. */
   --hl-butter: oklch(0.38 0.055 96);
@@ -148,7 +148,7 @@ html {
  * 10px along the diagonal, drawn from --pattern-fg so it re-tints with the theme.
  *
  * `fixed` anchors the pattern to the viewport rather than to each strip, so the
- * diagonals stay in phase across every section boundary instead of restarting — the
+ * diagonals stay in phase across every section boundary instead of restarting, so the
  * gutter reads as one continuous band. Tailwind's own site does the same.
  */
 @utility bg-hatch {
@@ -166,7 +166,7 @@ html {
 /**
  * Marker-pen highlights, the ozzyx.xyz way.
  *
- * `.highlight` is the paint and nothing else — inline, so a highlighted phrase
+ * `.highlight` is the paint and nothing else: inline, so a highlighted phrase
  * still wraps mid-sentence, with `box-decoration-break: clone` re-drawing the
  * radius and padding on every line fragment instead of leaving a torn box.
  * The negative inline margin pays back the padding so highlighting a word
@@ -174,7 +174,7 @@ html {
  *
  * `.highlight-link` adds the behaviour, and only links get it: static emphasis
  * shouldn't twitch under the cursor. It has to switch to inline-block for the
- * hover scale — transforms are ignored on non-replaced inline boxes — which
+ * hover scale, because transforms are ignored on non-replaced inline boxes, which
  * costs mid-phrase wrapping, a fair trade for the short labels links carry.
  */
 @layer components {

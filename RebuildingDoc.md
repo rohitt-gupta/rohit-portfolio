@@ -8,7 +8,7 @@
 
 [Fonts (confirmed from source):
 
-- gentlejoseph.com headings → Bricolage Grotesque (body is Calibre, licensed — I'll use Bricolage for headings only)
+- gentlejoseph.com headings → Bricolage Grotesque (body is Calibre, licensed, so I'll use Bricolage for headings only)
 - ozzyx.xyz headings → Space Grotesk (his body is Geist, hand-script accents are Gaegu)]
 
 - Heading font from: https://gentlejoseph.com/
@@ -81,10 +81,10 @@
 - https://gentlejoseph.com/
 - https://www.ozzyx.xyz/
 - https://maximeheckel.com/
-- https://dominikmart.in/ — Dominik Martin, product design + strategy + code
-- https://www.aidenybai.com/ — Aiden Bai
+- https://dominikmart.in/ - Dominik Martin, product design + strategy + code
+- https://www.aidenybai.com/ - Aiden Bai
 - https://palakonweb.in/
-- https://stusmith.co/ — Stu Smith, designer (Austin, TX)
-- https://work.mariusz.cc/#about — Mariusz Cieśla, product/design engineer (Berlin)
-- https://sehajbindra.info/ — Sehaj Bindra
-- https://zilvestro.com/ — Silvestro, founder of Affonso
+- https://stusmith.co/ - Stu Smith, designer (Austin, TX)
+- https://work.mariusz.cc/#about - Mariusz Cieśla, product/design engineer (Berlin)
+- https://sehajbindra.info/ - Sehaj Bindra
+- https://zilvestro.com/ - Silvestro, founder of Affonso

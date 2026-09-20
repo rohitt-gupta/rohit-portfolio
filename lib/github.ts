@@ -2,7 +2,7 @@
  * Contribution data for the git graph.
  *
  * GitHub's own contribution counts are only exposed through the authenticated GraphQL
- * API, so we go through jogruber's public mirror instead — no token, no secret to leak
+ * API, so we go through jogruber's public mirror instead: no token, no secret to leak
  * into a client bundle. Every failure path returns null and the section simply doesn't
  * render; a portfolio should never 500 because someone else's API had a bad minute.
  */

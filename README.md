@@ -1,6 +1,6 @@
 # Rohit's Portfolio
 
-My personal website and blog — [rohitt.in](https://rohitt.in).
+My personal website and blog: [rohitt.in](https://rohitt.in).
 
 Design heavily inspired by [Manu Arora's site](https://manuarora.in)
 ([source](https://github.com/manuarora700/manuaroradotin)).
@@ -34,7 +34,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```
 app/
-  page.tsx              Home — bio, projects, stack, experience, contact
+  page.tsx              Home: bio, projects, stack, experience, contact
   blog/                 Blog index + [slug] MDX renderer
   inspiration/          People, tools and sites I admire
   layout.tsx            Fonts, metadata, navbar/footer shell
@@ -43,7 +43,7 @@ components/             UI components (kebab-case)
   blog/                 Blog index, list and article shell
 data/blog/*.mdx         Blog posts
 lib/
-  site.ts               ⭐ All personal data — edit here first
+  site.ts               ⭐ All personal data, edit here first
   mdx.ts                MDX file reading + front matter
   motion-config.ts      Shared spring/variant config
   use-mounted.ts        Hydration-safe mounted flag
@@ -74,7 +74,7 @@ summary: "One line that shows up in the index and OG tags."
 ---
 
 Content here. Components like `<StepCheck />`, `<HighlightBox />`,
-`<VideoComponent />` and `<Button />` are available — see
+`<VideoComponent />` and `<Button />` are available, see
 `components/mdx-components.tsx`.
 ```
 

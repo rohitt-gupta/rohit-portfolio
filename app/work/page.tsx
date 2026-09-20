@@ -11,7 +11,7 @@ import { PROJECTS } from "@/lib/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Everything I've built and everywhere I've worked — side projects, client work and the day job.",
+    "Everything I've built and everywhere I've worked: side projects, client work and the day job.",
   alternates: { canonical: "/work" },
 };
 

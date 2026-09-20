@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  * A drawn signature for Rohit.
  *
  * The name is a single path, so it animates as one continuous pen motion rather than
- * pieces appearing — which is what makes it read as writing rather than assembly.
+ * pieces appearing, which is what makes it read as writing rather than assembly.
  * Only the bar, the dot and the underline lift the pen, and they come in that order,
  * the way you finish a signature.
  *
@@ -54,7 +54,7 @@ export function Signature({ className }: { className?: string }) {
       role="img"
       // Without this the SVG stretches to the flex line and the viewBox centres itself.
       preserveAspectRatio="xMinYMid meet"
-      aria-label="Rohit — signature"
+      aria-label="Rohit signature"
       className={cn("text-foreground h-12 w-33", className)}
     >
       {STROKES.map((stroke, i) => (

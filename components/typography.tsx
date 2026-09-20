@@ -26,7 +26,7 @@ export const Eyebrow = ({
 type HeadingProps = {
   children: React.ReactNode;
   className?: string;
-  /** Rendered element. Defaults to h2 — the hero passes h1. */
+  /** Rendered element. Defaults to h2; the hero passes h1. */
   as?: "h1" | "h2" | "h3";
 };
 

@@ -7,8 +7,8 @@ import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /**
- * Shows the address in full — it's the fastest path for anyone who'd rather just read
- * it — and copies on click for everyone else.
+ * Shows the address in full, which is the fastest path for anyone who'd rather just read
+ * it, and copies on click for everyone else.
  */
 export function CopyEmail({ className }: { className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -23,7 +23,7 @@ export function CopyEmail({ className }: { className?: string }) {
       clearTimeout(timer.current);
       timer.current = setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard blocked (insecure context, denied permission) — the address is on
+      // Clipboard blocked (insecure context, denied permission). The address is on
       // screen anyway, so there's nothing useful to say here.
     }
   };

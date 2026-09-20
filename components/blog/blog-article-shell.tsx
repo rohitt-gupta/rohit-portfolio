@@ -14,7 +14,7 @@ export type BlogArticleFrontMatter = {
 
 /**
  * TODO: unique view count and the likes/popcorn button belong in the meta row below
- * the title — both need a persistence layer first.
+ * the title; both need a persistence layer first.
  */
 export function BlogArticleShell({
   frontMatter,

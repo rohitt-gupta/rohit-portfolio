@@ -6,8 +6,8 @@ import React from "react";
 import { isEnabled, isEnabledOnServer, setEnabled, sfx, subscribe } from "@/lib/sfx";
 
 /**
- * Sound is on by default but makes no noise until the page has had a click —
- * browsers hold the AudioContext shut until then — so nobody is ambushed by it.
+ * Sound is on by default but makes no noise until the page has had a click,
+ * since browsers hold the AudioContext shut until then, so nobody is ambushed by it.
  * This is here so it can be switched off for good, and the choice is remembered.
  */
 export function SoundToggle() {

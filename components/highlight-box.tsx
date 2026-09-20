@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * A block of text with a pastel strip run under its last line — the louder
+ * A block of text with a pastel strip run under its last line. The louder
  * cousin of {@link Highlight}, for the one sentence in a post that has to land.
  * Use `Highlight` for a word inside a sentence; this for the sentence itself.
  */

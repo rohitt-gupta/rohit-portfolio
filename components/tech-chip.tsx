@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /**
  * One technology: its mark, its name, and a link out to it.
  *
- * Shared by the toolkit and the experience list so the two never drift — the hover
+ * Shared by the toolkit and the experience list so the two never drift. The hover
  * roll and the id namespacing are fiddly enough that a second copy would.
  * A label with no entry in TECH_LINKS renders as a plain span rather than a dead
  * link, so adding a technology can never produce a chip that goes nowhere.
@@ -36,7 +36,7 @@ export function TechChip({
     >
       {/* The mark keeps full ink while the label may be muted, so the marks drawn in
           currentColor sit at the same weight as the coloured ones instead of washing
-          out beside them — and they stay themselves on hover rather than turning
+          out beside them, and they stay themselves on hover rather than turning
           the accent colour with the text.
 
           Two copies of the mark roll through a clipped window: the one on show

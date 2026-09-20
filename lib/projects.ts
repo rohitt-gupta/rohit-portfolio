@@ -14,7 +14,7 @@ export type Project = {
    */
   video?: string;
   /**
-   * The scene behind the shot, revealed on hover — the screenshot reads as a
+   * The scene behind the shot, revealed on hover; the screenshot reads as a
    * window sitting on it. Self-hosted rather than hotlinked, so the cards do not
    * depend on someone else's CDN staying up.
    *
@@ -36,7 +36,7 @@ export type Project = {
 
 /**
  * The shot that fills the right half of the "currently building" band. It's cropped
- * hard — inset from the top-left and bleeding off the right and bottom edges — so
+ * hard, inset from the top-left and bleeding off the right and bottom edges, so
  * feed it a wide, landscape capture and let the interesting part sit top-left.
  */
 export type ProjectPreview = {
@@ -49,13 +49,13 @@ export type ProjectPreview = {
 
 export type CurrentProject = {
   title: string;
-  /** Free text inside the pulsing pill — "Building", "In beta", "Shipping soon". */
+  /** Free text inside the pulsing pill: "Building", "In beta", "Shipping soon". */
   status: string;
   /** Set in full ink, straight after the project name. The claim. */
   tagline: string;
   /** Drops to muted behind it. The elaboration nobody has to read. */
   description: string;
-  /** Empty string while there's nothing worth linking to — the button disappears. */
+  /** Empty string while there's nothing worth linking to; the button disappears. */
   href: string;
   stack: readonly string[];
   /** Omit and the band collapses to one column instead of showing an empty panel. */
@@ -69,7 +69,7 @@ export type CurrentProject = {
 
 /**
  * The one at the top of the home page. Title and tagline run together as one
- * sentence, so write the tagline as a clause: "Flowy — {tagline}".
+ * sentence, so write the tagline as a clause: "Flowy is {tagline}".
  *
  * `stack` is the iPhone app's, not the marketing site's.
  */
@@ -109,7 +109,7 @@ export const PROJECTS: Project[] = [
     title: "Ecommerce Admin + Store",
     tagline: "Multi-store platform with a public storefront API.",
     description:
-      "An admin dashboard that can run several stores at once, each exposing a public API the storefront consumes. Products, variants, orders, billboards — the whole loop.",
+      "An admin dashboard that can run several stores at once, each exposing a public API the storefront consumes. Products, variants, orders, billboards, the whole loop.",
     href: "https://ecom-dashboard-five.vercel.app/",
     year: "2024",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Stripe"],
@@ -157,7 +157,7 @@ export const PROJECTS: Project[] = [
     title: "Travel Agency",
     tagline: "A landing page built to sharpen my UI taste.",
     description:
-      "No brief, no client — just a landing page I designed and built to spend time on spacing, type and motion without a deadline attached.",
+      "No brief, no client, just a landing page I designed and built to spend time on spacing, type and motion without a deadline attached.",
     href: "https://landing-page-tan-seven.vercel.app/",
     year: "2023",
     stack: ["React", "Tailwind", "Framer Motion"],

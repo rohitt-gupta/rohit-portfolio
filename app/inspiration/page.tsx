@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-// NOTE: this list is a starting point — swap in your own picks whenever you like.
+// NOTE: this list is a starting point, so swap in your own picks whenever you like.
 const items = [
   {
     title: "shadcn/ui",

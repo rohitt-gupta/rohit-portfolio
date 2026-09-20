@@ -8,7 +8,7 @@ import { STACK } from "@/lib/stack";
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 /**
- * One wrapped run of marks — the order in `lib/stack.ts` carries the grouping that
+ * One wrapped run of marks. The order in `lib/stack.ts` carries the grouping that
  * the row labels used to spell out.
  *
  * TODO: once /toolbox exists, add an ActionLink action here pointing at it.

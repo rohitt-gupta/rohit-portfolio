@@ -39,7 +39,7 @@ export const Hero = () => {
       */}
       <div className="font-secondary text-foreground flex max-w-prose flex-col gap-5 text-[clamp(1rem,0.45rem+2.28vw,1.875rem)] leading-[1.42] font-medium tracking-[-0.02em]">
         <p>
-          I&apos;m Rohit. For the last four years I&apos;ve been building product end to end —{" "}
+          I&apos;m Rohit. For the last four years I&apos;ve been building product end to end:{" "}
           <LinkPreview url="https://nextjs.org" highlight="sky">
             React and Next.js
           </LinkPreview>{" "}
@@ -50,7 +50,7 @@ export const Hero = () => {
         </p>
         <p>
           Everyone has a superpower. <Note>For some it&apos;s music, for others sport.</Note> For me
-          it has always been computers — so most of what I make ends up in the open on{" "}
+          it has always been computers, so most of what I make ends up in the open on{" "}
           <LinkPreview url={SITE.socials.github} highlight="lilac">
             GitHub
           </LinkPreview>

@@ -3,12 +3,12 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Where a section rule meets a column rail we don't want a corner — we want a plus.
+ * Where a section rule meets a column rail we don't want a corner, we want a plus.
  * Two background-coloured bars erase both hairlines over a 24px square, then the
  * glyph sits in the gap they leave behind.
  *
  * Drawn in --rule like every other hairline, at the stroke width that renders to 1px
- * once the 24-unit viewBox is scaled into 20px (24 / 20 × 1 = 1.2) — so the plus is
+ * once the 24-unit viewBox is scaled into 20px (24 / 20 × 1 = 1.2), so the plus is
  * the same colour AND the same weight as the lines it marks.
  */
 const Cross = () => (
@@ -29,7 +29,7 @@ const Cross = () => (
 );
 
 export type SectionProps = React.ComponentPropsWithoutRef<"section"> & {
-  /** Classes on the railed column itself — padding, layout, min-height. */
+  /** Classes on the railed column itself: padding, layout, min-height. */
   innerClassName?: string;
   /** Omit the plus markers where this section meets the next. */
   hideCrosses?: boolean;
@@ -43,14 +43,14 @@ export type SectionProps = React.ComponentPropsWithoutRef<"section"> & {
  *
  *     1fr | 38px hatch | min(54rem, 100% - 76px) | 38px hatch | 1fr
  *
- * The hatch is a fixed-width band hugging the column, not the whole gutter — plain
+ * The hatch is a fixed-width band hugging the column, not the whole gutter; plain
  * background runs from there out to the viewport edge. Capping the middle track at
  * `100% - 76px` reserves room for both bands, so they never collapse and the plus
  * markers never get clipped against the screen edge.
  *
  * 54rem rather than a rounder 48rem because the contribution graph needs 781px of
  * content box in its worst case (a 54-column year); 54rem leaves 800px. Long-form
- * text doesn't get dragged out with it — body copy is capped at `max-w-prose`.
+ * text doesn't get dragged out with it; body copy is capped at `max-w-prose`.
  *
  * Each band carries only its OUTER hairline; the inner one is the column's own rail,
  * so the two can't double up into a 2px line. Rules, rails and band edges all draw

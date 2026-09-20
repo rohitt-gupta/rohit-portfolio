@@ -8,7 +8,7 @@ export const HIGHLIGHT_TONES = ["butter", "sky", "mint", "lilac", "peach"] as co
 export type HighlightTone = (typeof HIGHLIGHT_TONES)[number];
 
 /**
- * Written out rather than built from `bg-hl-${tone}` — Tailwind reads source as
+ * Written out rather than built from `bg-hl-${tone}`. Tailwind reads source as
  * plain text, so a class it can't see spelled in full never gets generated.
  */
 export const TONE_CLASS: Record<HighlightTone, string> = {
@@ -35,11 +35,11 @@ type Props = {
 
 /**
  * A word with a marker pen dragged over it. Emphasis that reads at a glance and
- * costs no extra weight, size or colour of its own — which is why it can carry
+ * costs no extra weight, size or colour of its own, which is why it can carry
  * a link inside running prose without turning the paragraph into a list of
  * blue words.
  *
- * Tones are meant to be assigned per destination and then kept — a reader picks
+ * Tones are meant to be assigned per destination and then kept. A reader picks
  * up "lilac means code" after the second one, and that only works if the
  * mapping holds across the page.
  */

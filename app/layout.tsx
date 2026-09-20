@@ -13,14 +13,14 @@ import { cn } from "@/lib/utils";
 
 import Providers from "./providers";
 
-/** Headings — the face from gentlejoseph.com. */
+/** Headings. The face from gentlejoseph.com. */
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-bricolage",
 });
 
-/** Eyebrows, labels and buttons — the face from ozzyx.xyz. */
+/** Eyebrows, labels and buttons. The face from ozzyx.xyz. */
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       {/* Extensions (password managers, colour pickers, …) inject attributes onto
-          <body> before React hydrates — suppress the resulting mismatch warning. */}
+          <body> before React hydrates, so suppress the resulting mismatch warning. */}
       <body suppressHydrationWarning>
         <Providers>
           <a

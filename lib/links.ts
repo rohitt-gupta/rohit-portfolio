@@ -1,7 +1,7 @@
 import { SITE } from "@/lib/site";
 
 /**
- * Everything the /links page points at, in one place — the link-in-bio card I can
+ * Everything the /links page points at, in one place: the link-in-bio card I can
  * paste into a profile and forget about. Socials aren't listed here: the page renders
  * them straight from SITE.socials via SOCIAL_LINKS, so adding one there is enough.
  */
@@ -10,7 +10,7 @@ export type LinkItem = {
   label: string;
   description: string;
   href: string;
-  /** Right-hand column, monospaced — a handle, a domain, a file. */
+  /** Right-hand column, monospaced: a handle, a domain, a file. */
   meta?: string;
   external?: boolean;
 };
@@ -29,7 +29,7 @@ export const SITE_PAGES: LinkItem[] = [
   },
   {
     label: "About",
-    description: "Longer form — the path here and where it's going.",
+    description: "Longer form: the path here and where it's going.",
     href: "/about",
   },
   {

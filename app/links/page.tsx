@@ -15,7 +15,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Links",
-  description: `Every way to find ${SITE.firstName} — socials, writing and the rest of the site, on one page.`,
+  description: `Every way to find ${SITE.firstName}: socials, writing and the rest of the site, on one page.`,
   alternates: { canonical: "/links" },
 };
 
@@ -72,7 +72,7 @@ export default async function LinksPage() {
 
   return (
     <>
-      {/* The only centred band on the site — this page gets pasted into a bio, so it
+      {/* The only centred band on the site. This page gets pasted into a bio, so it
           should read as a card rather than as another left-aligned article. */}
       <Section innerClassName="py-12 sm:py-16">
         <div className="flex flex-col items-center gap-6 text-center">
@@ -84,7 +84,7 @@ export default async function LinksPage() {
               {SITE.role} · {SITE.location}
             </p>
             <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed text-balance">
-              I build product end to end — TypeScript, React, Next.js and React Native. This page is
+              I build product end to end: TypeScript, React, Next.js and React Native. This page is
               every way to find me, in one place.
             </p>
           </div>
@@ -98,7 +98,7 @@ export default async function LinksPage() {
         </div>
       </Section>
 
-      {/* Glyphs only — no heading, no wordmarks, no handles. Flexed rather than gridded
+      {/* Glyphs only: no heading, no wordmarks, no handles. Flexed rather than gridded
           so the row stays full-width whatever SITE.socials ends up holding. */}
       <Section>
         <ul className="flex gap-3">

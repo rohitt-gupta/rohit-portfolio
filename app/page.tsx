@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Null when GitHub's mirror is down or rate-limited — the band just doesn't render.
+  // Null when GitHub's mirror is down or rate-limited, so the band just doesn't render.
   const contributions = await getContributions(SITE.github);
 
   return (

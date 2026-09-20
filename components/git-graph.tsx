@@ -25,7 +25,7 @@ function formatDate(date: string) {
 
 /**
  * A year of commits. At `sm` and up the whole grid fits the content column, so nothing
- * scrolls — Section sizes that column for this section's worst case, a 54-week year.
+ * scrolls. Section sizes that column for this section's worst case, a 54-week year.
  *
  * Below `sm` it has to scroll, so the scroller flips to RTL and a phone opens on the
  * most recent weeks rather than on last autumn. That flip is deliberately undone from

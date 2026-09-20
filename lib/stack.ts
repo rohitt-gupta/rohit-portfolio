@@ -1,5 +1,5 @@
 /**
- * The tools I actually open on a given week — not everything I've ever touched.
+ * The tools I actually open on a given week, not everything I've ever touched.
  *
  * One flat run rather than labelled groups. The categories were a taxonomy for my
  * benefit, not the reader's: nobody scanning this needs to be told Postgres is a

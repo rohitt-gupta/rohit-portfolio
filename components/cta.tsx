@@ -9,7 +9,7 @@ import { SITE } from "@/lib/site";
  * The last thing on the page, and the only one asking for something.
  *
  * TODO: add `cal` to SITE.socials and put a "Book a call" primary button above the
- * email — that becomes the better first action once the link exists.
+ * email. That becomes the better first action once the link exists.
  */
 export const Cta = () => {
   return (
@@ -17,8 +17,8 @@ export const Cta = () => {
       <SectionHeader eyebrow="Say hello" title="Let's build something" />
 
       <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
-        I&apos;m always up for a good problem — freelance, full-time, or just someone wanting to
-        talk through an idea. The fastest way to reach me is email, and I read all of it.
+        I&apos;m always up for a good problem: freelance, full-time, or just someone wanting to talk
+        through an idea. The fastest way to reach me is email, and I read all of it.
       </p>
 
       <div className="flex flex-wrap items-center gap-3">
