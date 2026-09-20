@@ -29,7 +29,8 @@ export default function WorkPage() {
         </div>
       </Section>
 
-      <Section>
+      {/* The band carries its own padding so the screenshot panel can bleed to the rails. */}
+      <Section innerClassName="p-0 sm:p-0">
         <CurrentProject />
       </Section>
 

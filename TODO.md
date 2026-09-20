@@ -24,8 +24,6 @@ matching `TODO:` comment, so each one is a fill-in rather than a build-from-scra
 - [ ] **Your real signature.** `components/signature.tsx` currently holds a bezier
       stand-in. Sign on paper → scan → trace (Figma image trace or `potrace`) → paste the
       `d` strings into `STROKES`, in pen order.
-- [ ] **Flowy.** `CURRENT_PROJECT` in `lib/projects.ts` is scaffolding — real tagline,
-      description, stack and a link once there's something to link to.
 - [ ] **More photos.** `SITE.photos` drives the click-to-cycle avatar; there are only two
       shots in `/public` today, so it flips between the same pair.
 - [ ] **"Some things I like"** in `app/about/page.tsx` — I guessed. Make them yours.

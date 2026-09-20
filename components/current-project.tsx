@@ -1,8 +1,15 @@
+"use client";
+
+import Image from "next/image";
 import React from "react";
 
 import { ActionLink } from "@/components/action-link";
-import { Eyebrow, Heading } from "@/components/typography";
-import { CURRENT_PROJECT } from "@/lib/projects";
+import { Highlight } from "@/components/highlight";
+import { Eyebrow } from "@/components/typography";
+import { CURRENT_PROJECT, type ProjectPreview } from "@/lib/projects";
+import { sfx } from "@/lib/sfx";
+import { TECH_LINKS } from "@/lib/tech-links";
+import { cn } from "@/lib/utils";
 
 /** Slow breathing dot. The only thing on the page that loops. */
 const LiveDot = () => (
@@ -13,55 +20,169 @@ const LiveDot = () => (
 );
 
 /**
- * The "what's he actually doing right now" band. Deliberately given more room than
- * a grid card — this is the one project worth reading a paragraph about.
+ * The screenshot half: hatch along the top and left, the shot itself running off the
+ * right edge and the bottom. Cropping it is the point — a page that carries on past
+ * the frame reads as a real thing being used, where a whole screenshot floating with
+ * margin all round reads as a thumbnail.
+ *
+ * The frame is absolutely positioned and inset NEGATIVE on two sides, so its height
+ * can never push the row: the band is exactly as tall as the column beside it and the
+ * shot is cut wherever that lands. `object-cover` from the top-left then fills that
+ * box whatever the source aspect is.
+ *
+ * The right inset is deliberately large. It isn't padding — it's how much of the shot
+ * gets carried off the edge, and a timid 1rem reads as a misaligned image rather than
+ * a deliberate crop.
+ *
+ * Only the top-left corner is rounded. The other three are off-screen.
  */
-export const CurrentProject = () => {
-  const { title, status, tagline, description, href, stack } = CURRENT_PROJECT;
+const Preview = ({
+  preview,
+  href,
+  backdrop,
+}: {
+  preview: ProjectPreview;
+  href?: string;
+  backdrop?: string;
+}) => {
+  const Frame = href ? "a" : "div";
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex items-center justify-between gap-4">
-        <Eyebrow>Currently building</Eyebrow>
-        <span className="font-secondary text-accent inline-flex items-center gap-2 text-[0.6875rem] font-medium tracking-[0.12em] uppercase">
-          <LiveDot />
-          {status}
-        </span>
-      </div>
-
-      <div className="border-connection bg-card relative overflow-hidden rounded-lg border p-6 sm:p-7">
-        {/* A wash of accent in the corner so the card reads warm without a border colour. */}
-        <div
+    <div
+      className="bg-hatch border-rule group relative min-h-56 overflow-hidden border-t sm:min-h-72 lg:min-h-0 lg:border-t-0 lg:border-l"
+      onPointerEnter={(event) => {
+        // The whole half is the hover target, not just the screenshot, so the
+        // sound and the scene arrive together wherever the pointer crosses in.
+        if (event.pointerType !== "touch") sfx.hover();
+      }}
+    >
+      {/* The hatch is the resting state; hovering trades it for the photograph
+          underneath the shot. Mounted at zero opacity rather than swapped in on
+          hover, so the first hover is not a blank band waiting on a fetch. */}
+      {backdrop ? (
+        <Image
           aria-hidden
-          className="from-accent-soft pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-radial to-transparent opacity-60"
+          alt=""
+          src={backdrop}
+          fill
+          sizes="(max-width: 1024px) 100vw, 640px"
+          className="object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
         />
-        <div className="relative flex flex-col gap-3">
-          <Heading>{title}</Heading>
-          <p className="text-foreground text-[0.9375rem] leading-relaxed font-medium">{tagline}</p>
-          <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
-            {description}
-          </p>
+      ) : null}
+      <Frame
+        {...(href && {
+          href,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          "aria-hidden": true,
+          tabIndex: -1,
+        })}
+        className="absolute top-6 -right-10 -bottom-10 left-6 sm:top-8 sm:left-8 lg:-right-24"
+      >
+        <div className="border-connection bg-card relative size-full overflow-hidden rounded-tl-xl border shadow-[0_24px_48px_-28px_var(--well-shadow)]">
+          {/* The shot leans in a little while the scene comes up behind it. From
+              the top-left, matching object-left-top, so the zoom pushes further
+              past the crop rather than drifting the whole page sideways. The
+              frame itself stays put — its geometry is what makes the bleed read
+              as deliberate. */}
+          <Image
+            src={preview.src}
+            alt={preview.alt}
+            fill
+            sizes="(max-width: 1024px) 120vw, 640px"
+            className="origin-top-left object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          />
+        </div>
+      </Frame>
+    </div>
+  );
+};
 
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            {stack.map((tech) => (
-              <span
-                key={tech}
-                className="font-secondary text-muted-foreground border-connection rounded-full border px-2.5 py-1 text-[0.6875rem] tracking-wide"
-              >
-                {tech}
-              </span>
+/**
+ * The "what's he actually doing right now" band — the one project worth reading a
+ * paragraph about, so it gets the whole width rather than a tile in the work grid.
+ *
+ * Split 40/60 at `lg`, the thing itself taking the larger half. That ratio is the
+ * whole design: the screenshot carries the section and the copy is a caption hung
+ * beside it, which is why the prose here sits at body scale rather than the hero's.
+ * An even split with display-size type gave both halves too little — a cramped
+ * 30-character measure next to a screenshot too small to read.
+ *
+ * The section hands its padding over (`innerClassName="p-0 sm:p-0"` on the Section) so
+ * the panel can reach the column rails and the hatch behind the screenshot lines up
+ * with the same diagonals running down the page gutters.
+ */
+export const CurrentProject = () => {
+  const { title, status, tagline, description, href, stack, preview, backdrop } = CURRENT_PROJECT;
+
+  return (
+    <div
+      className={cn(
+        "grid",
+        preview && "lg:min-h-[22rem] lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]",
+      )}
+    >
+      <div className="flex flex-col gap-5 px-5 py-10 sm:px-8 sm:py-12 lg:pt-8 lg:pr-7 lg:pb-10">
+        <div className="flex items-center justify-between gap-3">
+          <Eyebrow>Now</Eyebrow>
+          <span className="font-secondary text-accent inline-flex items-center gap-2 text-[0.6875rem] font-medium tracking-[0.12em] uppercase">
+            <LiveDot />
+            {status}
+          </span>
+        </div>
+
+        {/*
+          Body scale, not hero scale. The claim stays in full ink and the elaboration
+          drops to muted behind it — the same two-tone the hero bio uses — but at 15/16px,
+          because this column is 40% of an already-capped 54rem and anything larger sets
+          five words to a line. The project name is a marker-pen highlight rather than a
+          heading, so the whole thing stays one sentence you can read.
+        */}
+        <p className="font-secondary text-foreground text-[0.9375rem] leading-[1.6] font-medium tracking-[-0.01em] lg:text-base">
+          <Highlight tone="peach" href={href || undefined}>
+            {title}
+          </Highlight>{" "}
+          — {tagline} <span className="text-muted-foreground font-normal">{description}</span>
+        </p>
+
+        {/* `mt-auto` drops this to the floor of the column. The gap it opens up under
+            short copy is deliberate — the band is framed by its rules, and the button
+            wants to sit on the bottom one. */}
+        <div className="mt-auto flex flex-col items-start gap-4 pt-6">
+          <div className="text-faint font-secondary flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.6875rem] tracking-wide">
+            {stack.map((tech, i) => (
+              <React.Fragment key={tech}>
+                {i > 0 ? <span aria-hidden>·</span> : null}
+                {TECH_LINKS[tech] ? (
+                  <a
+                    href={TECH_LINKS[tech]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-accent transition-colors"
+                  >
+                    {tech}
+                  </a>
+                ) : (
+                  <span>{tech}</span>
+                )}
+              </React.Fragment>
             ))}
           </div>
 
           {href ? (
-            <div className="mt-3">
-              <ActionLink href={href} variant="outline" external>
-                Take a look
-              </ActionLink>
-            </div>
+            <ActionLink
+              href={href}
+              variant="outline"
+              external
+              className="bg-card shadow-[0_1px_2px_var(--well-shadow)]"
+            >
+              Check it out
+            </ActionLink>
           ) : null}
         </div>
       </div>
+
+      {preview ? <Preview preview={preview} href={href || undefined} backdrop={backdrop} /> : null}
     </div>
   );
 };
