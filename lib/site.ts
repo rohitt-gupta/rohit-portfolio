@@ -14,7 +14,13 @@ export const SITE = {
   email: "pta.rohit28@gmail.com",
   avatar: "/pic1.jpeg",
   /** Every photo here joins the click-to-cycle rotation in the hero. Add more, it picks them up. */
-  photos: ["/pic1.jpeg", "/pic4.jpg"],
+  /**
+   * The stack the avatar on the home page cycles through. Square crops, 640px,
+   * because the toy renders at 128 and `object-cover` would throw away
+   * everything outside the square anyway. Framed head-and-shoulders on the face:
+   * at 128px a full-body shot is a person-shaped smudge.
+   */
+  photos: ["/pic1.jpeg", "/pic4.jpg", "/me-garden.jpg", "/me-rooftop.jpg", "/me-street.jpg"],
   resume: "https://drive.google.com/file/d/1-1LW0ArT3ujaIBx0Le7zKQ_IEimRCxuA/view?usp=sharing",
   github: "rohitt-gupta",
   socials: {
