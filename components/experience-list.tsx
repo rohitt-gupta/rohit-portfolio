@@ -1,46 +1,17 @@
 import React from "react";
 
+import { ExperienceRow } from "@/components/experience-row";
 import { TechChip } from "@/components/tech-chip";
 import { type Company, EXPERIENCE } from "@/lib/experience";
 import { cn } from "@/lib/utils";
 
-/**
- * A tracked label with a hairline running out to the right edge. The device
- * gentlejoseph.com uses to open a sub-block. It separates without a heading
- * weight, which is what you want this far down a nested list.
- */
-const RuledLabel = ({ children }: { children: React.ReactNode }) => (
-  <p className="font-secondary text-faint flex items-baseline gap-3 text-[0.625rem] tracking-[0.2em] uppercase">
-    <span className="shrink-0">{children}</span>
-    <span aria-hidden className="bg-rule h-px flex-1" />
-  </p>
-);
-
-/**
- * One measure, shared by every block of copy in an entry: the blurb, the summary
- * and the highlights all break on the same right edge, a little inside the column
- * the tech chips run to.
- *
- * A rem value rather than `max-w-prose`, which was here before and was wrong twice
- * over. `prose` is 65ch, and ch is the width of a zero, far wider than an average
- * character in this face: 65ch at 16px is 690px, which takes about 104 characters
- * of 14px body text, not 65. And because ch scales with font-size, the same class
- * on the 14px paragraph and the 16px highlights wrapper resolved 85px apart. A rem
- * is the same number wherever it is written, so the two sides cannot drift.
- */
-const MEASURE = "max-w-[44rem]";
-
-const Prose = ({ children }: { children: React.ReactNode }) => (
-  <p className={cn("text-muted-foreground text-sm leading-relaxed", MEASURE)}>{children}</p>
-);
-
 /** Dot-marked list. One marker style, since there's only one kind of list here. */
 const Bullets = ({ items }: { items: string[] }) => (
-  <ul className="flex flex-col gap-2">
+  <ul className="flex flex-col gap-2.5">
     {items.map((item) => (
       <li
         key={item}
-        className="text-muted-foreground relative pl-4 text-sm leading-relaxed before:absolute before:top-[0.6em] before:left-0 before:size-1 before:rounded-full before:bg-current/40"
+        className="text-muted-foreground relative pl-4 text-[0.9375rem] leading-relaxed before:absolute before:top-[0.62em] before:left-0 before:size-1 before:rounded-full before:bg-current/40"
       >
         {item}
       </li>
@@ -48,106 +19,128 @@ const Bullets = ({ items }: { items: string[] }) => (
   </ul>
 );
 
-function CompanyBlock({ company }: { company: Company }) {
-  const multiple = company.positions.length > 1;
+/**
+ * A tracked label with a hairline running out to the right edge. The device
+ * gentlejoseph.com uses to open a sub-block. It separates without a heading
+ * weight, which is what you want this far down a nested list.
+ */
+const RuledLabel = ({ children }: { children: React.ReactNode }) => (
+  <p className="font-secondary text-faint flex items-center gap-3 text-[0.625rem] tracking-[0.2em] uppercase">
+    <span className="shrink-0">{children}</span>
+    <span aria-hidden className="bg-rule h-px flex-1" />
+  </p>
+);
+
+/** Rendered outside the panel, so a collapsed row still shows the stack. */
+const StackChips = ({ company }: { company: Company }) => {
   const uid = company.company.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-  /**
-   * The line above the name carries everything factual, so the name itself can
-   * just be the name. With one position its dates live here; with several, the
-   * span lives here and each position keeps its own on the right.
-   */
-  const meta = [
-    company.period ?? company.positions[0].period,
-    company.employment,
-    company.location && company.mode
-      ? `${company.location} (${company.mode})`
-      : (company.location ?? company.mode),
-  ].filter(Boolean);
+  return (
+    <ul className="flex flex-wrap gap-2">
+      {company.stack?.map((tech) => (
+        <li key={tech}>
+          <TechChip
+            name={tech}
+            uid={`${uid}-${tech.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+            className="text-muted-foreground text-xs"
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-  /**
-   * With one position and nothing written about it, the whole list is empty
-   * markup, and an empty flex child still collects a gap. Skip it, or the four
-   * bare entries sit in noticeably more air than the ones carrying content.
-   */
-  const hasPositionDetail = company.positions.some((p) => p.summary || p.highlights?.length);
-  const showPositions = multiple || hasPositionDetail;
+/**
+ * The inside of one card, rendered on the server and handed to the client row as
+ * children. That is what keeps TechChip, and the brand marks it pulls in, out of
+ * the client bundle: the row only reveals HTML that was already drawn.
+ *
+ * Copy runs the full width of the card rather than sitting at a reading measure
+ * of its own. The card is the measure now.
+ */
+function CompanyBody({ company }: { company: Company }) {
+  const multiple = company.positions.length > 1;
 
   return (
-    <li className="flex flex-col gap-3">
-      <div className="flex flex-col gap-1.5">
-        <p className="text-faint font-mono text-[0.6875rem] tracking-[0.08em] uppercase">
-          {meta.join("  ·  ")}
-        </p>
-        {/* Brand casing kept as written: "fynk" and "mroads" are lowercase on
-            purpose, and the display face carries the hierarchy without shouting. */}
-        <h3 className="font-display text-foreground text-xl font-semibold tracking-[-0.025em]">
-          {company.company}
-        </h3>
-        {!multiple ? (
-          <p className="text-foreground text-sm font-medium">{company.positions[0].title}</p>
-        ) : null}
-      </div>
-
-      {company.blurb ? <Prose>{company.blurb}</Prose> : null}
-
-      {company.stack?.length ? (
-        <ul className="flex flex-wrap gap-2 pt-0.5">
-          {company.stack.map((tech) => (
-            <li key={tech}>
-              <TechChip
-                name={tech}
-                uid={`${uid}-${tech.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                className="text-muted-foreground text-xs"
-              />
-            </li>
-          ))}
-        </ul>
+    <div className="flex flex-col gap-5">
+      {company.blurb ? (
+        <p className="text-muted-foreground text-[0.9375rem] leading-relaxed">{company.blurb}</p>
       ) : null}
 
       {/* Several positions get a rail with a node each, so a promotion inside one
           company reads as one run rather than as separate jobs. */}
-      {showPositions ? (
-        <ol className={cn("flex flex-col", multiple && "border-rule mt-2 gap-8 border-l pl-6")}>
-          {company.positions.map((position) => (
-            <li key={position.title} className="relative flex flex-col gap-2">
-              {multiple ? (
-                <>
-                  <span
-                    aria-hidden
-                    className="border-connection bg-background absolute top-[0.3rem] -left-[29px] size-2.5 rounded-full border"
-                  />
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h4 className="text-foreground text-sm font-medium">{position.title}</h4>
-                    <span className="text-faint shrink-0 font-mono text-[0.6875rem] tracking-[0.08em] uppercase">
-                      {position.period}
-                    </span>
-                  </div>
-                </>
-              ) : null}
-
-              {position.summary ? <Prose>{position.summary}</Prose> : null}
-
-              {position.highlights?.length ? (
-                <div className={cn("mt-2 flex flex-col gap-3", MEASURE)}>
-                  <RuledLabel>Highlights</RuledLabel>
-                  <Bullets items={position.highlights} />
+      <ol className={cn("flex flex-col", multiple && "border-rule gap-7 border-l pl-6")}>
+        {company.positions.map((position) => (
+          <li key={position.title} className="relative flex flex-col gap-3">
+            {multiple ? (
+              <>
+                <span
+                  aria-hidden
+                  className="border-connection bg-background absolute top-[0.3rem] -left-[29px] size-2.5 rounded-full border"
+                />
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h4 className="text-foreground text-sm font-medium">{position.title}</h4>
+                  <span className="text-faint shrink-0 font-mono text-[0.6875rem] tracking-[0.08em] uppercase">
+                    {position.period}
+                  </span>
                 </div>
-              ) : null}
-            </li>
-          ))}
-        </ol>
-      ) : null}
-    </li>
+              </>
+            ) : null}
+
+            {position.summary ? (
+              <p className="text-muted-foreground text-[0.9375rem] leading-relaxed">
+                {position.summary}
+              </p>
+            ) : null}
+
+            {position.highlights?.length ? (
+              <div className="mt-1 flex flex-col gap-3">
+                <RuledLabel>Highlights</RuledLabel>
+                <Bullets items={position.highlights} />
+              </div>
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }
 
-/** The /work experience list. Structure borrowed from gentlejoseph.com. */
+/**
+ * One panel, a row per company, each opening onto its own detail. Modelled on
+ * swamii.me, which is where the shape comes from: a tile, the name, a pill for
+ * the arrangement, the dates underneath, a chevron at the far end.
+ *
+ * Collapsed by default except the current role. The write-ups run long, and
+ * someone scanning for where you have worked should not have to scroll past
+ * forty bullets to find out.
+ */
 export function ExperienceList() {
   return (
-    <ol className="flex flex-col gap-12">
-      {EXPERIENCE.map((company) => (
-        <CompanyBlock key={company.company} company={company} />
+    <ol className="border-connection divide-connection bg-card/50 divide-y overflow-hidden rounded-2xl border">
+      {EXPERIENCE.map((company, index) => (
+        <li key={company.company}>
+          <ExperienceRow
+            name={company.company}
+            mark={company.mark}
+            logo={company.logo}
+            tone={company.tone}
+            badge={company.employment}
+            role={company.positions.length === 1 ? company.positions[0].title : undefined}
+            meta={[
+              company.period ?? company.positions[0].period,
+              company.location && company.mode
+                ? `${company.location} (${company.mode})`
+                : (company.location ?? company.mode),
+            ]
+              .filter(Boolean)
+              .join("  ·  ")}
+            chips={company.stack?.length ? <StackChips company={company} /> : null}
+            defaultOpen={index === 0}
+          >
+            <CompanyBody company={company} />
+          </ExperienceRow>
+        </li>
       ))}
     </ol>
   );

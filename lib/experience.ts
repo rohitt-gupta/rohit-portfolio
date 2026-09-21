@@ -1,5 +1,7 @@
 /** Companies and education. Shown on /work and /about. */
 
+import type { HighlightTone } from "@/components/highlight";
+
 export type Position = {
   title: string;
   period: string;
@@ -11,6 +13,29 @@ export type Position = {
 
 export type Company = {
   company: string;
+  /**
+   * The tile beside the name on /work. Tones come from the highlight palette, so
+   * the section is coloured out of the page's own five rather than a new set.
+   * Assigned once and kept, like the highlights: a reader who notices peach means
+   * fynk only benefits if it stays peach.
+   */
+  tone: HighlightTone;
+  /** One or two characters for that tile. Defaults to the first of `company`. */
+  mark?: string;
+  /**
+   * The real logo, where the company publishes one that survives a 44px square.
+   * Self-hosted under /logos rather than hotlinked, so the page does not depend
+   * on someone else's CDN. Without one the tile falls back to `mark`, which is
+   * the honest answer: a wordmark squeezed into a square is a smudge, and a
+   * generic building glyph is worse than an initial.
+   */
+  logo?: {
+    src: string;
+    /** Fills the tile. For marks that ship their own background, like Steerlab. */
+    bleed?: boolean;
+    /** Flat dark ink on transparent, so it has to flip on a dark ground. */
+    invert?: boolean;
+  };
   /** One line on what the company does. Worth setting for names a reader won't know. */
   blurb?: string;
   /** What the work was built with. Company-level: it spans every position here. */
@@ -36,6 +61,8 @@ export type Company = {
 export const EXPERIENCE: Company[] = [
   {
     company: "fynk",
+    logo: { src: "/logos/fynk.svg", invert: true },
+    tone: "peach",
     blurb: "Contract lifecycle management: drafting, negotiation and signing in one place.",
     employment: "Full-time",
     location: "Vienna, Austria",
@@ -74,12 +101,17 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Launchbox Studio",
+    logo: { src: "/logos/launchbox.svg", invert: true },
+    tone: "butter",
+    mark: "LS",
     employment: "Self-employed",
     mode: "Remote",
     positions: [{ title: "Founder", period: "Apr 2024 → Present" }],
   },
   {
     company: "Steerlab",
+    logo: { src: "/logos/steerlab.png", bleed: true },
+    tone: "mint",
     blurb: "AI that automates RFP and vendor-questionnaire responses for PreSales teams.",
     employment: "Part-time",
     location: "Paris, France",
@@ -99,6 +131,8 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Frontier AI Lab",
+    tone: "lilac",
+    mark: "F",
     blurb: "One of the frontier labs. Which one is under NDA, so it goes unnamed here.",
     employment: "Full-time",
     mode: "Remote",
@@ -136,6 +170,9 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "AI Acquisition",
+    logo: { src: "/logos/ai-acquisition.png", invert: true },
+    tone: "sky",
+    mark: "AI",
     blurb: "AI agents and automation systems for founders and service businesses.",
     employment: "Full-time",
     location: "Dubai, UAE",
@@ -173,6 +210,8 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Alpine",
+    logo: { src: "/logos/alpine.svg", bleed: true },
+    tone: "mint",
     blurb:
       "A productivity suite in one workspace: documents, slides, tasks, projects and messaging.",
     location: "New York, United States",
@@ -211,6 +250,8 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "mroads",
+    logo: { src: "/logos/mroads.png" },
+    tone: "butter",
     employment: "Full-time",
     location: "Hyderabad, India",
     mode: "Remote",
