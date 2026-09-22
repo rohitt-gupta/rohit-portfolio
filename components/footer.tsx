@@ -12,7 +12,12 @@ import { SITE } from "@/lib/site";
 
 export const Footer = () => {
   return (
-    <Section className="border-b-0" hideCrosses innerClassName="py-10 sm:py-12">
+    /* The extra bottom padding is room for the sticky "Book a call" pill, which is
+       fixed to this corner of the viewport: without it, the last thing the page
+       scrolls to is the sound and theme toggles sitting underneath the pill. Both
+       breakpoints spell out `pb`, since tailwind-merge only drops the `py` that this
+       one actually conflicts with. */
+    <Section className="border-b-0" hideCrosses innerClassName="py-10 pb-28 sm:py-12 sm:pb-28">
       <footer className="flex flex-col gap-8">
         <div className="flex flex-wrap items-center gap-5">
           <Link

@@ -14,8 +14,10 @@ matching `TODO:` comment, so each one is a fill-in rather than a build-from-scra
 - [ ] **`/toolbox` page.** Once it exists, add an `ActionLink` action to the
       `SectionHeader` in `components/stack-section.tsx`. The home stack stays a summary
       and Toolbox gets the long list.
-- [ ] **Cal.com link.** Add `cal` to `SITE.socials` in `lib/site.ts`; then add the primary
-      "Book a call" button above the email in `components/cta.tsx`.
+- [ ] **"Book a call" in the CTA.** The link and the overlay both exist now
+      (`SITE.socials.cal`, `components/book-a-call.tsx`); what's left is deciding whether
+      the CTA in `components/cta.tsx` should carry the same trigger as a primary button
+      above the email, or whether the sticky pill is enough on its own.
 - [ ] **Instagram.** Add `instagram` to `SITE.socials`. The footer and CTA pick it up on
       their own, no component changes needed.
 

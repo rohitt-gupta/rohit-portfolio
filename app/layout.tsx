@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
 
+import { BookACall } from "@/components/book-a-call";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { SITE, SITE_URL } from "@/lib/site";
@@ -74,6 +75,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main id="main">{children}</main>
           <Footer />
+          {/* Last in the tree so it comes last in the tab order too: a pill that
+              follows the scroll shouldn't sit between the header and the page. */}
+          <BookACall />
         </Providers>
         <Analytics />
       </body>

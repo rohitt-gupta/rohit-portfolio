@@ -48,7 +48,20 @@ export const SITE = {
     linkedin: "https://www.linkedin.com/in/rohit-gupta28/",
     x: "https://x.com/whyrohitwhy",
     // TODO: add `instagram` here and it shows up in the footer + CTA automatically.
-    // TODO: add `cal` (https://cal.com/…) here to switch the CTA's primary button to booking.
+    /**
+     * Booking. The full URL, so it stays a link anyone can click or paste; the
+     * embed wants the slug on its own and `CAL_LINK` below peels it off.
+     */
+    cal: "https://cal.com/rohit.gupta/quick-chat-w-rohit",
   },
   repo: "https://github.com/rohitt-gupta/rohit-portfolio",
 } as const;
+
+/**
+ * `rohit.gupta/quick-chat-w-rohit` — the same booking page as `SITE.socials.cal`, in
+ * the form Cal's embed takes. Derived rather than written out twice, so changing the
+ * URL above is the only edit needed.
+ */
+export const CAL_LINK = SITE.socials.cal
+  .replace(/^https?:\/\/(app\.)?cal\.com\//, "")
+  .replace(/\/+$/, "");

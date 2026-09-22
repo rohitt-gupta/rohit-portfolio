@@ -8,8 +8,10 @@ import { SITE } from "@/lib/site";
 /**
  * The last thing on the page, and the only one asking for something.
  *
- * TODO: add `cal` to SITE.socials and put a "Book a call" primary button above the
- * email. That becomes the better first action once the link exists.
+ * TODO: the booking overlay now exists in `components/book-a-call.tsx`, as the sticky
+ * pill in the corner. Lifting its trigger out of that file would let this section carry
+ * a "Book a call" primary button above the email too — worth doing only if the pill
+ * turns out not to be enough on its own.
  */
 export const Cta = () => {
   return (
