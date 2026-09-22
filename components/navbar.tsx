@@ -57,11 +57,21 @@ export const Navbar = () => {
   }, [open]);
 
   return (
-    // The `sm:` repeat is not redundant: Section's own default is
-    // `py-10 sm:py-14`, and tailwind-merge only drops a class this one actually
-    // conflicts with. Passing `py-4` alone leaves `sm:py-14` standing, which is
-    // exactly how the tablet header ended up at 56px of padding.
-    <Section innerClassName="py-4 sm:py-4 lg:py-6">
+    <Section
+      // Sticky only on a phone, where the menu behind the toggle is the only way
+      // to get around and scrolling back up to reach it is the whole cost. From
+      // `sm` the links are always on screen, so it goes back to scrolling away.
+      //
+      // Needs a ground of its own once it floats, or the page runs underneath
+      // it. z-30 sits above the page and below both the booking pill and the
+      // skip link, which has to stay reachable over the top of it.
+      className="bg-background sticky top-0 z-30 sm:static"
+      // The `sm:` repeat is not redundant: Section's own default is
+      // `py-10 sm:py-14`, and tailwind-merge only drops a class this one
+      // actually conflicts with. Passing `py-4` alone leaves `sm:py-14`
+      // standing, which is exactly how the tablet header reached 56px.
+      innerClassName="py-4 sm:py-4 lg:py-6"
+    >
       <nav className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-0 sm:gap-y-4">
         {/* Dropped on a phone, where the signature says the same name in the
             same hand and the menu carries Home.
