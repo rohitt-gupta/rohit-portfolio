@@ -67,7 +67,7 @@ export type ExperienceRowProps = {
   /** One or two characters for the tile. Defaults to the first of `name`. */
   mark?: string;
   /** The real logo, where there is one worth showing at this size. */
-  logo?: { src: string; bleed?: boolean; invert?: boolean };
+  logo?: { src: string };
   tone: HighlightTone;
   /** The pill beside the name: Full-time, Part-time, Self-employed. */
   badge?: string;
@@ -118,17 +118,17 @@ export function ExperienceRow({
         className="hover:bg-connection/20 flex w-full cursor-pointer items-center gap-4 p-4 text-left transition-colors sm:p-5"
       >
         {/* The logo where the company publishes one, a tinted initial where it
-            does not. Tones come from the highlight palette rather than a new
-            set, so a row without a logo still belongs to the page.
+            does not. Every logo is a square carrying its own ground, so it fills
+            the tile and the tint only shows on the rows without one; the tones
+            come from the highlight palette so those still belong to the page.
 
-            A plain img, not next/image: these are 1 to 11 KB and already the
-            right size, so the optimiser has nothing to win, and routing an SVG
-            through it would mean turning on dangerouslyAllowSVG for one file. */}
+            A plain img, not next/image: these are 2 to 11 KB and already the
+            size they are drawn at, so the optimiser has nothing to win. */}
         <span
           aria-hidden
           className={cn(
             "text-foreground/80 font-display grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl text-base font-semibold",
-            !logo?.bleed && TONE_CLASS[tone],
+            !logo && TONE_CLASS[tone],
           )}
         >
           {logo ? (
@@ -138,10 +138,7 @@ export function ExperienceRow({
               alt=""
               loading="lazy"
               decoding="async"
-              className={cn(
-                logo.bleed ? "size-full object-cover" : "size-6 object-contain",
-                logo.invert && "dark:invert",
-              )}
+              className="size-full object-cover"
             />
           ) : (
             (mark ?? name.charAt(0))

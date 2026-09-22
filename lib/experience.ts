@@ -28,14 +28,14 @@ export type Company = {
    * on someone else's CDN. Without one the tile falls back to `mark`, which is
    * the honest answer: a wordmark squeezed into a square is a smudge, and a
    * generic building glyph is worse than an initial.
+   *
+   * Every one is a square that carries its own background, so they fill the tile
+   * and the set reads as one row of brand avatars. That is the whole reason to
+   * prefer these over the marks on the companies' own sites, which come as bare
+   * glyphs on transparency and each needed their own tint and inversion to sit
+   * on the page.
    */
-  logo?: {
-    src: string;
-    /** Fills the tile. For marks that ship their own background, like Steerlab. */
-    bleed?: boolean;
-    /** Flat dark ink on transparent, so it has to flip on a dark ground. */
-    invert?: boolean;
-  };
+  logo?: { src: string };
   /** One line on what the company does. Worth setting for names a reader won't know. */
   blurb?: string;
   /** What the work was built with. Company-level: it spans every position here. */
@@ -61,7 +61,7 @@ export type Company = {
 export const EXPERIENCE: Company[] = [
   {
     company: "fynk",
-    logo: { src: "/logos/fynk.svg", invert: true },
+    logo: { src: "/logos/fynk.jpg" },
     tone: "peach",
     blurb: "Contract lifecycle management: drafting, negotiation and signing in one place.",
     employment: "Full-time",
@@ -101,7 +101,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Launchbox Studio",
-    logo: { src: "/logos/launchbox.svg", invert: true },
+    logo: { src: "/logos/launchbox.jpg" },
     tone: "butter",
     mark: "LS",
     employment: "Self-employed",
@@ -110,7 +110,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Steerlab",
-    logo: { src: "/logos/steerlab.png", bleed: true },
+    logo: { src: "/logos/steerlab.png" },
     tone: "mint",
     blurb: "AI that automates RFP and vendor-questionnaire responses for PreSales teams.",
     employment: "Part-time",
@@ -170,7 +170,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "AI Acquisition",
-    logo: { src: "/logos/ai-acquisition.png", invert: true },
+    logo: { src: "/logos/ai-acquisition.jpg" },
     tone: "sky",
     mark: "AI",
     blurb: "AI agents and automation systems for founders and service businesses.",
@@ -210,7 +210,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Alpine",
-    logo: { src: "/logos/alpine.svg", bleed: true },
+    logo: { src: "/logos/alpine.jpg" },
     tone: "mint",
     blurb:
       "A productivity suite in one workspace: documents, slides, tasks, projects and messaging.",
@@ -250,7 +250,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "mroads",
-    logo: { src: "/logos/mroads.png" },
+    logo: { src: "/logos/mroads.jpg" },
     tone: "butter",
     employment: "Full-time",
     location: "Hyderabad, India",
