@@ -16,6 +16,7 @@ const LINKS = [
   { title: "About", href: "/about" },
   { title: "Work", href: "/work" },
   { title: "Blog", href: "/blog" },
+  { title: "Inspiration", href: "/inspiration" },
 ];
 
 function isActivePath(pathname: string, href: string) {
@@ -118,7 +119,7 @@ export const Navbar = () => {
 
             max-height rather than the grid-rows 0fr/1fr trick, which collapses
             reliably but would not expand again here: the panel stuck at zero on
-            the way open. A cap comfortably above one row of links costs nothing
+            the way open. A cap comfortably above two rows of links costs nothing
             and animates both ways. All of it is CSS, so the `sm:` variants land
             later in the sheet than the state classes and hold the panel open
             without an important flag or a media query in JavaScript.
@@ -135,7 +136,11 @@ export const Navbar = () => {
           )}
         >
           <div>
-            <div className="flex items-center gap-4 pt-4 sm:pt-0">
+            {/* Wraps, because five links do not fit one 280px row: at 320px
+                "Inspiration" runs past the column and the panel's overflow-hidden
+                clips it rather than scrolling. Two rows of links still sit inside the
+                max-height below. */}
+            <div className="flex flex-wrap items-center gap-4 pt-4 sm:pt-0">
               {LINKS.map((link) => {
                 const active = isActivePath(pathname, link.href);
                 return (

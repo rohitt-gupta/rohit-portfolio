@@ -9,8 +9,9 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { ProseLink } from "@/components/prose-link";
 import { Section } from "@/components/section";
-import { Eyebrow, Heading } from "@/components/typography";
+import { Eyebrow, Heading, SectionHeader } from "@/components/typography";
 
 export const metadata: Metadata = {
   title: "Inspiration",
@@ -139,6 +140,99 @@ const items = [
   },
 ];
 
+/**
+ * The sites this one is built out of, and the exact thing taken from each.
+ *
+ * Named rather than vaguely gestured at, because "inspired by" with no specifics is
+ * how people describe work they copied. Every line here points at code in this repo
+ * that carries the same credit in a comment, so the two cannot drift apart.
+ */
+const borrowed = [
+  {
+    title: "braydoncoyer.dev",
+    href: "https://www.braydoncoyer.dev",
+    took: "The debossed dish the avatar sits in, the prints scattered across the about page, and half the 45° hatch running down the gutters.",
+  },
+  {
+    title: "ozzyx.xyz",
+    href: "https://www.ozzyx.xyz",
+    took: "Space Grotesk on the small labels, the marker-pen highlights, the bio set large and skimmable, and the logo-in-front-of-the-name links.",
+  },
+  {
+    title: "gentlejoseph.com",
+    href: "https://gentlejoseph.com",
+    took: "Bricolage Grotesque on anything that shouts, and the tracked label with a hairline running out to the edge.",
+  },
+  {
+    title: "swamii.me",
+    href: "https://swamii.me",
+    took: "The hand-drawn arrow in the margin, and the shape of the experience list: tile, name, pill, dates, chevron.",
+  },
+  {
+    title: "jhey.dev",
+    href: "https://www.jhey.dev",
+    took: "Signing the page, and having the name write itself on rather than fade in.",
+  },
+  {
+    title: "zagrodzki.me",
+    href: "https://www.zagrodzki.me",
+    took: "The band for whatever I'm working on right now, which is the reason that section exists, and the shape of the about page.",
+  },
+  {
+    title: "maximeheckel.com",
+    href: "https://maximeheckel.com",
+    took: "Putting the introduction on the home page at all, instead of saving it for an about page.",
+  },
+  {
+    title: "baothiento.com",
+    href: "https://www.baothiento.com",
+    took: "Sound. Between this and Dominik Martin's, the idea that a page can answer the pointer out loud.",
+  },
+  {
+    title: "dominikmart.in",
+    href: "https://dominikmart.in",
+    took: "The other half of that, plus a lesson in how quiet an interface sound has to be to survive a second visit.",
+  },
+  {
+    title: "tailwindcss.com",
+    href: "https://tailwindcss.com",
+    took: "The hatched gutters running down both sides of every section — though only the outer two rules, not the ones inside the grid.",
+  },
+];
+
+/**
+ * The rest of the list: sites I keep open in a tab rather than ones I can point at a
+ * line of this repo and say "that came from there".
+ *
+ * Kept separate from `borrowed` on purpose. Lumping the two together would either
+ * claim I took something from all of them or bury the four or five I actually did.
+ */
+const admired = [
+  {
+    title: "manuarora.in",
+    href: "https://www.manuarora.in",
+    note: "Manu Arora, who is above this list for a reason",
+  },
+  {
+    title: "kishoregunnam.com",
+    href: "https://www.kishoregunnam.com",
+    note: "Kishore Gunnam, who co-founded Aceternity and built Ace Builder",
+  },
+  {
+    title: "itsbatu.com",
+    href: "https://www.itsbatu.com/#windmill",
+    note: "Batu — go for the windmill",
+  },
+  { title: "aidenybai.com", href: "https://www.aidenybai.com", note: "Aiden Bai" },
+  { title: "stusmith.co", href: "https://stusmith.co", note: "Stu Smith, designer in Austin" },
+  {
+    title: "work.mariusz.cc",
+    href: "https://work.mariusz.cc/#about",
+    note: "Mariusz Cieśla, product and design engineer in Berlin",
+  },
+  { title: "zilvestro.com", href: "https://zilvestro.com", note: "Silvestro, who founded Affonso" },
+];
+
 export default function InspirationPage() {
   return (
     <>
@@ -150,6 +244,67 @@ export default function InspirationPage() {
             The people I look up to, the websites I admire and the tools I reach for. I add to this
             whenever something makes me want to go and build.
           </p>
+          <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
+            One name goes above the list.{" "}
+            <ProseLink href="https://www.manuarora.in">Manu Arora</ProseLink> got me my first job,
+            built <ProseLink href="https://ui.aceternity.com">Aceternity UI</ProseLink> into
+            something a large part of the internet builds with, and has been the bar I have been
+            chasing since before I could write anything worth reading. Everything below is a list.
+            He is the reason there is one.
+          </p>
+        </div>
+      </Section>
+
+      <Section>
+        <div className="flex flex-col gap-7">
+          <SectionHeader eyebrow="Credits" title="Sites this one is built out of" />
+          <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
+            The sites I kept going back to while building this one. Each line is something I
+            actually took rather than a vague nod, and the code that uses it carries the same credit
+            in a comment, so the two can&apos;t drift apart.
+          </p>
+          <ul className="flex flex-col gap-5">
+            {borrowed.map((item) => (
+              <li key={item.href} className="flex flex-col gap-1">
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-display text-foreground hover:text-accent w-fit text-[0.9375rem] font-semibold tracking-[-0.02em] transition-colors"
+                >
+                  {item.title}
+                </a>
+                <p className="text-muted-foreground max-w-prose text-sm leading-relaxed">
+                  {item.took}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <Section>
+        <div className="flex flex-col gap-7">
+          <SectionHeader eyebrow="Also open in a tab" title="Sites I just like" />
+          <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
+            Nothing of mine came out of these, or nothing I can point at. They are here because they
+            are good and because a list of who you read is more honest than a list of what you use.
+          </p>
+          <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+            {admired.map((item) => (
+              <li key={item.href} className="flex flex-col gap-0.5">
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-display text-foreground hover:text-accent w-fit text-[0.9375rem] font-semibold tracking-[-0.02em] transition-colors"
+                >
+                  {item.title}
+                </a>
+                <span className="text-muted-foreground text-sm leading-relaxed">{item.note}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 

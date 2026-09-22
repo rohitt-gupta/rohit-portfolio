@@ -6,7 +6,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * A drawn signature for Rohit.
+ * A drawn signature for Rohit. The idea of signing the page, and of the name
+ * writing itself on, is jhey.dev's.
  *
  * The name is a single path, so it animates as one continuous pen motion rather than
  * pieces appearing, which is what makes it read as writing rather than assembly.

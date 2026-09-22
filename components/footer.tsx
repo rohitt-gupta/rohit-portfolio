@@ -30,6 +30,13 @@ export const Footer = () => {
           >
             Links
           </Link>
+          <Link
+            href="/inspiration"
+            {...hoverSfx()}
+            className="text-muted-foreground hover:text-accent text-sm transition-colors"
+          >
+            Inspiration
+          </Link>
           <SocialLinks />
         </div>
 

@@ -1,5 +1,7 @@
 /**
- * A very small synthesiser for interface sounds.
+ * A very small synthesiser for interface sounds, in the spirit of baothiento.com
+ * and dominikmart.in, which are where the idea of a site that answers the pointer
+ * out loud came from.
  *
  * Nothing is downloaded; every sound is generated at the moment it plays, so
  * there are no audio files to ship, cache or license. Two voices cover it: an

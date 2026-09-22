@@ -99,6 +99,8 @@ const Preview = ({
 /**
  * The "what's he actually doing right now" band: the one project worth reading a
  * paragraph about, so it gets the whole width rather than a tile in the work grid.
+ * zagrodzki.me runs the same idea on his home page, and it is the reason this
+ * section exists at all.
  *
  * Split 40/60 at `lg`, the thing itself taking the larger half. That ratio is the
  * whole design: the screenshot carries the section and the copy is a caption hung

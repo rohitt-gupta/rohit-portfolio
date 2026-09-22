@@ -16,6 +16,9 @@ const Note = ({ children }: { children: React.ReactNode }) => (
 /**
  * Face, and the shortest honest version of who I am. Everything below this section
  * is evidence for the claims made in it.
+ *
+ * maximeheckel.com is the reference for putting an intro here at all, rather than
+ * saving it for an about page; his runs longer than this one wants to.
  */
 export const Hero = () => {
   return (
