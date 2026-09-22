@@ -92,13 +92,16 @@ export const Hero = () => {
           Most of what I make ends up in the open on{" "}
           {/* Both of these ship their screenshot rather than taking Microlink's. Logged
               out, x.com serves a wall and github.com a stranger's view of the profile,
-              so the live shot is the wrong picture in both cases. Each carries its own
-              ratio: the 200x125 default would squash them. */}
+              so the live shot is the wrong picture in both cases.
+
+              Each carries its own ratio, because the 200x125 default would squash them,
+              and each file is 440px wide — twice what the card draws — rather than the
+              2000px original, which is 11KB and 17KB instead of 138KB and 144KB. */}
           <LinkPreview
             url={SITE.socials.github}
             highlight="lilac"
             isStatic
-            imageSrc="/previews/github.png"
+            imageSrc="/previews/github.webp"
             width={220}
             height={126}
           >
@@ -109,7 +112,7 @@ export const Hero = () => {
             url={SITE.socials.x}
             highlight="mint"
             isStatic
-            imageSrc="/previews/x.png"
+            imageSrc="/previews/x.webp"
             width={220}
             height={167}
           >
