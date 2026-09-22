@@ -65,8 +65,8 @@ export const Hero = () => {
       */}
       <div className="font-secondary text-foreground flex max-w-prose flex-col gap-5 text-[clamp(1rem,0.45rem+2.28vw,1.875rem)] leading-[1.42] font-medium tracking-[-0.02em]">
         <p>
-          Hey, I&apos;m Rohit! For the last five years I&apos;ve been building products on the
-          internet with{" "}
+          Hey, I&apos;m Rohit! <Note>For the last five years I&apos;ve been building</Note> products
+          on the internet with{" "}
           <MarkLink href={TECH_LINKS.React} mark="React">
             React
           </MarkLink>{" "}
