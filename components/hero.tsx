@@ -2,8 +2,8 @@ import React from "react";
 
 import { AvatarHint } from "@/components/avatar-hint";
 import { AvatarToy } from "@/components/avatar-toy";
-import { BrandIcon } from "@/components/brand-icon";
 import { LinkPreview } from "@/components/link-preview";
+import { MarkLink } from "@/components/mark-link";
 import { Heading } from "@/components/typography";
 import { SITE } from "@/lib/site";
 import { TECH_LINKS } from "@/lib/tech-links";
@@ -43,10 +43,13 @@ export const Hero = () => {
         <div className="flex flex-col gap-2 [grid-area:heading] sm:pt-1">
           <Heading as="h1">
             Product engineer,{" "}
-            {/* A display:none br leaves no break behind, so the line only splits once
-                there is room for the split to be deliberate. */}
-            <br className="hidden sm:inline" />
-            end to end.
+            {/* Broken by hand at every width, not just from `sm`. Left to wrap on its
+                own a phone puts the break inside the second clause and strands the comma
+                mid-line — "Product / engineer, from / idea to shipped." Forcing it here
+                costs a third line at 320px, where the second clause is 322px against 280
+                of column, and buys a clean two lines everywhere from 375 up. */}
+            <br />
+            from idea to shipped.
           </Heading>
           <p className="font-secondary text-muted-foreground text-[0.8125rem] tracking-wide">
             {SITE.location}
@@ -64,64 +67,52 @@ export const Hero = () => {
         <p>
           Hey, I&apos;m Rohit! For the last five years I&apos;ve been building products on the
           internet with{" "}
-          <LinkPreview url="https://nextjs.org" highlight="sky">
-            React and Next.js
-          </LinkPreview>{" "}
+          <MarkLink href={TECH_LINKS.React} mark="React">
+            React
+          </MarkLink>{" "}
+          and{" "}
+          <MarkLink href={TECH_LINKS["Next.js"]} mark="Next.js">
+            Next.js
+          </MarkLink>{" "}
           <Note>on the front, TypeScript and Node behind it, and lately a lot of</Note>{" "}
-          {/* The mark rides in front of the words, the way ozzyx.xyz sets soft machine:
-              the logo and full ink are the emphasis, so this one needs no highlight and
-              no rule under it, and the whole affordance on hover is the pair fading back
-              — which is his too, down to the curve, since it is the same one the rest of
-              this page eases on.
-
-              The mark is sized in `em` rather than at the chips' fixed 14px, because this
-              paragraph runs from 16px to 30px with the viewport and a fixed mark would
-              shrink against the words as the screen grows. */}
-          <a
-            href={TECH_LINKS["React Native"]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-[0.3em] transition-opacity duration-200 ease-(--ease-out-strong) hover:opacity-60"
-          >
-            <BrandIcon name="React Native" className="size-[0.85em]" />
-            React Native
-          </a>
+          <MarkLink href={TECH_LINKS.Expo} mark="Expo">
+            Expo
+          </MarkLink>
           <Note>. That list changes every few years.</Note>
         </p>
         <p>
           Right now I&apos;m at{" "}
-          {/* fynk gets the mark-in-front treatment too, and for the same reason: the
-              logo and full ink say "this is a place" without another highlight colour
-              entering the paragraph. A plain img rather than next/image, the way
-              `experience-row.tsx` takes them — the file is a 100px square of a few KB
-              and is already smaller than it is drawn. */}
-          <a
-            href="https://fynk.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-[0.3em] transition-opacity duration-200 ease-(--ease-out-strong) hover:opacity-60"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logos/fynk.jpg"
-              alt=""
-              aria-hidden
-              loading="lazy"
-              decoding="async"
-              className="size-[0.85em] shrink-0 rounded-[0.18em] object-cover"
-            />
+          <MarkLink href="https://fynk.com" logo="/logos/fynk.jpg">
             fynk
-          </a>
+          </MarkLink>
           <Note>
             , where I&apos;m automating the contract lifecycle with AI, from the first draft to the
             signature.
           </Note>{" "}
           Most of what I make ends up in the open on{" "}
-          <LinkPreview url={SITE.socials.github} highlight="lilac">
+          {/* Both of these ship their screenshot rather than taking Microlink's. Logged
+              out, x.com serves a wall and github.com a stranger's view of the profile,
+              so the live shot is the wrong picture in both cases. Each carries its own
+              ratio: the 200x125 default would squash them. */}
+          <LinkPreview
+            url={SITE.socials.github}
+            highlight="lilac"
+            isStatic
+            imageSrc="/previews/github.png"
+            width={220}
+            height={126}
+          >
             GitHub
           </LinkPreview>
           <Note>, and most of what I think ends up on </Note>
-          <LinkPreview url={SITE.socials.x} highlight="mint">
+          <LinkPreview
+            url={SITE.socials.x}
+            highlight="mint"
+            isStatic
+            imageSrc="/previews/x.png"
+            width={220}
+            height={167}
+          >
             X
           </LinkPreview>
           <Note>.</Note>
