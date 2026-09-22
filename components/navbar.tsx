@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 
 const LINKS = [
   { title: "Home", href: "/" },
-  { title: "Work", href: "/work" },
   { title: "About", href: "/about" },
+  { title: "Work", href: "/work" },
   { title: "Blog", href: "/blog" },
 ];
 

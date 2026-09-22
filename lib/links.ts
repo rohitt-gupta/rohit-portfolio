@@ -23,14 +23,14 @@ export const SITE_PAGES: LinkItem[] = [
     href: "/",
   },
   {
-    label: "Work",
-    description: "Projects I've shipped, and what I actually did on each.",
-    href: "/work",
-  },
-  {
     label: "About",
     description: "Longer form: the path here and where it's going.",
     href: "/about",
+  },
+  {
+    label: "Work",
+    description: "Projects I've shipped, and what I actually did on each.",
+    href: "/work",
   },
   {
     label: "Blog",
