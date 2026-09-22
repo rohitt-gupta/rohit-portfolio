@@ -27,7 +27,7 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <Section innerClassName="py-6 sm:py-8">
+    <Section innerClassName="py-5 sm:py-6">
       <nav className="grid grid-cols-[1fr_auto] items-center gap-4">
         <Link
           href="/"
