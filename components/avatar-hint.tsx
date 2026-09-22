@@ -51,11 +51,16 @@ const LINES = ["psst — that photo", "is a toy, click it"];
  * the pointer as one object rather than two. Only the text takes the pointer: the
  * box around it is left transparent to clicks so it can't shadow anything beneath.
  *
- * On a phone the note stacks — handwriting on top, arrow beneath it — and sits in the
+ * On a phone the note stacks — arrow first, handwriting under it — and sits in the
  * column beside the photo. Side by side it measures 245px, which next to a 112px photo
- * does not fit a 320px screen; stacked it is only as wide as its longest line, and the
- * arrow ends up level with the middle of the photo, pointing back into it.
- * `col-reverse` keeps the arrow first in the DOM, which is the order it is drawn in.
+ * does not fit a 320px screen; stacked it is only as wide as its longest line.
+ *
+ * Stacked, the arrow is also turned a quarter-turn's worth clockwise about its own tip.
+ * Drawn flat it falls from top-right to bottom-left, which beside the photo aims it at
+ * the floor below the frame; pivoting on the tip swings the shaft round to come in from
+ * the right instead, so it runs at the photo rather than past it, and leaves the tail
+ * sitting over the handwriting that follows. The handwriting is then indented to hang
+ * off that tail, which is what keeps the two reading as one gesture.
  *
  * Nothing here is announced — it's aria-hidden, and `AvatarToy` keeps the real label
  * for anyone not looking at the page.
@@ -67,7 +72,7 @@ export function AvatarHint({ className }: { className?: string }) {
     <div
       aria-hidden
       className={cn(
-        "text-faint pointer-events-none flex w-fit flex-col-reverse items-start gap-1 transition-colors duration-200 select-none",
+        "text-faint pointer-events-none flex w-fit flex-col items-start gap-1 transition-colors duration-200 select-none",
         "sm:flex-row",
         "hover:text-muted-foreground",
         className,
@@ -82,7 +87,7 @@ export function AvatarHint({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         preserveAspectRatio="xMidYMid meet"
-        className="h-10 w-14 shrink-0 sm:h-12 sm:w-16"
+        className="h-10 w-14 shrink-0 origin-bottom-left rotate-[28deg] sm:h-12 sm:w-16 sm:rotate-0"
       >
         {STROKES.map((stroke, i) => (
           <motion.path
@@ -105,9 +110,15 @@ export function AvatarHint({ className }: { className?: string }) {
       </svg>
 
       {/* The tilt is what keeps this reading as a margin note rather than a caption.
-          Set on the block, not the lines, so the two stay parallel. */}
+          Set on the block, not the lines, so the two stay parallel.
+
+          Shallower on a phone, where the note is already sitting at an angle under the
+          turned arrow and the full 7° reads as two things leaning against each other.
+          The 32px indent is as far right as it can hang: at 320px the column beside the
+          photo is 156px wide and the longest line measures 114px, so this leaves about
+          eight to spare before "is a toy, click it" starts breaking across lines. */}
       <motion.p
-        className="pointer-events-auto origin-left -rotate-[7deg] font-mono text-[0.625rem] leading-[1.6] tracking-wide sm:text-[0.6875rem]"
+        className="pointer-events-auto ml-8 origin-left -rotate-[3deg] font-mono text-[0.625rem] leading-[1.6] tracking-wide sm:ml-0 sm:-rotate-[7deg] sm:text-[0.6875rem]"
         initial={reduceMotion ? { opacity: 1 } : { opacity: 0, x: -6 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{
