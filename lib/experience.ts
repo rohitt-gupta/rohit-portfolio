@@ -23,6 +23,12 @@ export type Company = {
   /** One or two characters for that tile. Defaults to the first of `company`. */
   mark?: string;
   /**
+   * The company's own site, linked from its name. Left off where there is
+   * nothing to point at: the lab is under NDA, and linking it would undo the
+   * anonymity the whole entry is written around.
+   */
+  url?: string;
+  /**
    * The real logo, where the company publishes one that survives a 44px square.
    * Self-hosted under /logos rather than hotlinked, so the page does not depend
    * on someone else's CDN. Without one the tile falls back to `mark`, which is
@@ -61,6 +67,7 @@ export type Company = {
 export const EXPERIENCE: Company[] = [
   {
     company: "fynk",
+    url: "https://fynk.com",
     logo: { src: "/logos/fynk.jpg" },
     tone: "peach",
     blurb: "Contract lifecycle management: drafting, negotiation and signing in one place.",
@@ -101,6 +108,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Launchbox Studio",
+    url: "https://www.launchbox.studio",
     logo: { src: "/logos/launchbox.jpg" },
     tone: "butter",
     mark: "LS",
@@ -110,6 +118,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Steerlab",
+    url: "https://www.steerlab.ai",
     logo: { src: "/logos/steerlab.png" },
     tone: "mint",
     blurb: "AI that automates RFP and vendor-questionnaire responses for PreSales teams.",
@@ -170,6 +179,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "AI Acquisition",
+    url: "https://www.aiacquisition.com",
     logo: { src: "/logos/ai-acquisition.jpg" },
     tone: "sky",
     mark: "AI",
@@ -210,6 +220,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "Alpine",
+    url: "https://www.alpine.inc",
     logo: { src: "/logos/alpine.jpg" },
     tone: "mint",
     blurb:
@@ -250,6 +261,7 @@ export const EXPERIENCE: Company[] = [
   },
   {
     company: "mroads",
+    url: "https://www.mroads.com",
     logo: { src: "/logos/mroads.jpg" },
     tone: "butter",
     employment: "Full-time",

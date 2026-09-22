@@ -31,7 +31,7 @@ const RuledLabel = ({ children }: { children: React.ReactNode }) => (
   </p>
 );
 
-/** Rendered outside the panel, so a collapsed row still shows the stack. */
+/** The stack, at the foot of the opened card. */
 const StackChips = ({ company }: { company: Company }) => {
   const uid = company.company.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
@@ -102,6 +102,10 @@ function CompanyBody({ company }: { company: Company }) {
           </li>
         ))}
       </ol>
+
+      {/* Last, not first. Inside a card the chips are a footnote on the work,
+          and leading with them buries the sentence saying what the work was. */}
+      {company.stack?.length ? <StackChips company={company} /> : null}
     </div>
   );
 }
@@ -135,7 +139,7 @@ export function ExperienceList() {
             ]
               .filter(Boolean)
               .join("  ·  ")}
-            chips={company.stack?.length ? <StackChips company={company} /> : null}
+            href={company.url}
             defaultOpen={index === 0}
           >
             <CompanyBody company={company} />

@@ -78,15 +78,8 @@ export type ExperienceRowProps = {
   role?: string;
   /** Dates, and where, on the line under the name. */
   meta: string;
-  /**
-   * The tech chips. They sit outside the panel, under the header, so a closed
-   * row still says what the work was built with: the stack is most of what
-   * someone skimming is here for, and burying it behind a click hides the one
-   * thing they would open the row to check. Full card width, starting under the
-   * logo rather than indented to the text, so a long stack wraps into three
-   * tidy rows instead of five ragged ones.
-   */
-  chips?: React.ReactNode;
+  /** The company's own site. Without one the name is plain text. */
+  href?: string;
   defaultOpen?: boolean;
   children: React.ReactNode;
 };
@@ -99,7 +92,7 @@ export function ExperienceRow({
   badge,
   role,
   meta,
-  chips,
+  href,
   defaultOpen = false,
   children,
 }: ExperienceRowProps) {
@@ -108,15 +101,24 @@ export function ExperienceRow({
   const panelId = React.useId();
 
   return (
-    <div className="group/row">
+    <div className="group/row relative">
+      {/* The toggle is a button stretched under the whole header rather than one
+          wrapped around it, because a link inside a button is invalid HTML and
+          browsers disagree about which one a click belongs to. Everything above
+          it is pointer-events-none so clicks fall through to it, and only the
+          company link opts back in. */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={panelId}
         {...hoverSfx()}
-        className="hover:bg-connection/20 flex w-full cursor-pointer items-center gap-4 p-4 text-left transition-colors sm:p-5"
+        className="group-hover/row:bg-connection/20 absolute inset-0 z-0 w-full cursor-pointer transition-colors"
       >
+        <span className="sr-only">{`${open ? "Hide" : "Show"} what I did at ${name}`}</span>
+      </button>
+
+      <div className="pointer-events-none relative z-10 flex items-center gap-4 p-4 sm:p-5">
         {/* The logo where the company publishes one, a tinted initial where it
             does not. Every logo is a square carrying its own ground, so it fills
             the tile and the tint only shows on the rows without one; the tones
@@ -147,9 +149,21 @@ export function ExperienceRow({
 
         <span className="flex min-w-0 flex-col gap-1">
           <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <span className="font-display text-foreground text-base font-semibold tracking-[-0.02em] sm:text-lg">
-              {name}
-            </span>
+            {href ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                {...hoverSfx()}
+                className="font-display text-foreground hover:text-accent pointer-events-auto text-base font-semibold tracking-[-0.02em] underline-offset-4 hover:underline sm:text-lg"
+              >
+                {name}
+              </a>
+            ) : (
+              <span className="font-display text-foreground text-base font-semibold tracking-[-0.02em] sm:text-lg">
+                {name}
+              </span>
+            )}
             {badge ? (
               <span className="border-connection text-muted-foreground font-secondary rounded-full border px-2 py-0.5 text-[0.6875rem] leading-none">
                 {badge}
@@ -165,9 +179,7 @@ export function ExperienceRow({
         <span className="text-faint group-hover/row:text-muted-foreground ml-auto pl-2 transition-colors">
           <Chevron open={open} />
         </span>
-      </button>
-
-      {chips ? <div className="px-4 pb-4 sm:px-5">{chips}</div> : null}
+      </div>
 
       <motion.div
         id={panelId}
