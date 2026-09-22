@@ -1,5 +1,6 @@
 import React from "react";
 
+import { AvatarHint } from "@/components/avatar-hint";
 import { AvatarToy } from "@/components/avatar-toy";
 import { LinkPreview } from "@/components/link-preview";
 import { Heading } from "@/components/typography";
@@ -17,12 +18,32 @@ const Note = ({ children }: { children: React.ReactNode }) => (
 export const Hero = () => {
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-start gap-5 sm:gap-6">
-        <AvatarToy className="shrink-0" />
-        <div className="flex flex-col gap-2 pt-1">
+      {/*
+        Three pieces, two arrangements. On a phone the photo keeps the left and the
+        note takes the space beside it, with the heading dropping underneath to the
+        full measure — squeezed into the 200px left over next to a 34px heading it
+        breaks into four ragged lines, and underneath it settles into two. From `sm`
+        up there is room for the old shape: note above, photo and heading side by side.
+
+        Grid rather than nested flex because those are the same three children in a
+        different order, and swapping template areas says that in one line instead of
+        duplicating the note into a mobile copy and a desktop copy.
+      */}
+      <div
+        className={
+          "grid grid-cols-[auto_1fr] items-start gap-x-3 gap-y-5 " +
+          "[grid-template-areas:'avatar_hint''heading_heading'] " +
+          "sm:gap-x-6 sm:gap-y-2 sm:[grid-template-areas:'hint_hint''avatar_heading']"
+        }
+      >
+        <AvatarHint className="[grid-area:hint] sm:pl-10" />
+        <AvatarToy className="shrink-0 [grid-area:avatar]" />
+        <div className="flex flex-col gap-2 [grid-area:heading] sm:pt-1">
           <Heading as="h1">
-            Full-stack developer,
-            <br />
+            Full-stack developer,{" "}
+            {/* A display:none br leaves no break behind, so the line only splits once
+                there is room for the split to be deliberate. */}
+            <br className="hidden sm:inline" />
             mostly on the web.
           </Heading>
           <p className="font-secondary text-muted-foreground text-[0.8125rem] tracking-wide">
