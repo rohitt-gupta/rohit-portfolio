@@ -245,6 +245,51 @@ export function noise(v: Voice) {
   finish(gain, source, v.pan, audio, out, at + dur + 0.02);
 }
 
+/**
+ * The toolkit's ladder. Hovering a chip plays the next rung up, so running the
+ * pointer along the row climbs a scale rather than repeating one blip twenty-one
+ * times. Minor pentatonic, which has no interval in it that can sound wrong
+ * whichever rung you happen to enter or leave the row on.
+ *
+ * Eight rungs across the row's twenty-one chips means the ladder tops out two or
+ * three times on a full pass, which is the point: the payoff has to be reachable.
+ * Semitones from `LADDER_BASE`, kept inside one octave so the top rung is bright
+ * rather than shrill.
+ */
+const LADDER = [0, 2, 3, 5, 7, 10, 12, 15];
+/** B5. An octave above where a coin pickup usually sits, because this is a tick. */
+const LADDER_BASE = 988;
+/** How long a gap counts as leaving the row. Short enough that coming back to it
+ *  later starts again from the bottom, long enough to survive a pause mid-row. */
+const LADDER_RESET_MS = 1200;
+
+let rung = 0;
+let rungAt = 0;
+
+function semitone(n: number) {
+  return LADDER_BASE * Math.pow(2, n / 12);
+}
+
+/**
+ * Four notes up an arpeggio, the last one held. Played on top of the rung that
+ * earned it, so it reads as that hover resolving rather than as a separate event.
+ */
+function fanfare() {
+  // Kept under 3 kHz. Two octaves over the base would be the obvious arpeggio and
+  // is unbearable held for a fifth of a second.
+  [7, 12, 15, 19].forEach((n, i) => {
+    tone({
+      type: "square",
+      freq: semitone(n),
+      dur: i === 3 ? 0.19 : 0.06,
+      attack: 0.003,
+      gain: i === 3 ? 0.03 : 0.024,
+      delay: 0.055 * (i + 1),
+      cutoff: 5200,
+    });
+  });
+}
+
 /** ± a few Hz, so a row of identical elements does not sound mechanical. */
 function jitter(freq: number, spread: number) {
   return freq + (Math.random() * 2 - 1) * spread;
@@ -273,6 +318,46 @@ export const sfx = {
   tick() {
     if (throttled("tick", 60)) return;
     noise({ freq: jitter(4300, 220), dur: 0.009, gain: 0.042, q: 3.2 });
+  },
+
+  /**
+   * A coin pickup, one rung higher each time. Three voices: a grace note, the
+   * rung itself a fourth above it, and a triangle an octave down so the pair has
+   * a body under it instead of reading as a bare chiptune squeak. Squares, because
+   * that edge is the whole reference — a sine here would just be the nav tick again.
+   *
+   * Climbing off the top rung throws the fanfare and drops back to the bottom, and
+   * the ladder also resets on its own once the pointer has been away long enough.
+   *
+   * Its own throttle key, at the pace of the other hovers: a flick along the row
+   * should climb a few rungs, not all eight at once.
+   */
+  rung() {
+    if (throttled("rung", 65)) return;
+
+    const now = performance.now();
+    if (now - rungAt > LADDER_RESET_MS) rung = 0;
+    rungAt = now;
+
+    const n = LADDER[rung];
+    tone({ type: "square", freq: semitone(n), dur: 0.03, attack: 0.002, gain: 0.02, cutoff: 5200 });
+    tone({
+      type: "square",
+      freq: semitone(n + 5),
+      dur: 0.1,
+      attack: 0.002,
+      gain: 0.026,
+      delay: 0.034,
+      cutoff: 5200,
+    });
+    tone({ type: "triangle", freq: semitone(n - 12), dur: 0.09, attack: 0.004, gain: 0.03 });
+
+    if (rung === LADDER.length - 1) {
+      fanfare();
+      rung = 0;
+    } else {
+      rung++;
+    }
   },
 
   /**
