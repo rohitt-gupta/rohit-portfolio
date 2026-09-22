@@ -22,7 +22,11 @@ export default async function Home() {
 
   return (
     <>
-      <Section innerClassName="py-12 sm:py-16">
+      {/* Less air above than the other pages get. They open on an eyebrow and a
+          heading; this one opens on the hint, which is small, pale and rotated,
+          so the same padding reads as an empty band rather than as breathing
+          room. The floor is unchanged. */}
+      <Section innerClassName="pt-8 pb-12 sm:pt-10 sm:pb-16">
         <Hero />
       </Section>
 
