@@ -34,11 +34,13 @@ const DROP = { duration: 0.18, ease: [0.4, 0, 1, 1] as const };
 export function AvatarToy({ className }: { className?: string }) {
   const photos = SITE.photos;
   const [index, setIndex] = useState(0);
-  const [poked, setPoked] = useState(false);
   const [swapping, setSwapping] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const multiple = photos.length > 1;
+
+  const photo = photos[index];
+  const longEdge = photo.height > photo.width ? { height: "100%" } : { width: "100%" };
 
   const cycle = () => {
     if (!multiple) return;
@@ -46,12 +48,11 @@ export function AvatarToy({ className }: { className?: string }) {
     // well, a rising one for the next photo springing back out of it.
     sfx.swap();
     setIndex((i) => (i + 1) % photos.length);
-    setPoked(true);
     setSwapping(true);
   };
 
   return (
-    <div className={cn("group relative w-fit", className)}>
+    <div className={cn("relative w-fit", className)}>
       <motion.button
         type="button"
         onClick={cycle}
@@ -72,12 +73,28 @@ export function AvatarToy({ className }: { className?: string }) {
         <span aria-hidden className="avatar-well absolute inset-[11%] rounded-[14%]" />
 
         {/* No clipping here: the photo scales as a whole rounded tile, so the
-            well is revealed behind it rather than the image sliding under a mask. */}
-        <span className="absolute inset-[16%]">
+            well is revealed behind it rather than the image sliding under a mask.
+
+            The tile is centred rather than stretched to the slot, because it is
+            sized to the photo instead of the other way round. A portrait photo
+            therefore leaves a little of the dish showing down each side, which is
+            the right trade: the alternative is filling the square by enlarging the
+            middle of the photo, which puts the lens six inches from my face. */}
+        <span className="absolute inset-[16%] flex items-center justify-center">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
-              key={photos[index]}
-              className="absolute inset-0 block overflow-hidden rounded-[9%]"
+              key={photo.src}
+              className="block overflow-hidden rounded-[9%]"
+              /* One definite edge plus the ratio; the other edge follows. Which
+                 edge is definite depends on the photo, since the slot is square:
+                 constrain the long one and the short one can only come out
+                 smaller. Set here rather than in a class because the ratio is
+                 data, not design. */
+              style={{
+                aspectRatio: `${photo.width} / ${photo.height}`,
+                ...longEdge,
+                willChange: "transform, opacity",
+              }}
               initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={
@@ -89,29 +106,22 @@ export function AvatarToy({ className }: { className?: string }) {
                 reduceMotion ? { duration: 0.12 } : { ...POP, opacity: { duration: 0.2 } }
               }
               onAnimationComplete={() => setSwapping(false)}
-              style={{ willChange: "transform, opacity" }}
             >
               <Image
-                src={photos[index]}
+                src={photo.src}
                 alt={`${SITE.name}, photo ${index + 1} of ${photos.length}`}
                 fill
                 sizes="128px"
                 priority={index === 0}
+                /* The tile already matches the photo's ratio, so there is nothing
+                   left to crop; this only absorbs the sub-pixel rounding that
+                   percentage insets produce at 112px and 128px. */
                 className="object-cover"
               />
             </motion.span>
           </AnimatePresence>
         </span>
       </motion.button>
-
-      {multiple && !poked ? (
-        <span
-          aria-hidden
-          className="font-secondary text-faint bg-background pointer-events-none absolute -right-2 -bottom-1 translate-y-1 rounded-full border border-current/20 px-2 py-0.5 text-[0.625rem] tracking-wide opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-        >
-          click me
-        </span>
-      ) : null}
     </div>
   );
 }
