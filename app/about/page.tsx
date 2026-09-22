@@ -50,7 +50,7 @@ export default function AboutPage() {
               offers and no real interest in circuits.
             </p>
             <p>
-              Three years in, I build product end to end: React and Next.js on the front, TypeScript
+              Five years in, I build product end to end: React and Next.js on the front, TypeScript
               and Node behind it, React Native when it needs to be in someone&apos;s pocket. I like
               the unglamorous parts: naming things properly, deleting code, making the loading state
               feel like it was designed rather than remembered.

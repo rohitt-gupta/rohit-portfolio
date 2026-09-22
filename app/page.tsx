@@ -11,7 +11,10 @@ import { getContributions } from "@/lib/github";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: SITE.name,
+  // `absolute`, because the layout's `%s – Rohit Gupta` template applies to every
+  // child segment including this one — a plain string here came out as
+  // "Rohit Gupta – Rohit Gupta" in the tab.
+  title: { absolute: SITE.title },
   description: SITE.description,
   alternates: { canonical: "/" },
 };

@@ -6,11 +6,11 @@ export const SITE = {
   name: "Rohit Gupta",
   firstName: "Rohit",
   handle: "whyrohitwhy",
-  role: "Full-stack developer",
+  role: "Product engineer",
   location: "Vienna, Austria",
-  title: "Rohit Gupta - Full-stack developer",
+  title: "Rohit Gupta — Product engineer",
   description:
-    "Full-stack developer working with TypeScript, React, Next.js, Vue and React Native. I like building things for the web and shipping them.",
+    "Product engineer working end to end with TypeScript, React, Next.js, Vue and React Native. I like building things for the web and shipping them.",
   email: "pta.rohit28@gmail.com",
   avatar: "/pic1.jpeg",
   /**
