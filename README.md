@@ -1,16 +1,20 @@
 # Rohit's Portfolio
 
-A modern, performant portfolio website built with Next.js 15, TypeScript, and Tailwind CSS.
+My personal website and blog: [rohitt.in](https://rohitt.in).
+
+Design heavily inspired by [Manu Arora's site](https://manuarora.in)
+([source](https://github.com/manuarora700/manuaroradotin)).
 
 ## 🚀 Tech Stack
 
-- **Framework**: Next.js 15.0.1
-- **Language**: TypeScript 5.6.3
-- **Styling**: Tailwind CSS 3.4.14
-- **Animations**: Framer Motion 11.11.10
-- **Email**: Resend API
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Language**: TypeScript 5.9
+- **Styling**: Tailwind CSS v4 (CSS-first config in `app/globals.css`)
+- **Animations**: Motion (`motion/react`)
+- **Content**: MDX via `next-mdx-remote` + `gray-matter`
+- **Icons**: Tabler Icons
 - **Analytics**: Vercel Analytics
-- **Code Quality**: ESLint, Prettier, Husky, lint-staged
+- **Code Quality**: ESLint (flat config), Prettier, Husky, lint-staged
 
 ## 📦 Getting Started
 
@@ -19,124 +23,76 @@ A modern, performant portfolio website built with Next.js 15, TypeScript, and Ta
 - Node.js 24.x
 - pnpm 10.x
 
-### Installation
-
 ```bash
-# Install dependencies
 pnpm install
-
-# Run development server
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## 🛠️ Available Scripts
-
-| Script              | Description                                       |
-| ------------------- | ------------------------------------------------- |
-| `pnpm dev`          | Start development server on http://localhost:3000 |
-| `pnpm build`        | Create optimized production build                 |
-| `pnpm start`        | Start production server                           |
-| `pnpm lint`         | Run ESLint checks                                 |
-| `pnpm lint:fix`     | Auto-fix ESLint issues                            |
-| `pnpm typecheck`    | Run TypeScript type checking                      |
-| `pnpm format`       | Format all files with Prettier                    |
-| `pnpm format:check` | Check formatting without modifying files          |
-
-## 🔧 Code Quality & Tooling
-
-This project uses a comprehensive setup for maintaining code quality:
-
-### ESLint
-
-- **Config**: Extends `next/core-web-vitals`, `@typescript-eslint/recommended`, and `prettier`
-- **Plugins**:
-  - `eslint-plugin-simple-import-sort` - Automatic import organization
-  - `eslint-plugin-prettier` - Prettier integration
-- **Custom Rules**: TypeScript-aware unused vars detection with `_` prefix pattern
-
-### Prettier
-
-- **Semi**: true
-- **Single Quote**: false
-- **Trailing Comma**: all
-- **Print Width**: 100
-- **Tab Width**: 2 spaces
-- **Arrow Parens**: always
-- **End of Line**: lf
-
-### TypeScript Configuration
-
-Strict type checking enabled with additional safety flags:
-
-- ✅ `strict: true`
-- ✅ `noFallthroughCasesInSwitch: true` - Prevents accidental switch fallthrough
-- ✅ `noImplicitOverride: true` - Requires explicit `override` keyword
-- ✅ `noUncheckedIndexedAccess: true` - Safer array/object access
-
-### Pre-commit Hooks (Husky + lint-staged)
-
-Automatically runs on every commit:
-
-- **TypeScript files** (`.ts`, `.tsx`):
-  - ESLint auto-fix
-  - Prettier formatting
-  - Import organization
-- **Other files** (`.json`, `.md`, `.css`):
-  - Prettier formatting
-
-### Continuous Integration
-
-GitHub Actions workflow runs on every push and PR:
-
-- ✅ Format checking
-- ✅ ESLint validation
-- ✅ TypeScript type checking
-- ✅ Production build verification
-
-## 📝 Code Style Guidelines
-
-- **Imports**: Automatically organized by `simple-import-sort`
-  - External packages first
-  - Internal imports with `@/` alias
-  - Sorted alphabetically within groups
-- **Formatting**: Handled by Prettier (runs automatically on commit)
-- **Type Safety**: All code must pass strict TypeScript checks
-- **No Unused Code**: ESLint enforces no unused variables/imports
-
-## 🏗️ Project Structure
+## 📁 Structure
 
 ```
-├── app/                    # Next.js 15 app directory
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── components/            # React components
-├── context/              # React context providers
-├── lib/                  # Utilities and data
-├── actions/              # Server actions
-├── public/               # Static assets
-├── .github/
-│   └── workflows/        # CI/CD workflows
-├── .husky/               # Git hooks
-└── .prettierrc           # Prettier config
+app/
+  page.tsx              Home: bio, projects, stack, experience, contact
+  blog/                 Blog index + [slug] MDX renderer
+  inspiration/          People, tools and sites I admire
+  layout.tsx            Fonts, metadata, navbar/footer shell
+  globals.css           Tailwind v4 theme + design tokens
+components/             UI components (kebab-case)
+  blog/                 Blog index, list and article shell
+data/blog/*.mdx         Blog posts
+lib/
+  site.ts               ⭐ All personal data, edit here first
+  mdx.ts                MDX file reading + front matter
+  motion-config.ts      Shared spring/variant config
+  use-mounted.ts        Hydration-safe mounted flag
 ```
 
-## 🚢 Deployment
+## ✏️ Editing content
 
-The easiest way to deploy is via [Vercel Platform](https://vercel.com/new):
+| What                     | Where                         |
+| ------------------------ | ----------------------------- |
+| Name, email, socials, CV | `lib/site.ts`                 |
+| Intro paragraphs         | `components/header.tsx`       |
+| Projects                 | `components/work.tsx`         |
+| Skills / tools           | `components/stack.tsx`        |
+| Work history & education | `components/experience.tsx`   |
+| Contact links            | `components/get-in-touch.tsx` |
+| Inspiration list         | `app/inspiration/page.tsx`    |
+| Blog posts               | `data/blog/*.mdx`             |
+
+### Adding a blog post
+
+Create `data/blog/my-post.mdx` with front matter:
+
+```mdx
+---
+title: "My post"
+publishedAt: "2026-01-15"
+summary: "One line that shows up in the index and OG tags."
+---
+
+Content here. Components like `<StepCheck />`, `<HighlightBox />`,
+`<VideoComponent />` and `<Button />` are available, see
+`components/mdx-components.tsx`.
+```
+
+The route, sitemap entry and index listing are generated automatically.
+
+## 🎨 Theme switcher
+
+The gear in the top-right toggles between three fonts and six colour palettes,
+persisted to `localStorage`. Palettes are defined in `components/settings.tsx`.
+
+## ✅ Scripts
 
 ```bash
-# Build command
-pnpm build
-
-# Output directory
-.next
+pnpm dev           # dev server
+pnpm build         # production build
+pnpm lint          # eslint
+pnpm typecheck     # tsc --noEmit
+pnpm format        # prettier --write
 ```
 
-## 📄 License
-
-This project is private and proprietary.
+CI runs `format:check`, `lint`, `typecheck` and `build` on every push and PR.

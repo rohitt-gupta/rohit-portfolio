@@ -1,15 +1,262 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 html {
-  --line-color: #e5e7eb;
+  min-width: 320px;
+  scroll-behavior: smooth;
 }
 
-html.dark {
-  --line-color: rgba(255, 255, 255, 0.2);
+/**
+ * Paper, ink and one warm accent. Three faces, each with exactly one job:
+ * Bricolage for anything that shouts, Space Grotesk for the small labels that
+ * point at it, Geist for everything you actually read.
+ */
+:root {
+  --font-display: var(--font-bricolage);
+  --font-secondary: var(--font-space-grotesk);
+
+  /* The overshoot-free ease every hover in the page shares. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.23 0.008 60);
+  --muted: oklch(0.955 0.005 85);
+  --muted-foreground: oklch(0.53 0.008 60);
+  --faint: oklch(0.72 0.006 60);
+  --card: oklch(0.995 0.002 85);
+  --accent: oklch(0.58 0.15 42);
+  --accent-soft: oklch(0.93 0.04 70);
+  --border: oklch(0.9 0.005 75);
+  --ring: oklch(0.58 0.15 42);
+
+  /* Every hairline in the page FRAME is this one weight: the section rules, the
+     column rails and the outer edge of the hatch band. One token so they can't drift
+     apart into two visibly different greys. */
+  --rule: color-mix(in oklab, var(--foreground) 6%, transparent);
+  /* The hatch is drawn at the same weight, so band and frame read as one system. */
+  --pattern-fg: var(--rule);
+
+  /* Borders on things that sit ON the page: cards, chips, inputs. Deliberately
+     stronger than --rule: the frame should recede, content structure shouldn't. */
+  --connection: color-mix(in oklab, var(--foreground) 15%, transparent);
+
+  /* The avatar sits in a debossed dish, the way braydoncoyer.dev frames his.
+     A top-edge inset shadow is the whole illusion. Light comes from above, so
+     a shadow under the top lip reads as "this surface is below the page". */
+  --well-shadow: color-mix(in oklab, var(--foreground) 11%, transparent);
+
+  /* ------------------------------------------------------------------
+   * Pastel highlighters. Paint behind a word instead of underlining it,
+   * the same trick a marker pen does on paper, which is why it reads as
+   * emphasis without shouting. Five tones so a page can colour-code what
+   * it points at (writing, code, socials) rather than tint at random.
+   *
+   * Lightness is held in a tight 0.93–0.945 band on purpose: hues this
+   * pale differ enough in perceived weight that letting yellow sit at its
+   * natural 0.95 makes the others look like a second, dirtier family.
+   * ------------------------------------------------------------------ */
+  --hl-butter: oklch(0.945 0.085 96);
+  --hl-sky: oklch(0.93 0.042 257);
+  --hl-mint: oklch(0.937 0.04 154);
+  --hl-lilac: oklch(0.93 0.045 302);
+  --hl-peach: oklch(0.935 0.042 45);
+
+  /* Contribution graph, coolest to hottest. */
+  --graph-0: oklch(0.93 0.004 85);
+  --graph-1: oklch(0.87 0.05 70);
+  --graph-2: oklch(0.78 0.1 58);
+  --graph-3: oklch(0.68 0.14 50);
+  --graph-4: oklch(0.58 0.16 42);
 }
 
-.borderBlack {
-  @apply border border-black/10;
+.dark {
+  --background: oklch(0.175 0.006 70);
+  --foreground: oklch(0.93 0.004 85);
+  --muted: oklch(0.225 0.006 70);
+  --muted-foreground: oklch(0.68 0.006 80);
+  --faint: oklch(0.48 0.006 80);
+  --card: oklch(0.21 0.006 70);
+  --accent: oklch(0.72 0.14 52);
+  --accent-soft: oklch(0.32 0.06 50);
+  --border: oklch(0.3 0.006 70);
+  --ring: oklch(0.72 0.14 52);
+  /* Lighter ink on a dark ground needs a touch more to stay visible. */
+  --rule: color-mix(in oklab, var(--foreground) 9%, transparent);
+
+  /* Mixing in the (now light) foreground would glow instead of recess, so the
+     dark well is shadowed with plain black. */
+  --well-shadow: oklch(0 0 0 / 0.4);
+
+  /* Pastels can't survive inversion: a 0.93 chip on a 0.175 ground is a
+     flashbang. Same hues, dropped to a third of the lightness, so the chip
+     reads as a tinted well the light ink still sits comfortably on. */
+  --hl-butter: oklch(0.38 0.055 96);
+  --hl-sky: oklch(0.37 0.055 257);
+  --hl-mint: oklch(0.37 0.05 154);
+  --hl-lilac: oklch(0.375 0.055 302);
+  --hl-peach: oklch(0.375 0.055 45);
+
+  --graph-0: oklch(0.24 0.006 70);
+  --graph-1: oklch(0.34 0.05 55);
+  --graph-2: oklch(0.46 0.09 50);
+  --graph-3: oklch(0.59 0.13 48);
+  --graph-4: oklch(0.72 0.15 46);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-secondary: var(--font-secondary);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint: var(--faint);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-rule: var(--rule);
+  --color-connection: var(--connection);
+
+  --color-hl-butter: var(--hl-butter);
+  --color-hl-sky: var(--hl-sky);
+  --color-hl-mint: var(--hl-mint);
+  --color-hl-lilac: var(--hl-lilac);
+  --color-hl-peach: var(--hl-peach);
+
+  --color-graph-0: var(--graph-0);
+  --color-graph-1: var(--graph-1);
+  --color-graph-2: var(--graph-2);
+  --color-graph-3: var(--graph-3);
+  --color-graph-4: var(--graph-4);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+}
+
+/**
+ * The 45° hatch Tailwind and Braydon Coyer run down their page gutters. 1px rule every
+ * 10px along the diagonal, drawn from --pattern-fg so it re-tints with the theme.
+ *
+ * `fixed` anchors the pattern to the viewport rather than to each strip, so the
+ * diagonals stay in phase across every section boundary instead of restarting, so the
+ * gutter reads as one continuous band. Tailwind's own site does the same.
+ */
+@utility bg-hatch {
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--pattern-fg) 0,
+    var(--pattern-fg) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+  background-attachment: fixed;
+}
+
+/**
+ * Marker-pen highlights, the ozzyx.xyz way.
+ *
+ * `.highlight` is the paint and nothing else: inline, so a highlighted phrase
+ * still wraps mid-sentence, with `box-decoration-break: clone` re-drawing the
+ * radius and padding on every line fragment instead of leaving a torn box.
+ * The negative inline margin pays back the padding so highlighting a word
+ * doesn't nudge the words either side of it.
+ *
+ * `.highlight-link` adds the behaviour, and only links get it: static emphasis
+ * shouldn't twitch under the cursor. It has to switch to inline-block for the
+ * hover scale, because transforms are ignored on non-replaced inline boxes, which
+ * costs mid-phrase wrapping, a fair trade for the short labels links carry.
+ */
+@layer components {
+  .highlight {
+    color: var(--foreground);
+    border-radius: 0.2em;
+    padding: 0.04em 0.16em;
+    margin-inline: -0.02em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    text-decoration: none;
+  }
+
+  .highlight-link {
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      filter 0.2s var(--ease-out-strong),
+      scale 0.2s var(--ease-out-strong);
+  }
+
+  .highlight-link:hover {
+    filter: saturate(1.6);
+    scale: 1.04;
+  }
+
+  /* Saturating a chip that is already dark barely registers, so dark mode
+     leans on lightness for the same "it lit up" read. */
+  .dark .highlight-link:hover {
+    filter: saturate(1.4) brightness(1.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .highlight-link:hover {
+      scale: 1;
+    }
+  }
+}
+
+/**
+ * The recessed dish the avatar sits in. Two insets doing separate jobs: a
+ * hairline ring that draws the lip, and an offset blur under the top edge that
+ * makes the floor read as sunk rather than painted on.
+ */
+@layer components {
+  .avatar-well {
+    background: var(--muted);
+    box-shadow:
+      inset 0 0 0 1px var(--rule),
+      inset 0 2px 3px var(--well-shadow);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    @apply outline-ring outline-2 outline-offset-2;
+  }
+}
+
+/* Anything that animates on entry should simply be there for people who asked
+   not to be moved. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

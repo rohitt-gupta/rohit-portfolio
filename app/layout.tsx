@@ -1,43 +1,85 @@
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
-import localFont from "next/font/local";
-import { Toaster } from "react-hot-toast";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
+import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import ThemeSwitch from "@/components/ThemeSwitch";
-import ActiveSectioContextProvider from "@/context/active-section-context";
-import ThemeContextProvider from "@/context/theme-context";
+import { BookACall } from "@/components/book-a-call";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
+import { SITE, SITE_URL } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
-const myFont = localFont({
-  src: "./CalSans-SemiBold.woff2",
+import Providers from "./providers";
+
+/** Headings. The face from gentlejoseph.com. */
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bricolage",
 });
 
-export const metadata = {
-  title: "Rohit | Protfolio",
-  description: "Rohit is a full-stack developer with 3 years of experience",
+/** Eyebrows, labels and buttons. The face from ozzyx.xyz. */
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-space-grotesk",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE.title,
+    template: `%s – ${SITE.name}`,
+  },
+  description: SITE.description,
+  // No title or description in either of these: Next fills both in from each page's
+  // own, so /about unfurls as About rather than as the home page. The same goes for
+  // `url`, since `./` resolves against the page being rendered. A page that sets
+  // `openGraph` itself replaces this whole object, image included, so none of them do.
+  // The image is `opengraph-image.tsx` next to this file, and X picks it up from here.
+  openGraph: {
+    url: "./",
+    siteName: SITE.name,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="!scroll-smooth">
-      <body
-        className={`${myFont.className} bg-[#EEEDEC] text-gray-950 relative pt-28 sm:pt-36 dark:bg-gray-900 dark:text-gray-50 dark:text-opacity-90 `}
-      >
-        {/* The below 2 divs are responsible for the background gradient color. BG is gray-50 but on the top we have 2 coloured divs. below are those divs. */}
-        {/* <div className="top-[-6rem] right-[11rem] -z-10 absolute bg-[#fbe2e3] dark:bg-[#946263] blur-[10rem] rounded-full w-[31.25rem] sm:w-[68.75rem] h-[31.25rem]"></div>
-        <div className="top-[-1rem] left-[-35rem] md:left-[-33rem] lg:left-[-28rem] 2xl:left-[-5rem] xl:left-[-15rem] -z-10 absolute bg-[#dbd7fb] dark:bg-[#676394] blur-[10rem] rounded-full w-[50rem] sm:w-[68.75rem] h-[31.25rem]"></div> */}
-
-        <ThemeContextProvider>
-          <ActiveSectioContextProvider>
-            <Header />
-            {children}
-            <Footer />
-            <Toaster position="top-right" />
-          </ActiveSectioContextProvider>
-          <ThemeSwitch />
-        </ThemeContextProvider>
+    <html
+      lang="en"
+      className={cn(
+        bricolage.variable,
+        spaceGrotesk.variable,
+        GeistSans.variable,
+        GeistMono.variable,
+      )}
+      suppressHydrationWarning
+    >
+      {/* Extensions (password managers, colour pickers, …) inject attributes onto
+          <body> before React hydrates, so suppress the resulting mismatch warning. */}
+      <body suppressHydrationWarning>
+        <Providers>
+          <a
+            href="#main"
+            className="bg-background focus:ring-ring sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2 focus:ring-2"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <main id="main">{children}</main>
+          <Footer />
+          {/* Last in the tree so it comes last in the tab order too: a pill that
+              follows the scroll shouldn't sit between the header and the page. */}
+          <BookACall />
+        </Providers>
         <Analytics />
       </body>
     </html>
