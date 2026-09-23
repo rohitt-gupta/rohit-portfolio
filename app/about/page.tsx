@@ -188,14 +188,14 @@ const STORY: {
     ),
   },
   {
-    years: "2025 → now · Paris, then Vienna",
+    years: "2025 → now · Remote, then Vienna",
     title: "Editors, then the AI on top of them",
     body: [
       <>
         Editors turned out to be the thing I am actually good at: the document model, the selection,
-        the cursor that ends up where it should not. I built editor products for{" "}
-        <ProseLink href={L.steerlab}>Steerlab</ProseLink> in Paris, and AI landing on top of them
-        made the problem more interesting rather than less. I have been on{" "}
+        the cursor that ends up where it should not. I built editor products remotely for{" "}
+        <ProseLink href={L.steerlab}>Steerlab</ProseLink>, a team in Paris, and AI landing on top of
+        them made the problem more interesting rather than less. I have been on{" "}
         <ProseLink href={L.cursor}>Cursor</ProseLink> since the week it launched, and for a stretch
         I paid for more than one subscription at once purely to keep shipping.
       </>,
