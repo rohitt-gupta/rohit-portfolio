@@ -5,6 +5,7 @@ import { ChomuMap } from "@/components/chomu-map";
 import { Print } from "@/components/print";
 import { ProseLink } from "@/components/prose-link";
 import { Section } from "@/components/section";
+import { StoryAside } from "@/components/story-aside";
 import { StoryRail } from "@/components/story-rail";
 import { Eyebrow, Heading, SectionHeader } from "@/components/typography";
 import { EDUCATION } from "@/lib/experience";
@@ -14,7 +15,7 @@ import { TECH_LINKS } from "@/lib/tech-links";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Electronics to product engineering, by way of ten failed exams, a referral, and a long detour into text editors.",
+    "Electronics to product engineering, by way of ten failed exams, a referral, a cafe, and a long detour into text editors.",
   alternates: { canonical: "/about" },
 };
 
@@ -49,146 +50,186 @@ const L = {
 };
 
 /**
+ * The one print that is not of me. Kept out of `SITE.photos`, which is the set of
+ * photos of me the home page toy cycles through, and given its own alt.
+ */
+const VIENNA_STREET = {
+  src: "/vienna-street.jpg",
+  width: 674,
+  height: 1200,
+  focus: "50% 0%",
+  alt: "A church at the top of a flight of steps in Vienna, with yellow houses beside it and bikes parked in front",
+};
+
+/**
  * The story, in chapters, each with the years it covers.
  *
  * Written as data rather than markup because the shape repeats and the page is
- * long enough that hand-laying each one would drift. A chapter can carry an aside,
- * which lands in the right-hand column on a wide screen and under the prose on a
- * narrow one. Three across six chapters is enough to break the column without
- * turning the page into an album, and the first one is drawn rather than
- * photographed, because the thing it wants to show is a place, not a face.
+ * long enough that hand-laying each one would drift. Every chapter carries a
+ * title in the display face, which is what a reader skims by; six labels in 10px
+ * mono were not enough to navigate a page this long. A chapter can also carry an
+ * aside, which lands in the right-hand column on a wide screen and, on a narrow one,
+ * under the prose beside a place tag so it never sits there alone. Each chapter also
+ * puts a bead on the rail where its title sits, so the line reads as a journey with
+ * stops rather than a progress bar.
+ *
+ * Deliberately no company logos on those beads, and deliberately light on the stack.
+ * A first draft had both, and the page turned into a CV with prose attached; the work
+ * page already is that. This one is told by place and by people, which is the part a
+ * CV leaves out, and it keeps the two years that had nothing to do with an editor.
  */
-const STORY: { label: string; body: React.ReactNode[]; aside?: React.ReactNode }[] = [
+const STORY: {
+  years: string;
+  title: string;
+  body: React.ReactNode[];
+  aside?: React.ReactNode;
+}[] = [
   {
-    label: "2018 → 2022 · Udaipur",
+    years: "2018 → 2022 · Udaipur",
+    title: "The long way round",
     body: [
       <>
-        I grew up in Chomu, a small town outside Jaipur, and the route from there to here ran
-        through Jaipur, then Udaipur for engineering, then back to Jaipur, and now Vienna, which is
-        still the biggest jump of the lot.
+        The route out of Chomu ran through Jaipur, then Udaipur for engineering. I studied
+        electronics at <ProseLink href={L.ctae}>CTAE</ProseLink>, not computer science, and I was
+        not good at it: ten failed exams in four years. I got the degree anyway, because the thing I
+        cared about was happening beside it. By the final year I was doing data structures in{" "}
+        <ProseLink href={L.cpp}>C++</ProseLink> most nights, because computers were the one part I
+        could not put down.
       </>,
       <>
-        I studied electronics at <ProseLink href={L.ctae}>CTAE</ProseLink>, not computer science,
-        and I was not good at it. Ten failed exams across four years. I got the degree anyway,
-        mostly because the thing I actually cared about was happening beside it: by the final year I
-        was doing data structures and algorithms in <ProseLink href={L.cpp}>C++</ProseLink> most
-        nights, because computers were the one part I could not put down.
+        Out of college I tried data engineering first. It was fine, and it was not mine. Web
+        development was: the first thing I built and put in front of someone settled it.
       </>,
     ],
-    aside: <ChomuMap className="lg:justify-self-end" />,
+    aside: (
+      <StoryAside
+        place="Chomu"
+        lines={["27.17° N, 75.72° E", "30 km north of Jaipur"]}
+        caption="Chomu, 30 km north of Jaipur"
+      >
+        <ChomuMap />
+      </StoryAside>
+    ),
   },
   {
-    label: "The wrong first turn",
+    years: "2022 → 2024 · Hyderabad",
+    title: "Hyderabad, and the two people who set the bar",
     body: [
       <>
-        I started in data engineering. It never landed. I still can&apos;t tell you exactly what was
-        missing, only that nothing about it made me want to open the laptop again the next morning.
-      </>,
-      <>Web development did. The first thing I built and put in front of someone settled it.</>,
-    ],
-  },
-  {
-    label: "2022 → 2024 · mroads, Bangalore",
-    body: [
-      <>
-        <ProseLink href={L.manu}>Manu Arora</ProseLink> used to work at{" "}
-        <ProseLink href={L.mroads}>mroads</ProseLink> and was kind enough to refer me. That referral
-        is the reason the rest of this happened at all, and it is the smallest part of what I owe
-        him.
+        I joined <ProseLink href={L.mroads}>mroads</ProseLink> as a front-end developer, remote, at
+        twenty-two. When they could not find the <ProseLink href={L.java}>Java</ProseLink> engineers
+        they needed, I learned Java, and that was the useful accident: I cared more about how a
+        thing is put together than about the front of it. Somewhere in there I found the word for
+        what I wanted to be, and it was product engineer.
       </>,
       <>
-        I have been following Manu since before I could write anything worth reading. He started in
-        web development too, built <ProseLink href={L.aceternity}>Aceternity UI</ProseLink> into
-        something a large part of the internet now builds with, and kept setting a bar just high
-        enough that I had to get better to see it. He does not know any of this yet. He is the
-        single biggest source of inspiration I have, and if you only click one link on this page,
-        make it <ProseLink href={L.manuLinkedin}>his</ProseLink>.
+        None of it happens without <ProseLink href={L.manu}>Manu Arora</ProseLink>, who used to work
+        there and referred me. The referral is the smallest part of what I owe him. I have followed
+        Manu since before I could write anything worth reading. He built{" "}
+        <ProseLink href={L.aceternity}>Aceternity UI</ProseLink> into something a large part of the
+        internet now builds with, and kept setting the bar just high enough that I had to get better
+        to see it. He does not know any of this yet. If you click one link on this page, make it{" "}
+        <ProseLink href={L.manuLinkedin}>his</ProseLink>.
       </>,
       <>
-        The other one is <ProseLink href={L.kishore}>Kishore Gunnam</ProseLink>, who co-founded
+        The other is <ProseLink href={L.kishore}>Kishore Gunnam</ProseLink>, who co-founded
         Aceternity and is the person behind <ProseLink href={L.aceBuilder}>Ace Builder</ProseLink>.
-        I sat next to his code for two and a half years at mroads. Watching him take a problem apart
-        and put it back together with scale already accounted for is the closest thing to formal
-        training I have had.{" "}
+        I sat next to his code for two and a half years, and watching him take a problem apart with
+        scale already accounted for is the closest thing to formal training I have had.{" "}
         <ProseLink href={L.kishoreLinkedin}>Go and look at what he builds.</ProseLink>
       </>,
-      <>
-        I started as a front-end developer on <ProseLink href={TECH_LINKS.React}>React</ProseLink>{" "}
-        and kept going: <ProseLink href={TECH_LINKS.TypeScript}>TypeScript</ProseLink>,{" "}
-        <ProseLink href={TECH_LINKS["Next.js"]}>Next.js</ProseLink>,{" "}
-        <ProseLink href={TECH_LINKS["Tailwind CSS"]}>Tailwind</ProseLink>. Most of it went into
-        government portals, which is less glamorous than it sounds and better practice than it
-        sounds. The team was good and the job was remote, which at twenty-two taught me as much as
-        the code did.
-      </>,
-      <>
-        Then they needed <ProseLink href={L.java}>Java</ProseLink> engineers and couldn&apos;t find
-        the right ones, so I learned Java. That turned out to be the useful accident: I was more
-        interested in how a thing was put together than in the front end of it. Somewhere in there I
-        found out the word for what I wanted to be was product engineer.
-      </>,
     ],
+    aside: (
+      <StoryAside place="Hyderabad" lines={["17.39° N, 78.49° E", "2022 → 2024"]}>
+        <Print photo={SITE.photos[1]} rotate="rotate-[3deg]" />
+      </StoryAside>
+    ),
   },
   {
-    label: "2024 · Going all in",
+    years: "2024",
+    title: "Going all in",
     body: [
       <>
-        I started freelancing on the side and talking to clients wherever they were, mostly in the
-        US. Then <ProseLink href={L.alpine}>Alpine</ProseLink> came along, and I quit the full-time
-        job and went all in on consulting.
-      </>,
-      <>
-        I joined Alpine as a freelance consultant and they hired me. Working with Caleb, who founded
-        it, is the best thing that has happened to me professionally. He is opinionated in the way
-        you want an engineer to be opinionated, and watching him think about code changed how I
-        write it. It is also where I met{" "}
-        <ProseLink href={TECH_LINKS.ProseMirror}>ProseMirror</ProseLink> and{" "}
-        <ProseLink href={TECH_LINKS.Tiptap}>Tiptap</ProseLink>.
+        I had been freelancing on the side, mostly for clients in the US, and when{" "}
+        <ProseLink href={L.alpine}>Alpine</ProseLink> came along I quit the full-time job and went
+        all in. They hired me off the back of the consulting. Working with Caleb, who founded it, is
+        the best thing that has happened to me professionally: he is opinionated the way you want an
+        engineer to be, and watching him think about code changed how I write it.
       </>,
     ],
-    aside: <Print photo={SITE.photos[2]} rotate="rotate-[4deg]" className="lg:justify-self-end" />,
+    aside: (
+      <StoryAside place="Remote" lines={["Freelance, then Alpine", "2024"]}>
+        {/* A landscape photo, so the frame widens to 3:4. Its focus, on the face
+            and the thumb, comes with the photo. */}
+        <Print photo={SITE.photos[2]} rotate="-rotate-[4deg]" className="aspect-[3/4]" />
+      </StoryAside>
+    ),
   },
   {
-    label: "2025 → 2026 · Editors, and the AI on top of them",
+    years: "2024 → 2026 · Online",
+    title: "The internet, and a cafe",
     body: [
       <>
-        Editors turned out to be the thing I am actually good at. They are a proper problem: the
-        document model, the selection, the thousand ways a cursor ends up somewhere it
-        shouldn&apos;t be. I enjoy them in a way I have not enjoyed much else.
+        In 2024 I also started posting on <ProseLink href={SITE.socials.x}>X</ProseLink> instead of
+        only reading it. A few posts went viral, the account grew to close to four thousand people,
+        and some of the builders I met there became a group we called Dominate X. Some of the best
+        people I know, I know from there.
       </>,
       <>
-        Then AI landed on top of them, which made them more interesting rather than less. I have
-        been on <ProseLink href={L.cursor}>Cursor</ProseLink> since the week it launched, and there
-        was a stretch where I paid for more than one subscription at once purely so I could keep
-        shipping. I built editor products at <ProseLink href={L.steerlab}>Steerlab</ProseLink> in
-        Paris and at a few places alongside it.
+        Then in January 2025 I bought a cafe. I ran it alongside the day job for about a year, until
+        it closed early in 2026. A good run all the same, and I enjoyed the whole process, start to
+        finish.
       </>,
     ],
+    aside: (
+      <StoryAside place="Online" lines={[`@${SITE.handle} on X`, "2024 → 2026"]}>
+        <Print photo={SITE.photos[4]} rotate="rotate-[4deg]" />
+      </StoryAside>
+    ),
   },
   {
-    label: "2026 → now · Vienna",
+    years: "2025 → now · Paris, then Vienna",
+    title: "Editors, then the AI on top of them",
     body: [
       <>
-        At <ProseLink href={L.fynk}>fynk</ProseLink> I am automating the contract lifecycle with AI,
-        from the first draft to the signature. On the side there is{" "}
-        <ProseLink href={L.flowy}>Flowy</ProseLink>, which started life in{" "}
+        Editors turned out to be the thing I am actually good at: the document model, the selection,
+        the cursor that ends up where it should not. I built editor products for{" "}
+        <ProseLink href={L.steerlab}>Steerlab</ProseLink> in Paris, and AI landing on top of them
+        made the problem more interesting rather than less. I have been on{" "}
+        <ProseLink href={L.cursor}>Cursor</ProseLink> since the week it launched, and for a stretch
+        I paid for more than one subscription at once purely to keep shipping.
+      </>,
+      <>
+        Now, from Vienna, I am automating the contract lifecycle with AI at{" "}
+        <ProseLink href={L.fynk}>fynk</ProseLink>, from the first draft to the signature. On the
+        side there is <ProseLink href={L.flowy}>Flowy</ProseLink>, which started in{" "}
         <ProseLink href={L.swift}>Swift</ProseLink> and is now{" "}
-        <ProseLink href={TECH_LINKS.Expo}>Expo</ProseLink>, because I would rather write TypeScript
-        and React.
-      </>,
-      <>
-        The day job is <ProseLink href={TECH_LINKS.Vue}>Vue</ProseLink> and the editor under it is
-        Tiptap. Which framework is under the hood matters less to me every year: the first
-        principles are the same across all of them, and the interesting part was never the stack.
+        <ProseLink href={TECH_LINKS.Expo}>Expo</ProseLink>, because I would rather write TypeScript.
       </>,
       <>
         Outside of work I am mostly reading, walking, or quietly rewriting this website for the
         fourth time.
       </>,
     ],
-    aside: <Print photo={SITE.photos[3]} rotate="-rotate-[3deg]" className="lg:justify-self-end" />,
+    aside: (
+      <StoryAside place="Vienna" lines={["48.21° N, 16.37° E", "2025 → now"]}>
+        <Print photo={VIENNA_STREET} rotate="-rotate-[3deg]" />
+      </StoryAside>
+    ),
   },
 ];
+
+/**
+ * A bead on the rail, level with the chapter's title. Drawn on the page background
+ * with a ring of it, so the bar passes behind rather than through, and above the bar
+ * in the stack but below the avatar, which travels over it.
+ */
+const ChapterMark = () => (
+  <span
+    aria-hidden
+    className="ring-background bg-background border-connection relative z-10 hidden size-4 rounded-full border ring-4 lg:block"
+  />
+);
 
 /**
  * The tracked label that opens each chapter. gentlejoseph.com's device: a rule
@@ -215,10 +256,10 @@ export default function AboutPage() {
           {/* The lede runs at the home page's scale rather than body size, so the page
               opens on something with weight instead of straight into small print. */}
           <p className="font-secondary text-foreground max-w-prose text-lg leading-[1.45] font-medium tracking-[-0.02em] text-balance sm:text-xl">
-            I came to this the long way round. Electronics rather than computer science, and a false
-            start in data engineering before the web caught. What I have been working out since is
-            that the part I like is the whole of it: the problem, the build, and whether the person
-            on the other end can tell the difference.
+            I&apos;m Rohit. I grew up in Chomu, a small town north of Jaipur, and I live in Vienna
+            now, which is still the biggest jump of the lot. I build software for a living and, most
+            evenings, for fun. This is how one turned into the other, told by place rather than job
+            title. The titles are on the work page; this is the part they leave out.
           </p>
         </div>
       </Section>
@@ -231,7 +272,8 @@ export default function AboutPage() {
         prints out at the right edge. The right-hand space was there anyway, since text set
         to `max-w-prose` inside a 54rem column leaves it, and putting the photos in it
         is better than centring them over a page that is left-aligned everywhere else.
-        Below `lg` the print drops under its chapter and stays left-aligned with it.
+        Below `lg` the print drops under its chapter, with its place tag filling the rest
+        of the row, so the chapter ends on a full line rather than a small picture and a gap.
       */}
       <Section>
         {/* `relative`, so the rail can span every chapter at once. Its left offset is
@@ -242,11 +284,14 @@ export default function AboutPage() {
           <StoryRail className="left-[32rem] hidden w-16 lg:block" />
           {STORY.map((chapter) => (
             <li
-              key={chapter.label}
+              key={chapter.title}
               className="grid gap-6 lg:grid-cols-[minmax(0,32rem)_4rem_minmax(0,1fr)] lg:gap-0"
             >
               <div className="flex flex-col gap-3">
-                <ChapterLabel>{chapter.label}</ChapterLabel>
+                <ChapterLabel>{chapter.years}</ChapterLabel>
+                <Heading as="h3" className="text-foreground -mt-1">
+                  {chapter.title}
+                </Heading>
                 <div className="text-muted-foreground flex flex-col gap-4 text-[0.9375rem] leading-relaxed">
                   {chapter.body.map((paragraph, i) => (
                     <p key={i}>{paragraph}</p>
@@ -254,7 +299,19 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {chapter.aside ? <div className="lg:col-start-3 lg:mt-6">{chapter.aside}</div> : null}
+              {/* The bead sits on the rail level with the chapter's title. */}
+              <div className="lg:col-start-2 lg:row-start-1 lg:mt-[1.75rem] lg:justify-self-center">
+                <ChapterMark />
+              </div>
+
+              {/* A flex row from `lg` so the picture is pushed to the right edge by
+                  layout, not by `justify-self` on a block child, which only some
+                  browsers honour. */}
+              {chapter.aside ? (
+                <div className="lg:col-start-3 lg:row-start-1 lg:mt-6 lg:flex lg:justify-end">
+                  {chapter.aside}
+                </div>
+              ) : null}
             </li>
           ))}
         </ol>

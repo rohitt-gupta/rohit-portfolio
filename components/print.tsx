@@ -4,7 +4,7 @@ import React from "react";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-type Photo = { src: string; width: number; height: number };
+type Photo = { src: string; width: number; height: number; focus?: string; alt?: string };
 
 /**
  * One photo, framed and dropped at an angle, in the spirit of the prints
@@ -17,13 +17,18 @@ type Photo = { src: string; width: number; height: number };
  * straight while the print is not is the whole effect: the dish shows only at the
  * corners, where the rotation uncovers it, and the shadow gets an edge to fall on.
  *
- * `object-top`, because a 2:3 crop of a square photo has to lose something and
- * losing the feet beats losing the face.
+ * The crop keeps the photo's `focus` point, top by default, because a 2:3 crop of
+ * a square photo has to lose something and losing the feet beats losing the face.
+ * A landscape photo carries its own focus, on the face, and can widen the frame
+ * to 3:4 through `className`; the office shot on the about page does both.
+ *
+ * The alt is my name unless the photo says otherwise. A print of a place rather
+ * than a person carries its own description.
  */
 export function Print({
   photo,
   rotate = "-rotate-[4deg]",
-  sizes = "(min-width: 1024px) 176px, 128px",
+  sizes = "(min-width: 1024px) 176px, 144px",
   className,
 }: {
   photo: Photo;
@@ -34,16 +39,17 @@ export function Print({
   className?: string;
 }) {
   return (
-    <div className={cn("relative aspect-[2/3] w-32 shrink-0 lg:w-44", className)}>
+    <div className={cn("relative aspect-[2/3] w-36 shrink-0 lg:w-44", className)}>
       <div aria-hidden className="border-rule absolute inset-0 rounded-xl border" />
       <div aria-hidden className="avatar-well absolute inset-[6%] rounded-lg" />
       <Image
         src={photo.src}
-        alt={SITE.name}
+        alt={photo.alt ?? SITE.name}
         fill
         sizes={sizes}
+        style={{ objectPosition: photo.focus ?? "50% 0%" }}
         className={cn(
-          "rounded-lg object-cover object-top shadow-lg shadow-black/15",
+          "rounded-lg object-cover shadow-lg shadow-black/15",
           "transition-transform duration-300 ease-(--ease-out-strong) hover:rotate-0",
           rotate,
         )}

@@ -37,28 +37,34 @@ export function StoryRail({ className }: { className?: string }) {
   const smoothed = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.35 });
   const progress = reduceMotion ? scrollYProgress : smoothed;
   const top = useTransform(progress, [0, 1], ["0%", "100%"]);
+  // The colour is the part of the story still ahead, draining from the bottom as I
+  // travel down it. Colouring what has been read instead leaves the bar entirely grey
+  // on arrival, which is the least inviting a page can look at the top.
+  const ahead = useTransform(progress, (v) => 1 - v);
 
   return (
     <div ref={ref} aria-hidden className={cn("pointer-events-none absolute inset-y-0", className)}>
-      {/* The track, and the part of it already walked. */}
-      <span className="bg-rule absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
+      {/* The track, and the part of it still to come. A soft bar rather than a
+          hairline: at this height a single pixel reads as a border that lost its
+          box, where a rounded 12px bar reads as a thing to travel along. */}
+      <span className="bg-muted absolute inset-y-0 left-1/2 w-3 -translate-x-1/2 rounded-full" />
       <motion.span
-        style={{ scaleY: progress }}
-        className="bg-accent/45 absolute inset-y-0 left-1/2 w-px origin-top -translate-x-1/2"
+        style={{ scaleY: ahead }}
+        className="bg-accent-soft absolute inset-y-0 left-1/2 w-3 origin-bottom -translate-x-1/2 rounded-full"
       />
 
       {/* Me, on the line. The ring is drawn in the page background rather than left
           transparent, so the track passes behind the photo instead of through it. */}
       <motion.span
         style={{ top }}
-        className="ring-background bg-background absolute left-1/2 block size-7 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full ring-4"
+        className="ring-background bg-background absolute left-1/2 z-20 block size-12 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full shadow-[0_4px_14px_-4px_var(--well-shadow)] ring-4"
       >
         <span className="border-rule absolute inset-0 z-10 rounded-full border" />
         <Image
           src={SITE.photos[0].src}
           alt=""
           fill
-          sizes="28px"
+          sizes="48px"
           className="object-cover object-top"
         />
       </motion.span>
