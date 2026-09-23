@@ -12,54 +12,63 @@ import { SITE } from "@/lib/site";
 
 export const Footer = () => {
   return (
-    /* The extra bottom padding is room for the sticky "Book a call" pill, which is
-       fixed to this corner of the viewport: without it, the last thing the page
-       scrolls to is the sound and theme toggles sitting underneath the pill.
+    /* The sticky "Book a call" pill is fixed to the bottom-right corner of the
+       viewport, so nothing clickable lives in that corner of the footer. The year
+       and the toggles sit above the line, where the pill can never reach them, and
+       below it there is only the credit, short and on the left. That lets the footer
+       keep the same padding below as above, with no reserve for the pill.
 
-       80px is measured rather than guessed. Scrolled to the very bottom the pill
-       occupies the last 68px of the viewport — 44 of button and 24 of offset — so
-       this clears it by 12 and nothing more. Both breakpoints spell out `pb`, since
-       tailwind-merge only drops the `py` that this one actually conflicts with. */
-    <Section className="border-b-0" hideCrosses innerClassName="py-10 pb-20 sm:py-12 sm:pb-20">
+       Except on the narrowest phones. The credit is 193px wide and the pill 126px,
+       so under 23rem the pill reaches far enough left to land on the end of "here's
+       the code" once the page is scrolled all the way down. There, and only there,
+       the credit gets 72px below it: at the bottom of the page the pill takes the
+       last 60px of the viewport, 16 of offset and 44 of button, and 72 clears it by
+       12. From 23rem up the two simply sit side by side. */
+    <Section
+      className="border-b-0"
+      hideCrosses
+      innerClassName="py-10 max-[23rem]:pb-[4.5rem] sm:py-12"
+    >
       <footer className="flex flex-col gap-8">
-        <div className="flex flex-wrap items-center gap-5">
-          <Link
-            href="/links"
-            {...hoverSfx()}
-            className="text-muted-foreground hover:text-accent text-sm transition-colors"
-          >
-            Links
-          </Link>
-          <Link
-            href="/inspiration"
-            {...hoverSfx()}
-            className="text-muted-foreground hover:text-accent text-sm transition-colors"
-          >
-            Inspiration
-          </Link>
-          <SocialLinks />
-        </div>
-
-        <div className="border-connection flex flex-wrap items-center justify-between gap-3 border-t pt-6">
-          <p className="text-faint text-xs">
-            Built by yours truly,{" "}
-            <a
-              href={SITE.repo}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-4">
+          <div className="flex flex-wrap items-center gap-5">
+            <Link
+              href="/links"
               {...hoverSfx()}
-              className="hover:text-accent underline decoration-dotted underline-offset-4 transition-colors"
+              className="text-muted-foreground hover:text-accent text-sm transition-colors"
             >
-              here&apos;s the code
-            </a>
-            .
-          </p>
+              Links
+            </Link>
+            <Link
+              href="/inspiration"
+              {...hoverSfx()}
+              className="text-muted-foreground hover:text-accent text-sm transition-colors"
+            >
+              Inspiration
+            </Link>
+            <SocialLinks />
+          </div>
+
           <div className="flex items-center gap-3">
             <span className="text-faint font-mono text-xs">© {new Date().getFullYear()}</span>
             <SoundToggle />
             <ThemeToggle />
           </div>
         </div>
+
+        <p className="border-connection text-faint border-t pt-6 text-xs">
+          Built by yours truly,{" "}
+          <a
+            href={SITE.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            {...hoverSfx()}
+            className="hover:text-accent underline decoration-dotted underline-offset-4 transition-colors"
+          >
+            here&apos;s the code
+          </a>
+          .
+        </p>
       </footer>
     </Section>
   );
