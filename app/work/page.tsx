@@ -57,8 +57,10 @@ export default function WorkPage() {
       <Section>
         <div className="flex flex-col gap-4">
           <Heading>Got something to build?</Heading>
+          {/* Generic on purpose, like the contact section on the home page: no kind of
+              work named, so it reads as an invitation rather than availability. */}
           <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
-            I&apos;m open to freelance work and full-time roles. Tell me what you&apos;re making.
+            Tell me what you&apos;re making. I&apos;m always happy to talk it through.
           </p>
           <div className="pt-1">
             <ActionLink href="/#contact" variant="outline">

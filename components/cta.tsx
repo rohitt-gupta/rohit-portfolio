@@ -8,6 +8,9 @@ import { SITE } from "@/lib/site";
 /**
  * The last thing on the page, and the only one asking for something.
  *
+ * The copy deliberately names no kind of work. It is an invitation to talk, not a
+ * statement of what I am available for, and it should stay that way.
+ *
  * TODO: the booking overlay now exists in `components/book-a-call.tsx`, as the sticky
  * pill in the corner. Lifting its trigger out of that file would let this section carry
  * a "Book a call" primary button above the email too — worth doing only if the pill
@@ -19,8 +22,8 @@ export const Cta = () => {
       <SectionHeader eyebrow="Say hello" title="Let's build something" />
 
       <p className="text-muted-foreground max-w-prose text-[0.9375rem] leading-relaxed">
-        I&apos;m always up for a good problem: freelance, full-time, or just someone wanting to talk
-        through an idea. The fastest way to reach me is email, and I read all of it.
+        I&apos;m always happy to talk through an idea, hear what you&apos;re making, or just say hi.
+        The fastest way to reach me is email, and I read all of it.
       </p>
 
       <div className="flex flex-wrap items-center gap-3">
