@@ -9,7 +9,7 @@ import { StoryAside } from "@/components/story-aside";
 import { StoryRail } from "@/components/story-rail";
 import { Eyebrow, Heading, SectionHeader } from "@/components/typography";
 import { EDUCATION } from "@/lib/experience";
-import { SITE } from "@/lib/site";
+import { SITE, withRef } from "@/lib/site";
 import { TECH_LINKS } from "@/lib/tech-links";
 
 export const metadata: Metadata = {
@@ -202,7 +202,7 @@ const STORY: {
       <>
         Now, from Vienna, I am automating the contract lifecycle with AI at{" "}
         <ProseLink href={L.fynk}>fynk</ProseLink>, from the first draft to the signature. On the
-        side there is <ProseLink href={L.flowy}>Flowy</ProseLink>, which started in{" "}
+        side there is <ProseLink href={withRef(L.flowy)}>Flowy</ProseLink>, which started in{" "}
         <ProseLink href={L.swift}>Swift</ProseLink> and is now{" "}
         <ProseLink href={TECH_LINKS.Expo}>Expo</ProseLink>, because I would rather write TypeScript.
       </>,

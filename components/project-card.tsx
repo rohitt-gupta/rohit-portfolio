@@ -6,6 +6,7 @@ import React from "react";
 import { BrandIcon } from "@/components/brand-icon";
 import type { Project } from "@/lib/projects";
 import { hoverSfx, sfx } from "@/lib/sfx";
+import { withRef } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /** The corner glints that make the tile read as glass rather than a flat panel. */
@@ -74,7 +75,7 @@ export function ProjectCard({ project, className }: { project: Project; classNam
   const Tag = project.href ? "a" : "div";
   const link = project.href
     ? {
-        href: project.href,
+        href: withRef(project.href),
         target: "_blank",
         rel: "noopener noreferrer",
         ...hoverSfx(sfx.hover),

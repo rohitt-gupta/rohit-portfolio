@@ -73,3 +73,26 @@ export const SITE = {
 export const CAL_LINK = SITE.socials.cal
   .replace(/^https?:\/\/(app\.)?cal\.com\//, "")
   .replace(/\/+$/, "");
+
+/** What outbound links to my own projects are tagged with: this site's host. */
+const REF = new URL(SITE_URL).host;
+
+/**
+ * An outbound link to one of my projects, tagged `?ref=rohitt.in` so that project's
+ * analytics can say where the visit came from. These links open with
+ * `rel="noreferrer"`, which strips the Referer header, and Vercel Web Analytics
+ * reads `ref` from the query string instead. Anything already on the URL is kept,
+ * and a link that already carries a `ref` is left as it is.
+ *
+ * Applied where the links render rather than in the data, so the project list, the
+ * llms.txt and the schema.org block keep the plain URLs.
+ */
+export function withRef(href: string) {
+  try {
+    const url = new URL(href);
+    if (!url.searchParams.has("ref")) url.searchParams.set("ref", REF);
+    return url.toString();
+  } catch {
+    return href;
+  }
+}

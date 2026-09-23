@@ -8,6 +8,7 @@ import { Highlight } from "@/components/highlight";
 import { Eyebrow } from "@/components/typography";
 import { CURRENT_PROJECT, type ProjectPreview } from "@/lib/projects";
 import { hoverSfx, sfx } from "@/lib/sfx";
+import { withRef } from "@/lib/site";
 import { TECH_LINKS } from "@/lib/tech-links";
 import { cn } from "@/lib/utils";
 
@@ -114,6 +115,9 @@ const Preview = ({
  */
 export const CurrentProject = () => {
   const { title, status, tagline, description, href, stack, preview, backdrop } = CURRENT_PROJECT;
+  // All three ways out of the band, the name, the button and the screenshot, carry
+  // the same tagged link.
+  const outbound = href ? withRef(href) : undefined;
 
   return (
     <div
@@ -139,7 +143,7 @@ export const CurrentProject = () => {
           heading, so the whole thing stays one sentence you can read.
         */}
         <p className="font-secondary text-foreground text-[0.9375rem] leading-[1.6] font-medium tracking-[-0.01em] lg:text-base">
-          <Highlight tone="peach" href={href || undefined}>
+          <Highlight tone="peach" href={outbound}>
             {title}
           </Highlight>{" "}
           is {tagline} <span className="text-muted-foreground font-normal">{description}</span>
@@ -169,9 +173,9 @@ export const CurrentProject = () => {
             ))}
           </div>
 
-          {href ? (
+          {outbound ? (
             <ActionLink
-              href={href}
+              href={outbound}
               variant="outline"
               external
               className="bg-card shadow-[0_1px_2px_var(--well-shadow)]"
@@ -182,7 +186,7 @@ export const CurrentProject = () => {
         </div>
       </div>
 
-      {preview ? <Preview preview={preview} href={href || undefined} backdrop={backdrop} /> : null}
+      {preview ? <Preview preview={preview} href={outbound} backdrop={backdrop} /> : null}
     </div>
   );
 };
