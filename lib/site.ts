@@ -49,7 +49,7 @@ export const SITE = {
     // caches by URL for hours and would have kept serving the crop.
     { src: "/me-glasses.jpg", width: 675, height: 1200, focus: "50% 20%" },
   ],
-  resume: "https://drive.google.com/file/d/1-1LW0ArT3ujaIBx0Le7zKQ_IEimRCxuA/view?usp=sharing",
+  resume: "https://drive.google.com/file/d/1k9ID7NkeOVhZaXhASm7GZzmtSoqxm12m/view?usp=sharing",
   github: "rohitt-gupta",
   socials: {
     github: "https://github.com/rohitt-gupta",
