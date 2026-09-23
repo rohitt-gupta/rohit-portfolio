@@ -40,7 +40,6 @@ export function AvatarToy({ className }: { className?: string }) {
   const multiple = photos.length > 1;
 
   const photo = photos[index];
-  const longEdge = photo.height > photo.width ? { height: "100%" } : { width: "100%" };
 
   const cycle = () => {
     if (!multiple) return;
@@ -75,26 +74,18 @@ export function AvatarToy({ className }: { className?: string }) {
         {/* No clipping here: the photo scales as a whole rounded tile, so the
             well is revealed behind it rather than the image sliding under a mask.
 
-            The tile is centred rather than stretched to the slot, because it is
-            sized to the photo instead of the other way round. A portrait photo
-            therefore leaves a little of the dish showing down each side, which is
-            the right trade: the alternative is filling the square by enlarging the
-            middle of the photo, which puts the lens six inches from my face. */}
-        <span className="absolute inset-[16%] flex items-center justify-center">
+            Every photo fills the square. A version of this sized the tile to each
+            photo's own ratio so nothing was cropped, and a phone's 9:16 came out as
+            a strip with the dish showing down both sides. Filled is better, here
+            and only here; the prints on the about page still show more of each
+            photo. What makes the fill work is that every photo says where its
+            face is, so the crop is around that rather than around the middle. */}
+        <span className="absolute inset-[16%]">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={photo.src}
-              className="block overflow-hidden rounded-[9%]"
-              /* One definite edge plus the ratio; the other edge follows. Which
-                 edge is definite depends on the photo, since the slot is square:
-                 constrain the long one and the short one can only come out
-                 smaller. Set here rather than in a class because the ratio is
-                 data, not design. */
-              style={{
-                aspectRatio: `${photo.width} / ${photo.height}`,
-                ...longEdge,
-                willChange: "transform, opacity",
-              }}
+              className="block size-full overflow-hidden rounded-[9%]"
+              style={{ willChange: "transform, opacity" }}
               initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={
@@ -113,10 +104,10 @@ export function AvatarToy({ className }: { className?: string }) {
                 fill
                 sizes="128px"
                 priority={index === 0}
-                /* The tile already matches the photo's ratio, so there is nothing
-                   left to crop; this only absorbs the sub-pixel rounding that
-                   percentage insets produce at 112px and 128px. */
+                /* The crop, around the photo's own focus point. A style rather
+                   than a class because it is data, not design. */
                 className="object-cover"
+                style={{ objectPosition: photo.focus }}
               />
             </motion.span>
           </AnimatePresence>

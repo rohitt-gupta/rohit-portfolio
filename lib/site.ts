@@ -17,29 +17,37 @@ export const SITE = {
    * The stack the avatar on the home page cycles through. Every photo here joins
    * the click-to-cycle rotation; add one and the toy picks it up.
    *
-   * Hand these over whole. The toy sizes its tile to each photo's own ratio and
-   * shows all of it, so a portrait phone photo comes out portrait rather than
-   * having its middle enlarged to fill a square — which is what pre-cropping
-   * them to 640 squares did, and why the face used to arrive so close.
+   * Hand these over whole, at the original ratio, and say where the subject is.
+   * `focus` is a CSS object-position: the point a crop keeps when the frame is a
+   * different shape from the photo. The toy fills its square with every photo and
+   * crops around it; the about page prints crop to 2:3 around it. Top for a
+   * portrait of a person, since losing feet beats losing a face; for a landscape,
+   * wherever the face is. Pre-cropping to 640 squares was the old way of doing
+   * this, and is why two of these still arrive too close.
    *
-   * `width` and `height` are the file's intrinsic pixels and are only used for
-   * that ratio, the same way `lib/projects.ts` carries them for the work shots.
-   * Framing is still worth thinking about — at 128px a full-body shot is a
-   * person-shaped smudge — but that is a reason to pick a closer photo, not to
-   * crop a wide one.
+   * `width` and `height` are the file's intrinsic pixels, the same way
+   * `lib/projects.ts` carries them for the work shots. Framing is still worth
+   * thinking about — at 128px a full-body shot is a person-shaped smudge — but
+   * that is a reason to pick a closer photo, not to bake a crop.
    */
   photos: [
     // The garden shot opens the rotation. It is the one whose 640 crop happens to
     // be framed well anyway, so the photo the page loads with is not one of the
     // close ones. It also gets `priority`, being first.
-    { src: "/me-garden.jpg", width: 640, height: 640 },
-    { src: "/pic1.jpeg", width: 2316, height: 3088 },
-    { src: "/pic4.jpg", width: 678, height: 628 },
-    // TODO: these two are baked 640px centre-crops of taller photos, so they still
-    // read as a zoom no matter what the toy does with them. Replace each with the
+    { src: "/me-garden.jpg", width: 640, height: 640, focus: "50% 50%" },
+    { src: "/pic1.jpeg", width: 2316, height: 3088, focus: "50% 0%" },
+    // Thumbs up in the office. Landscape: the focus sits on the right-hand half,
+    // where the face and the thumb are, and the about page print widens its frame.
+    { src: "/me-office.jpg", width: 1400, height: 788, focus: "56% 50%" },
+    // TODO: this one is a baked 640px centre-crop of a taller photo, so it still
+    // reads as a zoom no matter what the toy does with it. Replace it with the
     // original and update the numbers here.
-    { src: "/me-rooftop.jpg", width: 640, height: 640 },
-    { src: "/me-street.jpg", width: 640, height: 640 },
+    { src: "/me-rooftop.jpg", width: 640, height: 640, focus: "50% 50%" },
+    // The glasses shot is the whole 9:16 frame, downsized to 1200px. The focus is a
+    // little above centre so a square crop keeps the hair and the chin both. A new
+    // name rather than overwriting the old square crop, because the image optimiser
+    // caches by URL for hours and would have kept serving the crop.
+    { src: "/me-glasses.jpg", width: 675, height: 1200, focus: "50% 20%" },
   ],
   resume: "https://drive.google.com/file/d/1-1LW0ArT3ujaIBx0Le7zKQ_IEimRCxuA/view?usp=sharing",
   github: "rohitt-gupta",
