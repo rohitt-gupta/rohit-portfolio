@@ -33,6 +33,32 @@ const Arrow = () => (
   </svg>
 );
 
+/** "scranton.ai" from "https://www.scranton.ai", for the cover's address bar. */
+const hostOf = (href: string) => {
+  try {
+    return new URL(href).host.replace(/^www\./, "");
+  } catch {
+    return href;
+  }
+};
+
+/**
+ * What the tile carries when a project has no screenshot: the same inset window,
+ * with the address where the page would load and the name set in the middle of it.
+ * The grid stays one set of windows rather than a row with a hole in it, and the
+ * shot, when it arrives, is one field in `lib/projects.ts`.
+ */
+const Cover = ({ title, href }: { title: string; href?: string }) => (
+  <div className="border-connection bg-card absolute inset-x-[7%] top-[9%] flex aspect-[16/10] flex-col overflow-hidden rounded-[3px] border shadow-[0_6px_18px_-6px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+    <span className="border-connection text-faint block truncate border-b px-2.5 py-1.5 font-mono text-[0.625rem] leading-none">
+      {href ? hostOf(href) : "\u00a0"}
+    </span>
+    <span className="font-display text-muted-foreground flex flex-1 items-center justify-center px-4 text-center text-lg font-semibold tracking-[-0.02em] text-balance">
+      {title}
+    </span>
+  </div>
+);
+
 /**
  * A screenshot on a tile that only finds its colour when you point at it.
  *
@@ -40,16 +66,27 @@ const Arrow = () => (
  * nothing competes with the page. Hovering lifts exactly one out: the wash fades
  * up, the shot grows a fraction, the stack marks and the open-in-new arrow arrive,
  * and a twelve-millisecond tick confirms it.
+ *
+ * A project with nothing public to open still shows, just not as a link: no arrow
+ * promising a new tab, no tick and no press.
  */
 export function ProjectCard({ project, className }: { project: Project; className?: string }) {
+  const Tag = project.href ? "a" : "div";
+  const link = project.href
+    ? {
+        href: project.href,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        ...hoverSfx(sfx.hover),
+      }
+    : {};
+
   return (
-    <a
-      href={project.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      {...hoverSfx(sfx.hover)}
+    <Tag
+      {...link}
       className={cn(
-        "group flex flex-col transition-transform duration-150 ease-out active:scale-[0.985]",
+        "group flex flex-col",
+        project.href && "transition-transform duration-150 ease-out active:scale-[0.985]",
         className,
       )}
     >
@@ -69,59 +106,71 @@ export function ProjectCard({ project, className }: { project: Project; classNam
 
         {/* Inset and shadowed so it reads as a screen sitting on the tile rather
             than a picture cropped to it. */}
-        <div className="absolute inset-x-[7%] top-[9%] overflow-hidden rounded-[3px] shadow-[0_6px_18px_-6px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-          <Image
-            src={project.shot.src}
-            alt=""
-            width={project.shot.width}
-            height={project.shot.height}
-            sizes="(min-width: 640px) 22rem, 90vw"
-            className="block h-auto w-full"
-          />
-          {project.video ? (
-            <video
-              src={project.video}
-              muted
-              loop
-              playsInline
-              preload="none"
-              aria-hidden
-              className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
-              ref={(el) => {
-                if (!el) return;
-                el.onmouseenter = () => void el.play().catch(() => {});
-              }}
+        {project.shot ? (
+          <div className="absolute inset-x-[7%] top-[9%] overflow-hidden rounded-[3px] shadow-[0_6px_18px_-6px_rgba(0,0,0,0.35)] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
+            <Image
+              src={project.shot.src}
+              alt=""
+              width={project.shot.width}
+              height={project.shot.height}
+              sizes="(min-width: 640px) 22rem, 90vw"
+              className="block h-auto w-full"
             />
-          ) : null}
-        </div>
+            {project.video ? (
+              <video
+                src={project.video}
+                muted
+                loop
+                playsInline
+                preload="none"
+                aria-hidden
+                className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                ref={(el) => {
+                  if (!el) return;
+                  el.onmouseenter = () => void el.play().catch(() => {});
+                }}
+              />
+            ) : null}
+          </div>
+        ) : (
+          <Cover title={project.title} href={project.href} />
+        )}
 
         <Sheen />
 
-        <span
-          aria-hidden
-          className="text-foreground/70 absolute top-2.5 right-2.5 z-20 translate-y-0.5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-        >
-          <Arrow />
-        </span>
+        {project.href ? (
+          <span
+            aria-hidden
+            className="text-foreground/70 absolute top-2.5 right-2.5 z-20 translate-y-0.5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+          >
+            <Arrow />
+          </span>
+        ) : null}
 
-        <span
-          aria-hidden
-          className="bg-background/80 absolute right-2.5 bottom-2.5 z-20 inline-flex translate-y-0.5 items-center gap-1.5 rounded-md px-1.5 py-1 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-        >
-          {project.stack.map((tech) => (
-            <BrandIcon key={tech} name={tech} uid={`-${project.slug}-${tech}`} />
-          ))}
-        </span>
+        {project.stack.length > 0 ? (
+          <span
+            aria-hidden
+            className="bg-background/80 absolute right-2.5 bottom-2.5 z-20 inline-flex translate-y-0.5 items-center gap-1.5 rounded-md px-1.5 py-1 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+          >
+            {project.stack.map((tech) => (
+              <BrandIcon key={tech} name={tech} uid={`-${project.slug}-${tech}`} />
+            ))}
+          </span>
+        ) : null}
       </div>
 
       <div className="flex items-baseline justify-between gap-3">
         <h3 className="font-display text-foreground group-hover:text-accent text-base font-semibold tracking-[-0.02em] transition-colors">
           {project.title}
         </h3>
-        <span className="text-faint shrink-0 font-mono text-xs">{project.year}</span>
+        {project.year ? (
+          <span className="text-faint shrink-0 font-mono text-xs">{project.year}</span>
+        ) : null}
       </div>
 
-      <p className="text-muted-foreground pt-1 text-sm leading-relaxed">{project.tagline}</p>
-    </a>
+      {project.tagline ? (
+        <p className="text-muted-foreground pt-1 text-sm leading-relaxed">{project.tagline}</p>
+      ) : null}
+    </Tag>
   );
 }

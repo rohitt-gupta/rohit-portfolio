@@ -6,8 +6,11 @@ export type Project = {
   /**
    * The shot that sits on the card. Landscape; it is letterboxed onto a 4:3 tile,
    * so nothing important should hug the very top or bottom.
+   *
+   * Optional. Without one the tile carries the project's name and address in an
+   * empty window instead, which is how work still waiting on a screenshot shows.
    */
-  shot: { src: string; width: number; height: number };
+  shot?: { src: string; width: number; height: number };
   /**
    * Optional screen recording, revealed over the shot on hover. Muted and looped,
    * so keep it a few silent seconds of the product doing one thing.
@@ -21,16 +24,18 @@ export type Project = {
    * All six are wide, calm landscapes on the free Unsplash License; nothing from
    * Unsplash+. Attribution is not required by that licence but is only polite:
    * @friskygeek, @nidheeshkavalan, @alexanderstartsev, @vidarnm, @betagamma and
-   * @thugbong.
+   * @thugbong. There are more cards than scenes, so some cards share one.
    */
   backdrop: string;
   /** One line. It sits next to the title on the home grid, so keep it short. */
-  tagline: string;
+  tagline?: string;
   /** The longer version, only shown on /work. */
-  description: string;
-  href: string;
+  description?: string;
+  /** Where the card opens. Leave it out for work with nothing public to link to:
+   *  the card still shows, it just is not a link. */
+  href?: string;
   repo?: string;
-  year: string;
+  year?: string;
   stack: string[];
 };
 
@@ -90,6 +95,60 @@ export const CURRENT_PROJECT: CurrentProject = {
 };
 
 export const PROJECTS: Project[] = [
+  // The first four are the home page's selected work, in this order. The first
+  // three are studio work: their copy, years and stacks follow the case studies on
+  // launchbox.studio, and the screenshots are the ones those case studies use.
+  // Names are each product's own wordmark.
+  {
+    slug: "alawyer",
+    shot: { src: "/alawyer.png", width: 1600, height: 1037 },
+    backdrop: "/backgrounds/coast.jpg",
+    title: "Alawyer",
+    tagline: "Engineering support for an AI legal intelligence platform.",
+    description:
+      "Engineering support for an AI-powered legal intelligence platform that helps people research, extract and understand legal information faster.",
+    href: "https://alawyer.ai",
+    year: "2026",
+    // TODO: the case study names no framework, so the card shows no stack marks yet.
+    stack: [],
+  },
+  {
+    slug: "refco-club",
+    // The top of a full-page capture: the nav and the hero, down to the card's edge.
+    shot: { src: "/refco.jpg", width: 1600, height: 1133 },
+    backdrop: "/backgrounds/hills.jpg",
+    title: "REFCO Club",
+    tagline: "A private real estate membership platform for Fort Worth.",
+    description:
+      "A premium real estate membership platform for private listings and exclusive opportunities in the Fort Worth market.",
+    href: "https://www.refcoclub.com",
+    year: "2026",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    slug: "scranton-ai",
+    shot: { src: "/scranton.png", width: 1600, height: 1154 },
+    backdrop: "/backgrounds/lake.jpg",
+    title: "ScrantonAI",
+    tagline: "An AI chatbot for Scranton's public records, contracts and more.",
+    description:
+      "An AI chatbot over the City of Scranton's public records, contracts and council documents, streaming its answers, built on Next.js and Supabase.",
+    href: "https://www.scranton.ai",
+    year: "2024",
+    stack: ["Next.js", "Supabase", "Vercel AI SDK"],
+  },
+  {
+    slug: "launchbox-studio",
+    // The studio's home page, from the nav down through the client logos.
+    shot: { src: "/launchbox-site.png", width: 1600, height: 928 },
+    backdrop: "/backgrounds/dune.jpg",
+    title: "Launchbox Studio",
+    tagline: "The web design and development studio I founded.",
+    description: "The web design and development studio I founded in 2024.",
+    href: "https://www.launchbox.studio",
+    year: "2024",
+    stack: ["Next.js", "Tailwind CSS", "Motion"],
+  },
   {
     slug: "caption-me",
     shot: { src: "/captionme.png", width: 1920, height: 1080 },
@@ -164,5 +223,5 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-/** The home page shows a 2×2 grid; /work shows everything. */
+/** The home page shows the first four as a 2×2 grid; /work shows everything. */
 export const FEATURED_PROJECTS = PROJECTS.slice(0, 4);
