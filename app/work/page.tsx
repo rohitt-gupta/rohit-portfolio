@@ -34,6 +34,15 @@ export default function WorkPage() {
         <CurrentProject />
       </Section>
 
+      {/* Where I have worked comes straight after what I am building now, and before
+          the grid, so the day jobs are not read after every side project. */}
+      <Section>
+        <div className="flex flex-col gap-7">
+          <SectionHeader eyebrow="Experience" title="Where I've worked" />
+          <ExperienceList />
+        </div>
+      </Section>
+
       <Section>
         <div className="flex flex-col gap-7">
           <SectionHeader eyebrow="Projects" title="Built and shipped" />
@@ -42,13 +51,6 @@ export default function WorkPage() {
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
-        </div>
-      </Section>
-
-      <Section>
-        <div className="flex flex-col gap-7">
-          <SectionHeader eyebrow="Experience" title="Where I've worked" />
-          <ExperienceList />
         </div>
       </Section>
 
