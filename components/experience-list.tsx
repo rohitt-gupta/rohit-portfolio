@@ -110,6 +110,15 @@ function CompanyBody({ company }: { company: Company }) {
   );
 }
 
+/** Whether a card has anything to open onto. Launchbox, for one, is just the header. */
+const hasBody = (company: Company) =>
+  Boolean(
+    company.blurb ||
+      company.stack?.length ||
+      company.positions.length > 1 ||
+      company.positions.some((p) => p.summary || p.highlights?.length),
+  );
+
 /**
  * One panel, a row per company, each opening onto its own detail. Modelled on
  * swamii.me, which is where the shape comes from: a tile, the name, a pill for
@@ -142,7 +151,7 @@ export function ExperienceList() {
             href={company.url}
             defaultOpen={index === 0}
           >
-            <CompanyBody company={company} />
+            {hasBody(company) ? <CompanyBody company={company} /> : null}
           </ExperienceRow>
         </li>
       ))}

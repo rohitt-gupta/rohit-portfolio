@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 import { BrandIcon } from "@/components/brand-icon";
@@ -46,16 +47,15 @@ export function MarkLink({ href, children, className, mark, logo }: Props) {
       )}
     >
       {logo ? (
-        // A plain img, the way `experience-row.tsx` takes these: square avatars of a
-        // few KB, already smaller than they are drawn, so the optimiser has nothing
-        // to win. Rounded a touch, because each one carries its own background.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        // next/image, the way `experience-row.tsx` takes these. Sized for the largest
+        // the em-based mark gets (about 26px); CSS draws it smaller on narrow screens.
+        // Rounded a touch, because each one carries its own background.
+        <Image
           src={logo}
           alt=""
           aria-hidden
-          loading="lazy"
-          decoding="async"
+          width={28}
+          height={28}
           className="size-[0.85em] shrink-0 rounded-[0.18em] object-cover"
         />
       ) : mark ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
+import Image from "next/image";
 import React from "react";
 
 import { type HighlightTone, TONE_CLASS } from "@/components/highlight";
@@ -81,7 +82,8 @@ export type ExperienceRowProps = {
   /** The company's own site. Without one the name is plain text. */
   href?: string;
   defaultOpen?: boolean;
-  children: React.ReactNode;
+  /** The card's detail. Without it the row is just the header: no toggle, no chevron. */
+  children?: React.ReactNode;
 };
 
 export function ExperienceRow({
@@ -99,6 +101,7 @@ export function ExperienceRow({
   const [open, setOpen] = React.useState(defaultOpen);
   const reduceMotion = useReducedMotion();
   const panelId = React.useId();
+  const expandable = Boolean(children);
 
   return (
     <div className="group/row relative">
@@ -107,16 +110,18 @@ export function ExperienceRow({
           browsers disagree about which one a click belongs to. Everything above
           it is pointer-events-none so clicks fall through to it, and only the
           company link opts back in. */}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        aria-controls={panelId}
-        {...hoverSfx()}
-        className="group-hover/row:bg-connection/20 absolute inset-0 z-0 w-full cursor-pointer transition-colors"
-      >
-        <span className="sr-only">{`${open ? "Hide" : "Show"} what I did at ${name}`}</span>
-      </button>
+      {expandable ? (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={panelId}
+          {...hoverSfx()}
+          className="group-hover/row:bg-connection/20 absolute inset-0 z-0 w-full cursor-pointer transition-colors"
+        >
+          <span className="sr-only">{`${open ? "Hide" : "Show"} what I did at ${name}`}</span>
+        </button>
+      ) : null}
 
       <div className="pointer-events-none relative z-10 flex items-center gap-4 p-4 sm:p-5">
         {/* The logo where the company publishes one, a tinted initial where it
@@ -124,8 +129,8 @@ export function ExperienceRow({
             the tile and the tint only shows on the rows without one; the tones
             come from the highlight palette so those still belong to the page.
 
-            A plain img, not next/image: these are 2 to 11 KB and already the
-            size they are drawn at, so the optimiser has nothing to win. */}
+            next/image rather than a plain img: a few of these are 256px sources
+            drawn at 44px, and the optimiser resizes them and serves WebP/AVIF. */}
         <span
           aria-hidden
           className={cn(
@@ -134,12 +139,11 @@ export function ExperienceRow({
           )}
         >
           {logo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={logo.src}
               alt=""
-              loading="lazy"
-              decoding="async"
+              width={44}
+              height={44}
               className="size-full object-cover"
             />
           ) : (
@@ -176,33 +180,37 @@ export function ExperienceRow({
           </span>
         </span>
 
-        <span className="text-faint group-hover/row:text-muted-foreground ml-auto pl-2 transition-colors">
-          <Chevron open={open} />
-        </span>
+        {expandable ? (
+          <span className="text-faint group-hover/row:text-muted-foreground ml-auto pl-2 transition-colors">
+            <Chevron open={open} />
+          </span>
+        ) : null}
       </div>
 
-      <motion.div
-        id={panelId}
-        // Height zero leaves the body in the accessibility tree, and the chips
-        // inside it are links, so this has to hide the subtree outright.
-        aria-hidden={!open}
-        inert={!open}
-        initial={false}
-        // Reduced motion leaves the variant system rather than animating to
-        // nothing: naming variants that are no longer defined would resolve
-        // against the parent and quietly do nothing.
-        animate={reduceMotion ? undefined : open ? "open" : "closed"}
-        variants={reduceMotion ? undefined : PANEL}
-        style={reduceMotion ? { height: open ? "auto" : 0 } : undefined}
-        className="overflow-hidden"
-      >
+      {expandable ? (
         <motion.div
-          variants={reduceMotion ? undefined : BODY}
-          className="px-4 pb-5 sm:px-5 sm:pb-6"
+          id={panelId}
+          // Height zero leaves the body in the accessibility tree, and the chips
+          // inside it are links, so this has to hide the subtree outright.
+          aria-hidden={!open}
+          inert={!open}
+          initial={false}
+          // Reduced motion leaves the variant system rather than animating to
+          // nothing: naming variants that are no longer defined would resolve
+          // against the parent and quietly do nothing.
+          animate={reduceMotion ? undefined : open ? "open" : "closed"}
+          variants={reduceMotion ? undefined : PANEL}
+          style={reduceMotion ? { height: open ? "auto" : 0 } : undefined}
+          className="overflow-hidden"
         >
-          {children}
+          <motion.div
+            variants={reduceMotion ? undefined : BODY}
+            className="px-4 pb-5 sm:px-5 sm:pb-6"
+          >
+            {children}
+          </motion.div>
         </motion.div>
-      </motion.div>
+      ) : null}
     </div>
   );
 }
