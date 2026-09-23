@@ -71,7 +71,11 @@ export const Navbar = () => {
       // `py-10 sm:py-14`, and tailwind-merge only drops a class this one
       // actually conflicts with. Passing `py-4` alone leaves `sm:py-14`
       // standing, which is exactly how the tablet header reached 56px.
-      innerClassName="py-4 sm:py-4 lg:py-6"
+      //
+      // 18px from `lg` rather than 24: the desktop header came out 12px taller
+      // than it needed to be, and the space is taken evenly from above and below
+      // so the name and the links stay centred in the band.
+      innerClassName="py-4 sm:py-4 lg:py-4.5"
     >
       <nav className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-0 sm:gap-y-4">
         {/* Dropped on a phone, where the signature says the same name in the
