@@ -35,18 +35,19 @@ export const metadata: Metadata = {
     template: `%s – ${SITE.name}`,
   },
   description: SITE.description,
+  // No title or description in either of these: Next fills both in from each page's
+  // own, so /about unfurls as About rather than as the home page. The same goes for
+  // `url`, since `./` resolves against the page being rendered. A page that sets
+  // `openGraph` itself replaces this whole object, image included, so none of them do.
+  // The image is `opengraph-image.tsx` next to this file, and X picks it up from here.
   openGraph: {
-    title: SITE.title,
-    description: SITE.description,
-    url: SITE_URL,
+    url: "./",
     siteName: SITE.name,
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE.title,
-    description: SITE.description,
   },
 };
 

@@ -29,7 +29,13 @@ export async function generateMetadata({
   const post = await getFileBySlug("blog", slug);
   const { title, summary, image } = post.frontMatter as unknown as PostFrontMatter;
 
-  const ogImage = image ? (image.startsWith("http") ? image : `${SITE_URL}${image}`) : undefined;
+  // A post with its own image uses it. The rest fall back to the site card, by URL,
+  // because setting `openGraph` here replaces the one the layout would have passed down.
+  const ogImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${SITE_URL}${image}`
+    : `${SITE_URL}/opengraph-image`;
 
   return {
     title,
@@ -42,13 +48,13 @@ export async function generateMetadata({
       description: summary,
       type: "article",
       url: `${SITE_URL}/blog/${slug}`,
-      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: summary,
-      ...(ogImage ? { images: [ogImage] } : {}),
+      images: [ogImage],
     },
   };
 }
